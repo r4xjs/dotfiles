@@ -45,7 +45,7 @@ autocmd FileType python map <F5> :w<CR>:!python2 "%"<CR>
 
 let mapleader = " " " space is <Leader>-Key
 
-nnoremap <leader>c "+y
+vnoremap <leader>c "+y
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 
 noremap <leader>w <esc>:w<cr>
@@ -68,15 +68,6 @@ nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
-
-" close brackets
-inoremap ( ()<esc>i
-inoremap < <><esc>i
-inoremap { {}<esc>i
-inoremap [ []<esc>i
-inoremap " ""<esc>i
-inoremap ' ''<esc>i
-inoremap ` ``<esc>i
 
 " highlight all occurrence of a word by clicking on it
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>

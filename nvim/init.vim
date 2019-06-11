@@ -67,7 +67,14 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
-
+" close brackets
+inoremap ( ()<esc>i
+inoremap < <><esc>i
+inoremap { {}<esc>i
+inoremap [ []<esc>i
+inoremap " ""<esc>i
+inoremap ' ''<esc>i
+inoremap ` ``<esc>i
 
 " highlight all occurrence of a word by clicking on it
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>

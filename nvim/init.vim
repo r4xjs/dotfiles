@@ -1,4 +1,3 @@
-let mapleader = " " " space is <Leader>-Key
 " ---------- General Settings ----------
 " {{{1
 set number
@@ -16,6 +15,7 @@ set foldmethod=marker
 set guicursor=
 set expandtab
 set mouse=a
+set nomodeline
 "1}}}
 
 " ---------- Plugins ----------
@@ -38,25 +38,52 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 "1}}}
 
-
 "  ---------- Key Bindings  ---------- 
 " {{{1
 "autocmd FileType c,cpp,h,hpp,cc setlocal foldmethod=syntax
 autocmd FileType dot map <F5> :w<CR>:!xdot "%"<CR>
 autocmd FileType python map <F5> :w<CR>:!python2 "%"<CR>
 
-map <Leader>c "+y
-map <Leader>v <Esc>:set paste<CR>"+p<Esc>:set nopaste<CR>
-map <Leader>w <Esc>:w<CR>
-map <Leader>q <Esc>:q<CR>
+let mapleader = " " " space is <Leader>-Key
 
-imap jk <esc>
+nnoremap <leader>c "+y
+nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
+
+noremap <leader>w <esc>:w<cr>
+noremap <leader>q <esc>:q<cr>
+nnoremap <a-k> <c-w>k
+nnoremap <a-j> <c-w>j
+nnoremap <a-l> <c-w>l
+nnoremap <a-h> <c-w>h
+
+inoremap <c-u> <esc>viwU
+
+inoremap jk <esc>
+nnoremap H ^
+nnoremap L $
 nnoremap Q <nop>
 nnoremap ; :
+
+" vim configs
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ez :split ~/.zshrc<cr>
+nnoremap <leader>ei :split ~/.i3/config<cr>
+
+
 
 " highlight all occurrence of a word by clicking on it
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
 " Plugin Mappings
-map <Leader>o <Esc>:FZF<CR>
+nnoremap <eeader>o <esc>:FZF<cr>
 "1}}}
+
+" ---------- Abbreviations ----------
+"  {{{1
+autocmd FileType makedown call ModeMarkdown()
+function! ModeMarkdown()
+    iabbrev foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
+endfunction
+"  1}}}
+

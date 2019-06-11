@@ -25,6 +25,8 @@ set colorcolumn=81
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'flazz/vim-colorschemes'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 call plug#end()
@@ -73,7 +75,7 @@ nnoremap <leader>ei :split ~/.i3/config<cr>
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
 " Plugin Mappings
-nnoremap <eeader>o <esc>:FZF<cr>
+nnoremap <leader>p <esc>:FZF<cr>
 "1}}}
 
 " ---------- Abbreviations ----------

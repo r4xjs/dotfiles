@@ -16,6 +16,8 @@ set guicursor=
 set expandtab
 set mouse=a
 set nomodeline
+set textwidth=80
+set colorcolumn=81
 "1}}}
 
 " ---------- Plugins ----------

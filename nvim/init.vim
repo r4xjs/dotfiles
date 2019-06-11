@@ -80,10 +80,8 @@ nnoremap <eeader>o <esc>:FZF<cr>
 "1}}}
 
 " ---------- Abbreviations ----------
-"  {{{1
 autocmd FileType makedown call ModeMarkdown()
 function! ModeMarkdown()
     iabbrev foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
 endfunction
-"  1}}}
 

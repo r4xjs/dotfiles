@@ -41,10 +41,6 @@ colorscheme iceberg
 
 "  ---------- Key Bindings  ---------- 
 " {{{1
-"autocmd FileType c,cpp,h,hpp,cc setlocal foldmethod=syntax
-autocmd FileType dot map <F5> :w<CR>:!xdot "%"<CR>
-autocmd FileType python map <F5> :w<CR>:!python2 "%"<CR>
-
 let mapleader = " " " space is <Leader>-Key
 
 vnoremap <leader>c "+y
@@ -79,8 +75,20 @@ nnoremap <leader>p <esc>:FZF<cr>
 "1}}}
 
 " ---------- Abbreviations ----------
-autocmd FileType makedown call ModeMarkdown()
 function! ModeMarkdown()
-    iabbrev foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
+    iabbrev <buffer> foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
 endfunction
+function! ModePython()
+    iabbrev <buffer> foldme # {{{1 <cr><cr># 1}}}
+endfunction
+
+:augroup filetype_markdown
+:    autocmd!
+:    autocmd FileType markdown :call ModeMarkdown()
+:augroup end
+:augroup filetype_python
+:    autocmd!
+:    autocmd FileType python :call ModePython()
+:augroup end
+
 

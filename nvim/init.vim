@@ -81,7 +81,11 @@ endfunction
 function! ModePython()
     iabbrev <buffer> foldme # {{{1 <cr><cr># 1}}}
 endfunction
+function! ModeVim()
+    iabbrev <buffer> foldme " {{{1 <cr><cr>" 1}}}
+endfunction
 
+" {{{1 
 :augroup filetype_markdown
 :    autocmd!
 :    autocmd FileType markdown :call ModeMarkdown()
@@ -90,5 +94,9 @@ endfunction
 :    autocmd!
 :    autocmd FileType python :call ModePython()
 :augroup end
-
+:augroup filetype_vim
+:    autocmd!
+:    autocmd FileType vim :call ModeVim()
+:augroup end
+" 1}}} 
 

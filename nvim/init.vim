@@ -68,7 +68,11 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
+" ctags
+nnoremap <leader>t :!ctags -R .<cr>   
+
 "noremap <silent> <leader>m :<c-u>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
+
 " Matching Group Bindings
 noremap <silent> <leader>m1 :<c-u>execute ":1match SpellCap /".expand('<cword>')."/"<cr>
 noremap <silent> <leader>m2 :<c-u>execute ":2match DiffAdd /".expand('<cword>')."/"<cr>

@@ -77,9 +77,9 @@ nnoremap <leader>t :!ctags -R .<cr>
 noremap <silent> <leader>m1 :<c-u>execute ":1match SpellCap /".expand('<cword>')."/"<cr>
 noremap <silent> <leader>m2 :<c-u>execute ":2match DiffAdd /".expand('<cword>')."/"<cr>
 noremap <silent> <leader>m3 :<c-u>execute ":3match SpellRare /".expand('<cword>')."/"<cr>
-nnoremap <silent> <leader>mm1 :1match none<cr>
-nnoremap <silent> <leader>mm2 :2match none<cr>
-nnoremap <silent> <leader>mm3 :3match none<cr>
+nnoremap <silent> <leader>n1 :1match none<cr>
+nnoremap <silent> <leader>n2 :2match none<cr>
+nnoremap <silent> <leader>n3 :3match none<cr>
 
 " Search Bindings
 nnoremap / /\V

@@ -68,7 +68,8 @@ nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
 " highlight all occurrence of a word by clicking on it
-nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
+nnoremap <silent> <leader><2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
+nnoremap <leader><leader> :let @/=''<cr>
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>

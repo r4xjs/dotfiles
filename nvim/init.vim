@@ -18,6 +18,7 @@ set mouse=a
 set nomodeline
 set textwidth=80
 set colorcolumn=81
+set ignorecase
 "1}}}
 
 " ---------- Plugins ----------
@@ -41,7 +42,7 @@ colorscheme iceberg
 
 "  ---------- Key Bindings  ---------- 
 " {{{1
-let mapleader = " " " space is <Leader>-Key
+let mapleader = " " " space is <leader>-Key
 
 vnoremap <leader>c "+y
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
@@ -69,7 +70,8 @@ nnoremap <leader>ei :split ~/.i3/config<cr>
 
 " highlight all occurrence of a word by clicking on it
 nnoremap <silent> <leader><2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
-nnoremap <leader><leader> :let @/=''<cr>
+nnoremap <silent> <leader><leader> :let @/=''<cr>
+nnoremap / /\V
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>

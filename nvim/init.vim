@@ -68,10 +68,18 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
-" highlight all occurrence of a word by clicking on it
-nnoremap <silent> <leader><2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
-nnoremap <silent> <leader><leader> :let @/=''<cr>
+"noremap <silent> <leader>m :<c-u>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
+" Matching Group Bindings
+noremap <silent> <leader>m1 :<c-u>execute ":1match SpellCap /".expand('<cword>')."/"<cr>
+noremap <silent> <leader>m2 :<c-u>execute ":2match DiffAdd /".expand('<cword>')."/"<cr>
+noremap <silent> <leader>m3 :<c-u>execute ":3match SpellRare /".expand('<cword>')."/"<cr>
+nnoremap <silent> <leader>mm1 :1match none<cr>
+nnoremap <silent> <leader>mm2 :2match none<cr>
+nnoremap <silent> <leader>mm3 :3match none<cr>
+
+" Search Bindings
 nnoremap / /\V
+nnoremap <silent> <leader><leader> :let @/=''<cr>
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>

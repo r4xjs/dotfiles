@@ -19,6 +19,10 @@ set nomodeline
 set textwidth=80
 set colorcolumn=81
 set ignorecase
+set showcmd
+
+set nocompatible 
+filetype plugin on
 "1}}}
 
 " ---------- Plugins ----------
@@ -88,6 +92,11 @@ nnoremap <silent> <leader><leader> :let @/=''<cr>
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>
 "1}}}
+
+" ---------- Snippets ----------
+" {{{1 
+" nnoremap ,html :-1read $HOME/.vim/.skeleton.html<cr>3jwf>a
+" 1}}} 
 
 " ---------- Abbreviations ----------
 function! ModeMarkdown()

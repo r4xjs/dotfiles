@@ -22,7 +22,6 @@ set ignorecase
 set showcmd
 
 set nocompatible 
-filetype plugin on
 "1}}}
 
 " ---------- Plugins ----------
@@ -124,3 +123,11 @@ endfunction
 :augroup end
 " 1}}} 
 
+
+" ---------- Project Settings ----------
+if getcwd() =~ "sn00p"
+    :augroup proj_filetype_python
+        autocmd!
+        autocmd  FileType python :setlocal shiftwidth=2
+    :augroup end
+endif

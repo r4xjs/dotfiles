@@ -75,8 +75,8 @@ exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 #bindsym $mod+Return exec urxvt
 #bindsym $mod+Return exec terminology
 #bindsym $mod+Return exec konsole
-bindsym $mod+Return exec gnome-terminal
-#bindsym $mod+Return exec xfce4-terminal
+#bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill

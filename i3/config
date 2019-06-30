@@ -283,3 +283,9 @@ bindsym $mod+o mode "$lang_mode"
 # 2}}}
 
 # 1}}}
+
+# ---------- Window Rules ----------
+# {{{1
+for_window [title="References to .*"] floating enable
+for_window [title="References to .*"] resize set 1024 480 
+# 1}}}

@@ -175,11 +175,11 @@ bindsym XF86MonBrightnessDown exec /home/user/bin/brightness.sh -10
 #bindsym $mod+m exec synclient TouchpadOff=0
 # with libinput
 # disalbe touchpad
-#bindsym $mod+Shift+m exec "xinput set-prop 12 156 {0,0,0,0,0,0,0,0,1}"
-bindsym $mod+Shift+m exec "xinput set-prop 16 151 {0,0,0,0,0,0,0,0,1}"
+bindsym $mod+Shift+m exec "xinput set-prop 14 145 {0,0,0,0,0,0,0,0,1}"
+#bindsym $mod+Shift+m exec "xinput set-prop 16 151 {0,0,0,0,0,0,0,0,1}"
 # enable touchpad
-#bindsym $mod+m exec "xinput set-prop 12 156 {1,0,0,0,1,0,0,0,1}"
-bindsym $mod+m exec "xinput set-prop 16 151 {1,0,0,0,1,0,0,0,1}"
+bindsym $mod+m exec "xinput set-prop 14 145 {1,0,0,0,1,0,0,0,1}"
+#bindsym $mod+m exec "xinput set-prop 16 151 {1,0,0,0,1,0,0,0,1}"
 
 # lock screen
 bindsym $mod+z exec i3lock -c 090920 -d
@@ -189,7 +189,6 @@ bindsym $mod+Shift+X move scratchpad
 bindsym $mod+X scratchpad show
 
 # 1}}}
-
 # ---------- Status Bar ----------
 # {{{1
 

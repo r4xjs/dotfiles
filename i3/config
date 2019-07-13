@@ -175,10 +175,10 @@ bindsym XF86MonBrightnessDown exec /home/user/bin/brightness.sh -10
 #bindsym $mod+m exec synclient TouchpadOff=0
 # with libinput
 # disalbe touchpad
-bindsym $mod+Shift+m exec "xinput set-prop 14 145 {0,0,0,0,0,0,0,0,1}"
+bindsym $mod+Shift+m exec /home/user/.i3/disable_touchpad.sh
 #bindsym $mod+Shift+m exec "xinput set-prop 16 151 {0,0,0,0,0,0,0,0,1}"
 # enable touchpad
-bindsym $mod+m exec "xinput set-prop 14 145 {1,0,0,0,1,0,0,0,1}"
+bindsym $mod+m exec /home/user/.i3/enable_touchpad.sh
 #bindsym $mod+m exec "xinput set-prop 16 151 {1,0,0,0,1,0,0,0,1}"
 
 # lock screen

@@ -22,6 +22,7 @@ set colorcolumn=81
 set ignorecase
 set showcmd
 
+set guioptions-=T
 set nocompatible 
 "1}}}
 

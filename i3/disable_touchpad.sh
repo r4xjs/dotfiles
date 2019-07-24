@@ -1,3 +1,3 @@
 #!/bin/sh
-xinput set-prop 14 --type=float 145 0 0 0 0 0 0 0 0 1
-xinput set-prop 14 313 0,0,0,0,0,0,0
+xinput set-prop "SynPS/2 Synaptics TouchPad" --type=float "Coordinate Transformation Matrix" 0 0 0 0 0 0 0 0 1
+xinput set-prop "SynPS/2 Synaptics TouchPad" "Tap Action" 0,0,0,0,0,0,0

@@ -6,8 +6,8 @@ if [ "${1}" == "full" ]; then
 
     # fixes
     mkdir ~/bin
-    ln -s $(pwd)/fixes/wakeup_fix.sh ~/bin/wakeup_fix.sh
-    ln -s $(pwd)/fixes/brightness.sh ~/bin/brightness.sh
+    ln -s $(pwd)/scripts/fixes/wakeup_fix.sh ~/bin/wakeup_fix.sh
+    ln -s $(pwd)/scripts/fixes/brightness.sh ~/bin/brightness.sh
    
     # bluetooth pulseaudio default setup
     read -p "Do you want to setup bluetooth headphone to pulse/default.pa?" yn

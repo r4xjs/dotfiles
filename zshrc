@@ -48,6 +48,8 @@ alias ll='ls -lh'
 alias ssh-p='ssh -o PreferredAuthentications=password'
 alias rgrep='grep -Ri --color=always'
 
+alias rsync='rsync -arvphsS --progresss'
+
 alias grep='grep --color=auto'
 alias ip='ip -c'
 

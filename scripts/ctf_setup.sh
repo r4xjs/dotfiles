@@ -7,7 +7,7 @@
 sudo apt update -y && sudo apt upgrade -y
 packages="zsh git vim tmux python python3 ipython ipython3 \
 python-matplotlib build-essential nginx irssi curl wget nmap \
-python-pip python3-pip"
+python-pip python3-pip gdb strace"
 sudo apt install -y $packages
 sudo pip install pwntools
 

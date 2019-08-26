@@ -75,8 +75,8 @@ exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 #bindsym $mod+Return exec urxvt
 #bindsym $mod+Return exec terminology
 #bindsym $mod+Return exec konsole
-bindsym $mod+Return exec gnome-terminal
-#bindsym $mod+Return exec xfce4-terminal
+#bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -175,9 +175,11 @@ bindsym XF86MonBrightnessDown exec /home/user/bin/brightness.sh -10
 #bindsym $mod+m exec synclient TouchpadOff=0
 # with libinput
 # disalbe touchpad
-bindsym $mod+Shift+m exec "xinput set-prop 12 156 {0,0,0,0,0,0,0,0,1}"
+bindsym $mod+Shift+m exec /home/user/.i3/disable_touchpad.sh
+#bindsym $mod+Shift+m exec "xinput set-prop 16 151 {0,0,0,0,0,0,0,0,1}"
 # enable touchpad
-bindsym $mod+m exec "xinput set-prop 12 156 {1,0,0,0,1,0,0,0,1}"
+bindsym $mod+m exec /home/user/.i3/enable_touchpad.sh
+#bindsym $mod+m exec "xinput set-prop 16 151 {1,0,0,0,1,0,0,0,1}"
 
 # lock screen
 bindsym $mod+z exec i3lock -c 090920 -d
@@ -187,7 +189,6 @@ bindsym $mod+Shift+X move scratchpad
 bindsym $mod+X scratchpad show
 
 # 1}}}
-
 # ---------- Status Bar ----------
 # {{{1
 
@@ -280,4 +281,10 @@ set $lang_mode (u)s, (g)erman
 bindsym $mod+o mode "$lang_mode"
 # 2}}}
 
+# 1}}}
+
+# ---------- Window Rules ----------
+# {{{1
+for_window [title="References to .*"] floating enable
+for_window [title="References to .*"] resize set 1024 480 
 # 1}}}

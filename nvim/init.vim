@@ -1,6 +1,7 @@
 " ---------- General Settings ----------
 " {{{1
 set number
+set relativenumber
 syntax on
 set undofile
 set undodir="~/.vim_undo_files"
@@ -20,7 +21,8 @@ set colorcolumn=81
 set ignorecase
 set showcmd
 
-set nocompatible
+set guioptions-=T
+set nocompatible 
 "1}}}
 
 " ---------- Plugins ----------

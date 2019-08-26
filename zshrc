@@ -48,6 +48,8 @@ alias ll='ls -lh'
 alias ssh-p='ssh -o PreferredAuthentications=password'
 alias rgrep='grep -Ri --color=always'
 
+alias rsync='rsync -arvphsS --progress'
+
 alias grep='grep --color=auto'
 alias ip='ip -c'
 
@@ -65,7 +67,7 @@ SAVEHIST="$HISTSIZE"
 
 # ---------- exports ----------
 # {{{1
-export PATH="$PATH":"${HOME}/bin":"${HOME}/Android/Sdk/platform-tools"
+export PATH="$PATH":"${HOME}/bin":"${HOME}/.local/bin":"${HOME}/Android/Sdk/platform-tools"
 export wlan0=wlx00c0ca56bbff
 export okular_cache=/home/user/.config/okularrc
 if hash nvim 2>/dev/null; then
@@ -76,3 +78,5 @@ fi
 # 1}}}
 
 source ~/.profile
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

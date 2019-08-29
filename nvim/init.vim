@@ -116,6 +116,7 @@ endfunction
 " ---------- Abbreviations ----------
 function! ModeMarkdown()
     iabbrev <buffer> foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
+    iabbrev <buffer> foldme2 <!-- {{{2 --><cr><cr><!-- 2}}} -->
 endfunction
 function! ModePython()
     iabbrev <buffer> foldme # {{{1 <cr><cr># 1}}}

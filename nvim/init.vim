@@ -94,6 +94,12 @@ nnoremap <silent> <leader><leader> :let @/=''<cr>
 nnoremap <leader>p <esc>:FZF<cr>
 "1}}}
 
+" ---------- Mouse ---------- 
+" {{{1 
+noremap <ScrollWheelUp>     4<C-Y>
+noremap <ScrollWheelDown>   4<C-E>
+" 1}}} 
+
 " ---------- Snippets ----------
 " {{{1 
 " nnoremap ,html :-1read $HOME/.vim/.skeleton.html<cr>3jwf>a

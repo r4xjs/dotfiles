@@ -17,7 +17,6 @@ set guicursor=
 set expandtab
 set mouse=a
 set nomodeline
-" set textwidth=80
 set colorcolumn=81
 set ignorecase
 set showcmd
@@ -35,6 +34,8 @@ Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'rhysd/vim-grammarous'
+
 call plug#end()
 " 1}}}
 
@@ -45,7 +46,7 @@ set t_Co=256
 colorscheme iceberg
 "1}}}
 
-"  ---------- Key Bindings  ---------- 
+"  ---------- Key Bindings  ----------
 " {{{1
 let mapleader = " " " space is <leader>-Key
 
@@ -74,7 +75,7 @@ nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
 " ctags
-nnoremap <leader>t :!ctags -R .<cr>   
+nnoremap <leader>t :!ctags -R .<cr>
 
 "noremap <silent> <leader>m :<c-u>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
 
@@ -92,6 +93,19 @@ nnoremap <silent> <leader><leader> :let @/=''<cr>
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>
+let g:grammarous#hooks = {}
+let g:grammarous#show_first_error = 1
+let g:grammarous#use_vim_spelllang = 0
+let g:grammarous#enable_spell_check = 1
+function! g:grammarous#hooks.on_check(errs) abort
+    echom "check triggered"
+    nnoremap <buffer><leader>gn <plug>(grammarous-move-to-next-error)
+endfunction
+function! g:grammarous#hooks.on_reset(errs) abort
+    echom "reset triggered"
+    nunmap <buffer><leader>gn
+endfunction
+
 "1}}}
 
 " ---------- Mouse ---------- 
@@ -101,13 +115,14 @@ noremap <ScrollWheelDown>   4<C-E>
 " 1}}} 
 
 " ---------- Snippets ----------
-" {{{1 
+" {{{1
 " nnoremap ,html :-1read $HOME/.vim/.skeleton.html<cr>3jwf>a
-" 1}}} 
+" 1}}}
 
 " ---------- Abbreviations ----------
 function! ModeMarkdown()
     iabbrev <buffer> foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
+    iabbrev <buffer> foldme2 <!-- {{{2 --><cr><cr><!-- 2}}} -->
 endfunction
 function! ModePython()
     iabbrev <buffer> foldme # {{{1 <cr><cr># 1}}}
@@ -116,7 +131,7 @@ function! ModeVim()
     iabbrev <buffer> foldme " {{{1 <cr><cr>" 1}}}
 endfunction
 
-" {{{1 
+" {{{1
 :augroup filetype_markdown
 :    autocmd!
 :    autocmd FileType markdown :call ModeMarkdown()
@@ -129,13 +144,30 @@ endfunction
 :    autocmd!
 :    autocmd FileType vim :call ModeVim()
 :augroup end
-" 1}}} 
+" 1}}}
 
+augroup XML
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
 
 " ---------- Project Settings ----------
 if getcwd() =~ "sn00p"
+    function! Sn00pMode()
+        :setlocal shiftwidth=2
+        :setlocal tabstop=2
+        :setlocal softtabstop=2
+
+        " whitespaces
+        autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+        highlight ExtraWhitespace ctermbg=cyan guibg=cyan
+        autocmd InsertLeave * redraw!
+        match ExtraWhitespace /\s\+$\| \+\ze\t/
+        autocmd BufWritePre * :%s/\s\+$//e
+
+    endfunction
     :augroup proj_filetype_python
         autocmd!
-        autocmd  FileType python :setlocal shiftwidth=2
+        autocmd  FileType python :call Sn00pMode()
     :augroup end
 endif

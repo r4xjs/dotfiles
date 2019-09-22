@@ -76,6 +76,8 @@ nnoremap <leader>ei :split ~/.i3/config<cr>
 
 " ctags
 nnoremap <leader>t :!ctags -R .<cr>
+nnoremap <a-left> <c-t>
+nnoremap <c-t> <nop>
 
 "noremap <silent> <leader>m :<c-u>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
 

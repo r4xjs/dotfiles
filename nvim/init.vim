@@ -75,7 +75,7 @@ nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
 " ctags
-nnoremap <leader>t :!ctags -R .<cr>
+nnoremap <leader>c :!ctags -R .<cr>
 nnoremap <a-left> <c-t>
 nnoremap <c-t> <nop>
 
@@ -95,6 +95,7 @@ nnoremap <silent> <leader><leader> :let @/=''<cr>
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>
+nnoremap <leader>t <esc>:Tags<cr>
 let g:grammarous#hooks = {}
 let g:grammarous#show_first_error = 1
 let g:grammarous#use_vim_spelllang = 0

@@ -55,8 +55,8 @@ vnoremap <c-c> "+y
 vnoremap <a-c> "+y
 nnoremap <c-v> <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 
-noremap <leader>w <esc>:w<cr>
-noremap <leader>q <esc>:q<cr>
+noremap <leader>w <esc>:w!<cr>
+noremap <leader>q <esc>:q!<cr>
 nnoremap <a-k> <c-w>k
 nnoremap <a-j> <c-w>j
 nnoremap <a-l> <c-w>l

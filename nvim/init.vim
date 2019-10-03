@@ -53,7 +53,7 @@ let mapleader = " " " space is <leader>-Key
 " vnoremap <leader>c "+y
 vnoremap <c-c> "+y
 vnoremap <a-c> "+y
-nnoremap <c-v> <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
+nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 
 noremap <leader>w <esc>:w!<cr>
 noremap <leader>q <esc>:q!<cr>

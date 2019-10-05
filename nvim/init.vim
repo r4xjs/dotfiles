@@ -1,7 +1,6 @@
 " ---------- General Settings ----------
 " {{{1
 set number
-set relativenumber
 syntax on
 set undofile
 set undodir="~/.vim_undo_files"

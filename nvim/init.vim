@@ -1,7 +1,6 @@
 " ---------- General Settings ----------
 " {{{1
 set number
-set relativenumber
 syntax on
 set undofile
 set undodir="~/.vim_undo_files"
@@ -50,11 +49,13 @@ colorscheme iceberg
 " {{{1
 let mapleader = " " " space is <leader>-Key
 
-vnoremap <leader>c "+y
+" vnoremap <leader>c "+y
+vnoremap <c-c> "+y
+vnoremap <a-c> "+y
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 
-noremap <leader>w <esc>:w<cr>
-noremap <leader>q <esc>:q<cr>
+noremap <leader>w <esc>:w!<cr>
+noremap <leader>q <esc>:q!<cr>
 nnoremap <a-k> <c-w>k
 nnoremap <a-j> <c-w>j
 nnoremap <a-l> <c-w>l
@@ -75,7 +76,9 @@ nnoremap <leader>ez :split ~/.zshrc<cr>
 nnoremap <leader>ei :split ~/.i3/config<cr>
 
 " ctags
-nnoremap <leader>t :!ctags -R .<cr>
+nnoremap <leader>c :!ctags -R .<cr>
+nnoremap <a-left> <c-t>
+nnoremap <c-t> <nop>
 
 "noremap <silent> <leader>m :<c-u>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
 
@@ -93,6 +96,7 @@ nnoremap <silent> <leader><leader> :let @/=''<cr>
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>
+nnoremap <leader>t <esc>:Tags<cr>
 let g:grammarous#hooks = {}
 let g:grammarous#show_first_error = 1
 let g:grammarous#use_vim_spelllang = 0
@@ -107,6 +111,12 @@ function! g:grammarous#hooks.on_reset(errs) abort
 endfunction
 
 "1}}}
+
+" ---------- Mouse ---------- 
+" {{{1 
+noremap <ScrollWheelUp>     4<C-Y>
+noremap <ScrollWheelDown>   4<C-E>
+" 1}}} 
 
 " ---------- Snippets ----------
 " {{{1

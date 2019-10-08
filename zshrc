@@ -50,8 +50,10 @@ alias rgrep='grep -Ri --color=always'
 
 alias rsync='rsync -arvphsS --progress'
 
-alias grep='grep --color=auto'
+alias grep='grep --color=always'
 alias ip='ip -c'
+
+alias play='vlc "$(ph current)" && ph next'
 
 if  hash nvim 2>/dev/null; then
     alias vim='nvim'

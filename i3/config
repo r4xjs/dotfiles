@@ -196,7 +196,7 @@ bindsym $mod+X scratchpad show
 # finds out, if available)
 bar {
         status_command i3status -c ~/.i3/i3status.conf
-        font pango:monospace 8, FontAwesome 8
+        font pango:monospace 9, FontAwesome 9
         #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 }
 # 1}}}
@@ -237,7 +237,7 @@ mode "$display_mode" {
 set $display_mode Ext Screen (w) Work, (d) Docking, (x) External OFF (r) redshift on (u) redshift off 
     bindsym w exec --no-startup-id /home/user/.i3/i3work.sh
     bindsym d exec --no-startup-id /home/user/.i3/i3docking.sh
-    bindsym x exec --no-startup-id xrandr --output eDP-1 --auto --output DP-2-1 --off --output DP-2-2 --off --output DP-1 --off --output VGA-1 --off --output DP-1-8 --off --output DP-1-1 --off
+    bindsym x exec --no-startup-id xrandr --output eDP-1 --auto --scale 0.7x0.7 --output DP-2-1 --off --output DP-2-2 --off --output DP-2-3 --off --output HDMI-2 --off --output DP-1 --off --output VGA-1 --off --output DP-1-8 --off --output DP-1-1 --off
     bindsym r exec --no-startup-id redshift -o -b 0.1:1.0 -l 1:2
     bindsym u exec --no-startup-id redshift -x
     bindsym Return mode "default"

@@ -7,13 +7,10 @@ if [ "${1}" == "full" ]; then
     # fixes
     mkdir ~/bin
     ln -s $(pwd)/scripts/fixes/wakeup_fix.sh ~/bin/wakeup_fix.sh
-    ln -s $(pwd)/scripts/fixes/brightness.sh ~/bin/brightness.sh
 fi
 
 if [ "${1}" == "remove" ]; then
     rm ~/.i3
-    rm ~/bin/wakeup_fix.sh
-    rm ~/bin/brightness.sh
     rm ~/.tmux.conf
     rm ~/.zshrc
     rm ~/.zsh/cache

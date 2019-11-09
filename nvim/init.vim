@@ -22,6 +22,10 @@ set showcmd
 
 set guioptions-=T
 set nocompatible 
+
+set laststatus=2
+set statusline=%F
+
 "1}}}
 
 " ---------- Plugins ----------

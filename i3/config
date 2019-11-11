@@ -31,10 +31,6 @@ for_window [class=".*"] border pixel 3
 # ---------- Misc Variables ----------
 # {{{1
 
-# Bluetooth Headphones
-set $sink bluez_sink.04_5D_4B_DE_25_67.a2dp_sink
-set $volume_changed /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
-
 # Workspace names
 set $w1 1
 set $w2 2
@@ -163,10 +159,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # monitor brightness buttons
-#bindsym XF86MonBrightnessUp exec /usr/bin/xbacklight -inc 10
-#bindsym XF86MonBrightnessDown exec /usr/bin/xbacklight -dec 10
-bindsym XF86MonBrightnessUp exec /home/user/bin/brightness.sh +10
-bindsym XF86MonBrightnessDown exec /home/user/bin/brightness.sh -10
+bindsym XF86MonBrightnessUp exec ~/.i3/brightness.sh +10
+bindsym XF86MonBrightnessDown exec ~/.i3/brightness.sh -10
 
 
 # Touchpad/Synaptics
@@ -175,10 +169,10 @@ bindsym XF86MonBrightnessDown exec /home/user/bin/brightness.sh -10
 #bindsym $mod+m exec synclient TouchpadOff=0
 # with libinput
 # disalbe touchpad
-bindsym $mod+Shift+m exec /home/user/.i3/disable_touchpad.sh
+bindsym $mod+Shift+m exec ~/.i3/disable_touchpad.sh
 #bindsym $mod+Shift+m exec "xinput set-prop 16 151 {0,0,0,0,0,0,0,0,1}"
 # enable touchpad
-bindsym $mod+m exec /home/user/.i3/enable_touchpad.sh
+bindsym $mod+m exec ~/.i3/enable_touchpad.sh
 #bindsym $mod+m exec "xinput set-prop 16 151 {1,0,0,0,1,0,0,0,1}"
 
 # lock screen
@@ -196,7 +190,7 @@ bindsym $mod+X scratchpad show
 # finds out, if available)
 bar {
         status_command i3status -c ~/.i3/i3status.conf
-        font pango:monospace 8, FontAwesome 8
+        font pango:monospace 9, FontAwesome 9
         #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 }
 # 1}}}
@@ -235,9 +229,9 @@ bindsym $mod+r mode "resize"
 mode "$display_mode" {
 # {{{2
 set $display_mode Ext Screen (w) Work, (d) Docking, (x) External OFF (r) redshift on (u) redshift off 
-    bindsym w exec --no-startup-id /home/user/.i3/i3work.sh
-    bindsym d exec --no-startup-id /home/user/.i3/i3docking.sh
-    bindsym x exec --no-startup-id xrandr --output eDP-1 --auto --output DP-2-1 --off --output DP-2-2 --off --output DP-1 --off --output VGA-1 --off --output DP-1-8 --off --output DP-1-1 --off
+    bindsym w exec --no-startup-id ~/.i3/i3work.sh
+    bindsym d exec --no-startup-id ~/.i3/i3docking.sh
+    bindsym x exec --no-startup-id xrandr --output eDP-1 --auto --scale 0.7x0.7 --output DP-2-1 --off --output DP-2-2 --off --output DP-2-3 --off --output HDMI-2 --off --output DP-1 --off --output VGA-1 --off --output DP-1-8 --off --output DP-1-1 --off
     bindsym r exec --no-startup-id redshift -o -b 0.1:1.0 -l 1:2
     bindsym u exec --no-startup-id redshift -x
     bindsym Return mode "default"
@@ -250,18 +244,15 @@ bindsym $mod+u mode "$display_mode"
 mode "$sound_mode" {
 # {{{2
 set $sound_mode (u)p, (d)own, (m)ute, (n)ext, (p)rev, (c)onnect, (x)disconnect
-    #bindsym u exec --no-startup-id amixer -c 1 sset Master 5%+
-    #bindsym d exec --no-startup-id amixer -c 1 sset Master 5%-
-    #bindsym m exec --no-startup-id amixer -c 1 sset Master 0 
-	# bluetooth headpohnes
-	bindsym u exec pactl -- set-sink-volume $sink +5% && paplay -d $sink --volume 100000 $volume_changed
-	bindsym d exec pactl -- set-sink-volume $sink -5% && paplay -d $sink --volume 100000 $volume_changed
-	bindsym m exec pactl -- set-sink-volume $sink 0
+   
+	bindsym u exec ~/.i3/volume.sh up 
+	bindsym d exec ~/.i3/volume.sh down
+	bindsym m exec ~/.i3/volume.sh mute
+
 	bindsym c exec dbus-send --system --print-reply --dest=org.bluez /org/bluez/hci0/dev_04_5D_4B_DE_25_67 org.bluez.Device1.Connect
 	bindsym x exec dbus-send --system --print-reply --dest=org.bluez /org/bluez/hci0/dev_04_5D_4B_DE_25_67 org.bluez.Device1.Disconnect
-	bindsym n exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-	bindsym p exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-	bindsym space exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+	bindsym --release n exec xdotool key XF86AudioNext
+	bindsym --release p exec xdotool key XF86AudioPrev
 
 
     bindsym Escape mode "default"

@@ -54,6 +54,7 @@ alias grep='grep --color=always'
 alias ip='ip -c'
 
 alias play='vlc "$(ph current)" && ph next'
+alias journalctl='sudo journalctl'
 
 if  hash nvim 2>/dev/null; then
     alias vim='nvim'
@@ -69,7 +70,7 @@ SAVEHIST="$HISTSIZE"
 
 # ---------- exports ----------
 # {{{1
-export PATH="$PATH":"${HOME}/bin":"${HOME}/.local/bin":"${HOME}/Android/Sdk/platform-tools"
+export PATH="$PATH":"${HOME}/bin":"${HOME}/.local/bin":"${HOME}/go/bin":"${HOME}/Android/Sdk/platform-tools"
 export wlan0=wlx00c0ca56bbff
 export okular_cache=/home/user/.config/okularrc
 if hash nvim 2>/dev/null; then

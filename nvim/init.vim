@@ -21,7 +21,7 @@ set ignorecase
 set showcmd
 
 set guioptions-=T
-set nocompatible 
+set nocompatible
 "1}}}
 
 " ---------- Plugins ----------
@@ -34,6 +34,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'rhysd/vim-grammarous'
+Plug 'keith/swift.vim'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 " 1}}}
@@ -112,11 +114,11 @@ endfunction
 
 "1}}}
 
-" ---------- Mouse ---------- 
-" {{{1 
+" ---------- Mouse ----------
+" {{{1
 noremap <ScrollWheelUp>     4<C-Y>
 noremap <ScrollWheelDown>   4<C-E>
-" 1}}} 
+" 1}}}
 
 " ---------- Snippets ----------
 " {{{1
@@ -156,7 +158,7 @@ augroup XML
 augroup END
 
 " ---------- Project Settings ----------
-if getcwd() =~ "sn00p"
+if getcwd() =~ "nullscan"
     function! Sn00pMode()
         :setlocal shiftwidth=2
         :setlocal tabstop=2

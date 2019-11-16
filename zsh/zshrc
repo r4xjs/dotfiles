@@ -56,6 +56,14 @@ alias ip='ip -c'
 alias play='vlc "$(ph current)" && ph next'
 alias journalctl='sudo journalctl'
 
+# git
+alias gs='git status'
+alias gl='git log'
+alias ga='git add'
+alias gcm='git commit -m'
+alias gpush='git push'
+alias gpull='git pull'
+
 if  hash nvim 2>/dev/null; then
     alias vim='nvim'
 fi
@@ -88,9 +96,14 @@ zz(){
     __tmp=$( 
          (alias | cut -d'=' -f1; print -l ${(ok)functions}) | grep -v "^_" | fzf
         )
-    print -z "$__tmp"
+    if [[ $__tmp == nn_* ]]; then
+        $__tmp
+    else
+        print -z "$__tmp "
+    fi
     unset __tmp
 }
 
 # 1}}}
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

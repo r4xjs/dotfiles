@@ -80,6 +80,17 @@ else
 fi
 # 1}}}
 
-source ~/.profile
+# ---------- functions ----------
+# {{{1
 
+zz(){
+    # choose from all alias and functions
+    __tmp=$( 
+         (alias | cut -d'=' -f1; print -l ${(ok)functions}) | grep -v "^_" | fzf
+        )
+    print -z "$__tmp"
+    unset __tmp
+}
+
+# 1}}}
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

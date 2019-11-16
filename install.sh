@@ -13,7 +13,7 @@ if [ "${1}" == "remove" ]; then
     rm ~/.i3
     rm ~/.tmux.conf
     rm ~/.zshrc
-    rm ~/.zsh/cache
+    rm ~/.zsh
     rm ~/.config/htop/htoprc
     rm ~/.local/share/nvim/site/autoload/plug.vim
     rm ~/.config/nvim/init.vim
@@ -25,8 +25,8 @@ else
     ln -s "$(pwd)"/tmux.conf ~/.tmux.conf
     
     # zsh
-    ln -s "$(pwd)"/zshrc ~/.zshrc
-    mkdir -p ~/.zsh/cache
+    ln -s "$(pwd)"/zsh/zshrc ~/.zshrc
+    ln -s "$(pwd)"/zsh ~/.zsh
     
     # htop
     mkdir ~/.config/htop

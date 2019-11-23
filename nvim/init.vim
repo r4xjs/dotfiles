@@ -19,6 +19,7 @@ set nomodeline
 set colorcolumn=81
 set ignorecase
 set showcmd
+set cursorline
 
 set guioptions-=T
 set nocompatible 

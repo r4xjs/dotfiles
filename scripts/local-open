@@ -1,6 +1,9 @@
 #!/bin/sh
-pid_of_shell=$(ps --ppid=$PPID | grep -i "pts/0" | awk '{ print $1 }')
+pid_of_shell=$(ps --ppid=$PPID | grep -i "pts" | awk '{ print $1 }')
 cwd_of_shell=$(readlink /proc/$pid_of_shell/cwd)
+#echo "$pid_of_shell --> $cwd_of_shell" >> /tmp/out.log
+#ps --ppid=$PPID >> /tmp/out.log
+
 cd "$cwd_of_shell"
 
 arg="$1"

@@ -22,7 +22,8 @@ URxvt.keysym.C-Delete:          matcher:last
 URxvt.keysym.M-Delete:          matcher:list
 URxvt.matcher.launcher.0:       xdg-open 
 !URxvt.matcher.pattern.1:        \\B\\.?\\S*\\/\\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java|sh|conf|json|css|html)\\S*
-URxvt.matcher.pattern.1:        \\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java|sh|conf|json|css|html)\\S*
+!URxvt.matcher.pattern.1:        \\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java|sh|conf|json|css|html)\\S*
+URxvt.matcher.pattern.1:        \\S+\\.\\S{2,8}\\S*
 URxvt.matcher.launcher.1:       /home/user/bin/local-open $0
 URxvt.urlLauncher:              xdg-open
 

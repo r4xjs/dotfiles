@@ -42,6 +42,7 @@ Plug 'rhysd/vim-grammarous'
 Plug 'keith/swift.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'ycm-core/YouCompleteMe'
 
 call plug#end()
 " 1}}}

@@ -41,6 +41,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'keith/swift.vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'plasticboy/vim-markdown'
 
 call plug#end()
 " 1}}}
@@ -108,6 +109,13 @@ let g:grammarous#hooks = {}
 let g:grammarous#show_first_error = 1
 let g:grammarous#use_vim_spelllang = 0
 let g:grammarous#enable_spell_check = 1
+
+
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_folding_disabled = 1
+
+
 function! g:grammarous#hooks.on_check(errs) abort
     echom "check triggered"
     nnoremap <buffer><leader>gn <plug>(grammarous-move-to-next-error)
@@ -141,7 +149,6 @@ endfunction
 function! ModeVim()
     iabbrev <buffer> foldme " {{{1 <cr><cr>" 1}}}
 endfunction
-
 " {{{1
 :augroup filetype_markdown
 :    autocmd!
@@ -157,12 +164,10 @@ endfunction
 :augroup end
 " 1}}}
 
-augroup XML
-    autocmd!
-    " autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
-augroup END
 
 " ---------- Project Settings ----------
+" {{{1 
+"
 if getcwd() =~ "nullscan"
     function! Sn00pMode()
         :setlocal shiftwidth=2
@@ -182,3 +187,5 @@ if getcwd() =~ "nullscan"
         autocmd  FileType python :call Sn00pMode()
     :augroup end
 endif
+
+" 1}}} 

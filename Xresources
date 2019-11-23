@@ -18,13 +18,13 @@ URxvt.iso14755_52: false
 
 ! matcher
 URxvt.matcher.button:       1
-URxvt.keysym.C-Delete:    matcher:last
-URxvt.keysym.M-Delete:    matcher:list
-URxvt.matcher.launcher.0: xdg-open 
-!URxvt.matcher.pattern.1: \\B\\.?\\S*\\/\\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java)\\S*
-URxvt.matcher.pattern.1: \\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java)\\S*
-URxvt.matcher.launcher.1: /home/user/bin/local-open $0
-URxvt.urlLauncher:          xdg-open
+URxvt.keysym.C-Delete:          matcher:last
+URxvt.keysym.M-Delete:          matcher:list
+URxvt.matcher.launcher.0:       xdg-open 
+!URxvt.matcher.pattern.1:        \\B\\.?\\S*\\/\\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java|sh|conf|json|css|html)\\S*
+URxvt.matcher.pattern.1:        \\S+\\.(txt|lst|list|md|c|cpp|js|ts|py|rb|log|out|asm|java|sh|conf|json|css|html)\\S*
+URxvt.matcher.launcher.1:       /home/user/bin/local-open $0
+URxvt.urlLauncher:              xdg-open
 
 
 !! Colorscheme

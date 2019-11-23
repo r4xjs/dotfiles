@@ -1,9 +1,13 @@
 #!/bin/sh
+pid_of_shell=$(ps --ppid=$PPID | grep -i "pts/0" | awk '{ print $1 }')
+cwd_of_shell=$(readlink /proc/$pid_of_shell/cwd)
+cd "$cwd_of_shell"
+
 arg="$1"
 if [[ $arg =~ ":" ]]; then
     filename=$(echo "$arg" | cut -d':' -f1)
     linenumber=$(echo "$arg" | cut -d':' -f2)
-    gvim +$linenumber $filename
+    gvim -c "cd $PWD" +$linenumber $filename
 else
-    gvim "$arg"
+    gvim -c "cd $PWD" "$arg"
 fi

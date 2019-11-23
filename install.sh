@@ -20,6 +20,8 @@ if [ "${1}" == "remove" ]; then
     rm ~/.nvimrc
     rm ~/.vimrc
     rm ~/.vim/autoload/plug.vim
+    rm ~/bin/local-open
+    rm ~/bin/wakeup_fix.sh
 else
     # tmux
     ln -s "$(pwd)"/tmux.conf ~/.tmux.conf
@@ -43,5 +45,8 @@ else
     mkdir -p ~/.vim/autoload
     ln -s $(pwd)/nvim/init.vim ~/.vimrc
     ln -s $(pwd)/nvim/plug.vim ~/.vim/autoload/plug.vim
+
+    # scripts
+    ln -s $(pwd)/scripts/local-open ~/bin/local-open
 fi
 

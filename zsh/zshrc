@@ -2,9 +2,9 @@ cclear="free && sync && echo 3 > /proc/sys/vm/drop_caches && free"
 
 # ---------- prompt ----------
 # {{{1
-autoload -U promptinit 
-promptinit
-prompt adam2
+autoload -U colors && colors
+PS1="(%?)-%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+
 # 1}}}
 
 # ---------- options ----------
@@ -37,6 +37,8 @@ zstyle ':completion:*:kill:*' force-list always
 bindkey -v
 bindkey "^R" history-incremental-pattern-search-backward 
 bindkey "^E" history-incremental-pattern-search-forward
+bindkey -s '^n' 'nn\n'
+bindkey -s '^o' 'lfcd\n'
 # 1}}}
 
 # ---------- aliases ----------
@@ -91,7 +93,7 @@ fi
 # ---------- functions ----------
 # {{{1
 
-zz(){
+nn(){
     # choose from all alias and functions
     __tmp=$( 
          (alias | cut -d'=' -f1; print -l ${(ok)functions}) | grep -v "^_" | fzf
@@ -104,6 +106,21 @@ zz(){
     unset __tmp
 }
 
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
 # 1}}}
 
+# ---------- Plugins ---------- 
+# {{{1
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+syntax_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[ -f  "$syntax_hl" ] && source "$syntax_hl"
+# 1}}}

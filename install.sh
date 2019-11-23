@@ -7,6 +7,10 @@ if [ "${1}" == "full" ]; then
     # fixes
     mkdir ~/bin
     ln -s $(pwd)/scripts/fixes/wakeup_fix.sh ~/bin/wakeup_fix.sh
+    
+    # urxvt clickable files
+    ln -s $(pwd)/scripts/local-open ~/bin/local-open
+    ln -S $(pwd)/Xresources ~/.Xresources
 fi
 
 if [ "${1}" == "remove" ]; then
@@ -20,6 +24,7 @@ if [ "${1}" == "remove" ]; then
     rm ~/.nvimrc
     rm ~/.vimrc
     rm ~/.vim/autoload/plug.vim
+    rm ~/.Xresources
     rm ~/bin/local-open
     rm ~/bin/wakeup_fix.sh
 else
@@ -45,8 +50,5 @@ else
     mkdir -p ~/.vim/autoload
     ln -s $(pwd)/nvim/init.vim ~/.vimrc
     ln -s $(pwd)/nvim/plug.vim ~/.vim/autoload/plug.vim
-
-    # scripts
-    ln -s $(pwd)/scripts/local-open ~/bin/local-open
 fi
 

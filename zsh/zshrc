@@ -3,7 +3,7 @@ cclear="free && sync && echo 3 > /proc/sys/vm/drop_caches && free"
 # ---------- prompt ----------
 # {{{1
 autoload -U colors && colors
-PS1="(%?)-%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # 1}}}
 

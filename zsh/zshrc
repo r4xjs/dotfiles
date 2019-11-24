@@ -93,20 +93,12 @@ fi
 # ---------- functions ----------
 # {{{1
 
-scr(){
-    script=$(find ~/.scr/ -type f | fzf)
-    if [[ $script == *nn_* ]]; then 
-        $script
-    else
-        print -z "$script"
-    fi
-}
-
 nn(){
     # choose from all alias, functions and scripts
     __tmp=$( 
          ( alias | cut -d'=' -f1
            print -l ${(ok)functions}
+           find ~/.scr/ -type f 
          ) | 
            grep -v "^_" | fzf
         )

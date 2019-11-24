@@ -1,3 +1,4 @@
+let mapleader = " " " space is <leader>-Key
 " ---------- General Settings ----------
 " {{{1
 set number
@@ -34,8 +35,8 @@ set statusline=%F
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'flazz/vim-colorschemes'
-
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'keith/swift.vim'
 Plug 'leafgarland/typescript-vim'
@@ -87,7 +88,6 @@ colorscheme iceberg
 
 "  ---------- Key Bindings  ----------
 " {{{1
-let mapleader = " " " space is <leader>-Key
 
 " vnoremap <leader>c "+y
 vnoremap <c-c> "+y

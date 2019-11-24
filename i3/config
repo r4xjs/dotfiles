@@ -47,6 +47,10 @@ set $w10 10
 
 # ---------- Startup ----------
 # {{{1
+
+# reload Xresources
+exec --no-startup xrdb ~/.Xresources
+
 # always screen on
 exec --no-startup-id xset -dpms
 exec --no-startup-id xset dpms 0 0 0
@@ -60,6 +64,7 @@ exec --no-startup-id nm-applet
 
 # keyboard us international no dead keys
 exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl 
+
 
 # 1}}}
 

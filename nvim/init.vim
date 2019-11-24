@@ -36,8 +36,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'flazz/vim-colorschemes'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
 Plug 'rhysd/vim-grammarous'
 Plug 'keith/swift.vim'
 Plug 'leafgarland/typescript-vim'
@@ -45,6 +43,39 @@ Plug 'plasticboy/vim-markdown'
 Plug 'ycm-core/YouCompleteMe'
 
 call plug#end()
+" 1}}}
+
+" Plugin Settings
+" {{{1
+let g:grammarous#hooks = {}
+let g:grammarous#show_first_error = 1
+let g:grammarous#use_vim_spelllang = 0
+let g:grammarous#enable_spell_check = 1
+
+
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 0
+
+
+
+" Plugin Mappings
+nnoremap <leader>p <esc>:FZF<cr>
+nnoremap <leader>t <esc>:Tags<cr>
+
+
+
+function! g:grammarous#hooks.on_check(errs) abort
+    echom "check triggered"
+    nnoremap <buffer><leader>gn <plug>(grammarous-move-to-next-error)
+endfunction
+function! g:grammarous#hooks.on_reset(errs) abort
+    echom "reset triggered"
+    nunmap <buffer><leader>gn
+endfunction
+
+
 " 1}}}
 
 " ---------- Color Scheme Settings ----------
@@ -102,29 +133,6 @@ nnoremap <silent> <leader>n3 :3match none<cr>
 " Search Bindings
 nnoremap / /\V
 nnoremap <silent> <leader><leader> :let @/=''<cr>
-
-" Plugin Mappings
-nnoremap <leader>p <esc>:FZF<cr>
-nnoremap <leader>t <esc>:Tags<cr>
-let g:grammarous#hooks = {}
-let g:grammarous#show_first_error = 1
-let g:grammarous#use_vim_spelllang = 0
-let g:grammarous#enable_spell_check = 1
-
-
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_autowrite = 1
-let g:vim_markdown_folding_disabled = 1
-
-
-function! g:grammarous#hooks.on_check(errs) abort
-    echom "check triggered"
-    nnoremap <buffer><leader>gn <plug>(grammarous-move-to-next-error)
-endfunction
-function! g:grammarous#hooks.on_reset(errs) abort
-    echom "reset triggered"
-    nunmap <buffer><leader>gn
-endfunction
 
 "1}}}
 

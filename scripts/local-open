@@ -1,16 +1,26 @@
-#!/bin/sh
+#!/bin/bash
+
+DEBUG=false
+
+debug_log(){
+    $DEBUG && echo "$*" >> /tmp/out.log
+}
+
+arg=${1/\~/$HOME}
 pid_of_shell=$(ps --ppid=$PPID | grep -i "pts" | awk '{ print $1 }')
 cwd_of_shell=$(readlink /proc/$pid_of_shell/cwd)
-#echo "$pid_of_shell --> $cwd_of_shell" >> /tmp/out.log
-#ps --ppid=$PPID >> /tmp/out.log
 
+debug_log "$pid_of_shell --> $cwd_of_shell"
+debug_log $(ps --ppid=$PPID)
 cd "$cwd_of_shell"
 
-arg="$1"
+debug_log "arg: $arg"
 if [[ $arg =~ ":" ]]; then
-    filename=$(echo "$arg" | cut -d':' -f1)
-    linenumber=$(echo "$arg" | cut -d':' -f2)
-    gvim -c "cd $PWD" +$linenumber $filename
+    filename="${arg/:*/}"
+    linenumber="${arg/*:/}"
+    debug_log gvim "+$linenumber" "$filename"
+    gvim "+$linenumber" "$filename"
 else
-    gvim -c "cd $PWD" "$arg"
+    debu_log gvim "$arg"
+    gvim "$arg"
 fi

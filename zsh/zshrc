@@ -80,7 +80,7 @@ SAVEHIST="$HISTSIZE"
 
 # ---------- exports ----------
 # {{{1
-export PATH="$PATH":"${HOME}/bin":"${HOME}/.local/bin":"${HOME}/go/bin":"${HOME}/Android/Sdk/platform-tools"
+export PATH="$PATH:${HOME}/.scripts/:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools"
 export wlan0=wlx00c0ca56bbff
 export okular_cache=/home/user/.config/okularrc
 if hash nvim 2>/dev/null; then
@@ -93,10 +93,22 @@ fi
 # ---------- functions ----------
 # {{{1
 
+scr(){
+    script=$(find ~/.scr/ -type f | fzf)
+    if [[ $script == *nn_* ]]; then 
+        $script
+    else
+        print -z "$script"
+    fi
+}
+
 nn(){
-    # choose from all alias and functions
+    # choose from all alias, functions and scripts
     __tmp=$( 
-         (alias | cut -d'=' -f1; print -l ${(ok)functions}) | grep -v "^_" | fzf
+         ( alias | cut -d'=' -f1
+           print -l ${(ok)functions}
+         ) | 
+           grep -v "^_" | fzf
         )
     if [[ $__tmp == nn_* ]]; then
         $__tmp
@@ -120,6 +132,7 @@ lfcd () {
 # ---------- Plugins ---------- 
 # {{{1
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -e ~/.scr ] && source $(find ~/.scr/ -iname "nn_*")
 
 syntax_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 [ -f  "$syntax_hl" ] && source "$syntax_hl"

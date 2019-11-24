@@ -27,6 +27,7 @@ if [ "${1}" == "remove" ]; then
     rm ~/.Xresources
     rm ~/bin/local-open
     rm ~/bin/wakeup_fix.sh
+    rm ~/.scr
 else
     # tmux
     ln -s "$(pwd)"/tmux.conf ~/.tmux.conf
@@ -50,5 +51,7 @@ else
     mkdir -p ~/.vim/autoload
     ln -s $(pwd)/nvim/init.vim ~/.vimrc
     ln -s $(pwd)/nvim/plug.vim ~/.vim/autoload/plug.vim
+
+    ln -s $(pwd)/scripts ~/.scr
 fi
 

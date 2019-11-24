@@ -1,0 +1,14 @@
+#!/bin/bash
+
+while read -r line; do
+    [[ ! $line =~ "open" ]] && continue
+    host=$(echo $line | cut -d' ' -f2)
+    echo "$line" |  
+        sed -e 's:,:\n:g' -e 's/Ports:/\n/g' -e 's:/:\t:g' | 
+        sed -e '/filtered/ d' -e '/close/ d' -e '/tcpwrapped/ d' |
+        sort -k4 | 
+        while read -r port; do
+            printf "%s\t%s\n" "$host" "$port"
+        done 
+    echo "---------------------------------------------------------------------"
+done

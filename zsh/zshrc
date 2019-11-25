@@ -123,9 +123,18 @@ lfcd () {
 
 # ---------- Plugins ---------- 
 # {{{1
+
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Custom Scripts
 [ -e ~/.scr ] && source $(find ~/.scr/ -iname "nn_*")
 
-syntax_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-[ -f  "$syntax_hl" ] && source "$syntax_hl"
+# Syntax Highlighting
+if [ -d "/usr/share/zsh-syntax-highlighting" ]; then
+    syntax_hl="/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+elif [ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting/" ];then 
+    syntax_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+[ -f "$syntax_hl" ] && source "$syntax_hl"
 # 1}}}

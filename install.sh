@@ -8,9 +8,13 @@ if [ "${1}" == "full" ]; then
     mkdir ~/bin
     ln -s $(pwd)/scripts/fixes/wakeup_fix.sh ~/bin/wakeup_fix.sh
     
-    # urxvt clickable files
+    # urxvt setup
     ln -s $(pwd)/scripts/local-open ~/bin/local-open
     ln -S $(pwd)/Xresources ~/.Xresources
+    urxvt_perl_ext_path=$(locate "urxvt/perl/clipboard" | head -n 1 | sed 's/\/clipboard.*//g')
+    if [[ ! -e "$urxvt_perl_ext_path" ]]; then
+        ln -s $(pwd)/urxvt/clipboard "${urxvt_perl_ext_path}/clipboard"
+    fi
 fi
 
 if [ "${1}" == "remove" ]; then

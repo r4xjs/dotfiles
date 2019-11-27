@@ -8,6 +8,10 @@ nn_nmap_tcp_sCV(){
     print -z 'while read -r t; do host=${t%%:*};ports=${t##*: }; sudo nmap -sCV -p "$ports" -oA "${host}_sCV" -vvv -d "$host"  ; done <<(/home/user/.scr/pwn/gnmap_open_ports < **/*.gnmap)'
 }
 
+nn_nmap_smb_scan(){
+    print -z 'nmap --script smb2-security-mode,smb2-capabilities,"smb-enum-*","smb-vuln-*",smb-ls,smb-server-stats,smb-system-info,smb-protocols,smb-print-text,smb-mbenum,smb2-vuln-uptime,smb-security-mode -p445 -oA smb_scrpits '
+}
+
 nmap_ip_list(){
     nmap -sL -n -iL "$1" | cut -d' ' -f5 | grep -P '^\d' --color=never 
 }

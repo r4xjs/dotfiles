@@ -22,8 +22,8 @@ URxvt.keysym.C-Delete:          matcher:last
 URxvt.keysym.M-Delete:          matcher:list
 URxvt.matcher.launcher.0:       xdg-open 
 !                                this regex will not match files with spaces
-URxvt.matcher.pattern.1:        ([a-z,A-Z,.,_,/,~]+?[a-z,A-Z,0-9,.,-,_,/,\s]*:\\d+)
-URxvt.matcher.launcher.1:       /home/user/bin/local-open $1
+URxvt.matcher.pattern.1:        ([a-z,A-Z,.,_,/,~,\\-,0-9]+?[a-z,A-Z,0-9,.,\\-,_,/,\s]*:\\d+)
+URxvt.matcher.launcher.1:       /home/martin/bin/local-open $1
 URxvt.urlLauncher:              xdg-open
 
 

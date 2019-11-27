@@ -92,6 +92,7 @@ colorscheme iceberg
 " vnoremap <leader>c "+y
 vnoremap <c-c> "+y
 vnoremap <a-c> "+y
+nnoremap <leader>n <esc>:let @+ = expand("%")<cr>
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 
 noremap <leader>w <esc>:w!<cr>

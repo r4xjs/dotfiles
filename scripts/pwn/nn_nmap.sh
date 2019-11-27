@@ -11,3 +11,8 @@ nn_nmap_tcp_sCV(){
 nmap_ip_list(){
     nmap -sL -n -iL "$1" | cut -d' ' -f5 | grep -P '^\d' --color=never 
 }
+
+nn_nmap_list_scripts(){
+    script_path=/usr/share/nmap/scripts/
+    vim "${script_path}$(find $script_path -type f -printf '%f\n' | fzf)"
+}

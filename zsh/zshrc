@@ -128,7 +128,9 @@ lfcd () {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Custom Scripts
-[ -e ~/.scr ] && source $(find ~/.scr/ -iname "nn_*")
+[ -e ~/.scr ] && for nn in $(find ~/.scr/ -iname "nn_*"); do
+    source "$nn"
+done
 
 # Syntax Highlighting
 if [ -d "/usr/share/zsh-syntax-highlighting" ]; then

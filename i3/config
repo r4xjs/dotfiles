@@ -256,8 +256,8 @@ set $sound_mode (u)p, (d)own, (m)ute, (n)ext, (p)rev, (c)onnect, (x)disconnect
 	bindsym d exec ~/.i3/volume.sh down
 	bindsym m exec ~/.i3/volume.sh mute
 
-	bindsym c exec dbus-send --system --print-reply --dest=org.bluez /org/bluez/hci0/dev_04_5D_4B_DE_25_67 org.bluez.Device1.Connect
-	bindsym x exec dbus-send --system --print-reply --dest=org.bluez /org/bluez/hci0/dev_04_5D_4B_DE_25_67 org.bluez.Device1.Disconnect
+	bindsym c exec ~/.i3/bt.sh connect
+	bindsym x exec ~/.i3/bt.sh disconnect
 	bindsym --release n exec xdotool key XF86AudioNext
 	bindsym --release p exec xdotool key XF86AudioPrev
 

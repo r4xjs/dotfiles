@@ -1,2 +1,2 @@
 #!/bin/sh
-qrencode $(xsel -ob) -o -  | feh -
+qrencode "$(xsel -ob)" -o -  | feh -

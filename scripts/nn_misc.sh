@@ -10,3 +10,11 @@ nn_self_signed_openssl(){
             -keyout example.key \
             -subj "/C=SI/ST=Ljubljana/L=Ljubljana/O=Security/OU=IT Department/CN=www.example.com"'
 }
+
+nn_qemu_img_vmdk(){
+    print -z 'qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2'
+}
+
+nn_qemu_img_vdi(){
+    print -z 'qemu-img convert -f vdi -O qcow2 image.vdi image.qcow2'
+}

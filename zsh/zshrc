@@ -74,6 +74,9 @@ alias gpull='git pull'
 if  hash nvim 2>/dev/null; then
     alias vim='nvim'
 fi
+
+alias fixbt='sudo systemctl restart bluetooth && pulseaudio --kill && pulseaudio --start'
+
 # 1}}}
 
 # ---------- history settings ----------

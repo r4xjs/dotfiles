@@ -169,6 +169,8 @@ bindsym $mod+Shift+r restart
 bindsym XF86MonBrightnessUp exec ~/.i3/brightness.sh +10
 bindsym XF86MonBrightnessDown exec ~/.i3/brightness.sh -10
 
+# clipboard to qr
+bindsym $mod+q exec ~/.i3/clipboard2qr.sh
 
 # Touchpad/Synaptics
 # with synaptics 
@@ -190,6 +192,7 @@ bindsym $mod+Shift+X move scratchpad
 bindsym $mod+X scratchpad show
 
 # 1}}}
+
 # ---------- Status Bar ----------
 # {{{1
 

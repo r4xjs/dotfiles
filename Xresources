@@ -8,7 +8,7 @@ Xft.rgba: rgb
 
 URxvt.font: xft:monospace:size=10
 URxvt.scrollBar: false
-URxvt.perl-ext-common: clipboard,matcher
+URxvt.perl-ext-common: clipboard,matcher,resize-font
 
 ! clipboard
 URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
@@ -23,9 +23,12 @@ URxvt.keysym.M-Delete:          matcher:list
 URxvt.matcher.launcher.0:       xdg-open 
 !                                this regex will not match files with spaces
 URxvt.matcher.pattern.1:        ([a-z,A-Z,.,_,/,~,\\-,0-9]+?[a-z,A-Z,0-9,.,\\-,_,/,\s]*:\\d+)
-URxvt.matcher.launcher.1:       /home/martin/bin/local-open $1
+URxvt.matcher.launcher.1:       /home/user/bin/local-open $1
 URxvt.urlLauncher:              xdg-open
 
+! resize-font
+URxvt.resize-font.smaller: C-j
+URxvt.resize-font.bigger:  C-k
 
 !! Colorscheme
 ! special

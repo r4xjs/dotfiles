@@ -28,6 +28,8 @@ set nocompatible
 set laststatus=2
 set statusline=%F
 
+set encoding=utf-8
+
 "1}}}
 
 " ---------- Plugins ----------

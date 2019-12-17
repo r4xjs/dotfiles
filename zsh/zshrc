@@ -37,13 +37,12 @@ zstyle ':completion:*:kill:*' force-list always
 # {{{1
 bindkey -v
 bindkey "^R" history-incremental-pattern-search-backward 
-bindkey "^E" history-incremental-pattern-search-forward
 bindkey -s '^n' 'nn\n'
 bindkey -s '^o' 'lfcd\n'
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
+bindkey '^E' edit-command-line
 
 # 1}}}
 

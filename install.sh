@@ -56,6 +56,10 @@ else
     ln -s $(pwd)/nvim/init.vim ~/.vimrc
     ln -s $(pwd)/nvim/plug.vim ~/.vim/autoload/plug.vim
 
+    # scripts
     ln -s $(pwd)/scripts ~/.scr
+
+    # irssi
+    ln -s $(pwd)/irssi ~/.irssi
 fi
 

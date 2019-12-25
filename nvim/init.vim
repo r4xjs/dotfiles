@@ -161,6 +161,16 @@ endfunction
 function! ModeVim()
     iabbrev <buffer> foldme " {{{1 <cr><cr>" 1}}}
 endfunction
+function! ModeC()
+    iabbrev <buffer> main #include <stdio.h>
+\<cr>#include <stdlib.h>
+\<cr>
+\<cr>int main(int argc, char** argv){  
+\<cr>
+\<cr>return 0;
+\<cr>}
+endfunction
+
 " {{{1
 :augroup filetype_markdown
 :    autocmd!
@@ -174,6 +184,11 @@ endfunction
 :    autocmd!
 :    autocmd FileType vim :call ModeVim()
 :augroup end
+:augroup filetype_c
+:    autocmd!
+:    autocmd FileType c :call ModeC()
+:augroup end
+
 " 1}}}
 
 

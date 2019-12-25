@@ -43,7 +43,14 @@ Plug 'rhysd/vim-grammarous'
 Plug 'keith/swift.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'plasticboy/vim-markdown'
-Plug 'ycm-core/YouCompleteMe'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'zchee/deoplete-clang'
 
 call plug#end()
 " 1}}}
@@ -62,12 +69,12 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_new_list_item_indent = 0
 
 
+let g:deoplete#enable_at_startup = 1
+
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>
 nnoremap <leader>t <esc>:Tags<cr>
-
-
 
 function! g:grammarous#hooks.on_check(errs) abort
     echom "check triggered"
@@ -96,6 +103,8 @@ vnoremap <c-c> "+y
 vnoremap <a-c> "+y
 nnoremap <leader>n <esc>:let @+ = expand("%")<cr>
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
+
+nnoremap <F5> <Esc>:w<CR>:!./build_and_run.sh<CR>
 
 noremap <leader>w <esc>:w!<cr>
 noremap <leader>q <esc>:q!<cr>
@@ -145,11 +154,6 @@ noremap <ScrollWheelUp>     4<C-Y>
 noremap <ScrollWheelDown>   4<C-E>
 " 1}}}
 
-" ---------- Snippets ----------
-" {{{1
-" nnoremap ,html :-1read $HOME/.vim/.skeleton.html<cr>3jwf>a
-" 1}}}
-
 " ---------- Abbreviations ----------
 function! ModeMarkdown()
     iabbrev <buffer> foldme <!-- {{{1 --><cr><cr><!-- 1}}} -->
@@ -164,6 +168,7 @@ endfunction
 function! ModeC()
     iabbrev <buffer> main #include <stdio.h>
 \<cr>#include <stdlib.h>
+\<cr>#include <stdint.h>
 \<cr>
 \<cr>int main(int argc, char** argv){  
 \<cr>

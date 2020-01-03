@@ -15,6 +15,10 @@ if [ "${1}" == "full" ]; then
     if [[ ! -e "$urxvt_perl_ext_path" ]]; then
         ln -s $(pwd)/urxvt/clipboard "${urxvt_perl_ext_path}/clipboard"
     fi
+
+    # zap hdpi fix
+    mkdir "$HOME/.ZAP"
+    ln -s $(pwd)/zap_jvm.properties "$HOME/.ZAP/.ZAP_JVM.properties"
 fi
 
 if [ "${1}" == "remove" ]; then
@@ -32,6 +36,8 @@ if [ "${1}" == "remove" ]; then
     rm ~/bin/local-open
     rm ~/bin/wakeup_fix.sh
     rm ~/.scr
+    rm ~/.ZAP/.ZAP_JVM.properties
+
 else
     # tmux
     ln -s "$(pwd)"/tmux.conf ~/.tmux.conf

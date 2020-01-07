@@ -146,6 +146,9 @@ nnoremap <silent> <leader>n3 :3match none<cr>
 nnoremap / /\V
 nnoremap <silent> <leader><leader> :let @/=''<cr>
 
+" Fix Email Subject (PEP shit)
+nnoremap <silent> <leader>z :!ruby ~/.scr/fixes/fix_subject.rb "%"<cr>L<cr>/Subject:<cr>
+
 "1}}}
 
 " ---------- Mouse ----------

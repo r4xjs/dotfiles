@@ -106,7 +106,7 @@ nn(){
     __tmp=$( 
          ( alias | cut -d'=' -f1
            print -l ${(ok)functions}
-           find ~/.scr/ -type f | grep -v "nn_"
+           find -L ~/.scr/ -type f | grep -v "nn_" | grep -v ".md"
          ) | 
            grep -v "^_" | fzf
         )

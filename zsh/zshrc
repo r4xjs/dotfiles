@@ -89,7 +89,9 @@ SAVEHIST="$HISTSIZE"
 # ---------- exports ----------
 # {{{1
 export PATH="$PATH:${HOME}/.scripts/:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools"
-export TERM=xterm
+if [ "$SSH_CONNECTION" ]; then
+    export TERM=xterm
+fi
 export wlan0=wlx00c0ca56bbff
 export okular_cache=/home/user/.config/okularrc
 if hash nvim 2>/dev/null; then

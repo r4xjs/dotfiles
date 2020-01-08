@@ -104,7 +104,7 @@ vnoremap <a-c> "+y
 nnoremap <leader>n <esc>:let @+ = expand("%")<cr>
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 
-nnoremap <F5> <Esc>:w<CR>:!./build_and_run.sh<CR>
+nnoremap <F5> <Esc>:w<CR>:!./build_and_run.sh %<CR>
 
 noremap <leader>w <esc>:w!<cr>
 noremap <leader>q <esc>:q!<cr>
@@ -195,6 +195,7 @@ endfunction
 :augroup filetype_c
 :    autocmd!
 :    autocmd FileType c :call ModeC()
+:    autocmd FileType cpp :call ModeC()
 :augroup end
 
 " 1}}}

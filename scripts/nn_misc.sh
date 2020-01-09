@@ -11,6 +11,10 @@ nn_self_signed_openssl(){
             -subj "/C=SI/ST=Ljubljana/L=Ljubljana/O=Security/OU=IT Department/CN=www.example.com"'
 }
 
+nn_openssl_show_crt(){
+    print -z 'openssl x509 -text -noout -in crt.crt'
+}
+
 nn_qemu_img_vmdk(){
     print -z 'qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2'
 }

@@ -22,5 +22,5 @@ nn_qemu_img_vhd_vpc(){
     print -z 'qemu-img convert -f vpc -O qcow2 image.vhd image.qcow2'
 }
 nn_qemu_img_clone(){
-    print -z 'qemu-img create -f qcow2 -o backing_file=master.qcow2 clone.qcow2'
+    print -z 'qemu-img create -f qcow2 -F qcow2 -b master.qcow2 clone.qcow2'
 }

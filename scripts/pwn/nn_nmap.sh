@@ -12,6 +12,10 @@ nn_nmap_smb_scan(){
     print -z 'nmap --script smb2-security-mode,smb2-capabilities,"smb-enum-*","smb-vuln-*",smb-ls,smb-server-stats,smb-system-info,smb-protocols,smb-print-text,smb-mbenum,smb2-vuln-uptime,smb-security-mode -p445 -oA smb_scrpits '
 }
 
+nn_nmap_heartbleed(){
+    print -z 'while read -r t; do $(echo $t | awk "BEGIN{FS=\":\"} {printf \"nmap -p %s --script ssl-heartbleed %s\\n\",$2,$1}"); done < ~/w1/ip_colon_port.lst >> heartbleed.log'
+}
+
 nmap_ip_list(){
     nmap -sL -n -iL "$1" | cut -d' ' -f5 | grep -P '^\d' --color=never 
 }

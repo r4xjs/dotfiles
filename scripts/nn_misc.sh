@@ -18,6 +18,10 @@ nn_wpscan(){
     print -z 'wpscan -e "ap,at,u1-20,m1-50" --api-token XXX -o wpscan.log --url '
 }
 
+nn_dot_to_png(){
+    print -z 'dot -Tpng in.dot -o out.png'
+}
+
 
 nn_qemu_img_vmdk(){
     print -z 'qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2'

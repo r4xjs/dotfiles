@@ -3,7 +3,9 @@
 #su user -c "export DISPLAY=:0; export XAUTHORITY=/home/user/.Xauthority; xrandr -s 0"
 #sleep 3
 #xrandr --output eDP-1 --mode 1920x1080 --primary
-xrandr --output HDMI-2 --auto --primary
+xset r rate 250 100
+xrandr --output HDMI-2 --mode 3840x2160  --primary --scale 0.9x0.9 --dpi 120
+#xrandr --output DP-2-3 --auto --primary
 xrandr --output eDP-1 --off
 #xrandr --output DP-2-1 --mode 1920x1080 --crtc 0 --primary
 #xrandr --output DP-2-2 --mode 1920x1080 --crtc 1 --left-of DP-2-1 

@@ -29,6 +29,9 @@ set laststatus=2
 set statusline=%F
 
 set encoding=utf-8
+if &diff
+    set noreadonly
+endif
 
 "1}}}
 

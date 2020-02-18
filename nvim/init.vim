@@ -152,8 +152,8 @@ nnoremap <leader>t :!cscope -Rb<cr>:cs reset<cr><cr>:!ctags -R .<cr>
 nnoremap <leader>e :cs find e <c-r>=expand("<cword>")<cr><cr>:copen<cr><cr>
 
 " quickfix navigation
-nnoremap <down> :cnext<cr>
-nnoremap <up> :cprev<cr>
+nnoremap <c-down> :cnext<cr>
+nnoremap <c-up> :cprev<cr>
 
 
 

@@ -33,6 +33,14 @@ if &diff
     set noreadonly
 endif
 
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+set cscopetag
+if filereadable("cscope.out")
+    silent cs add cscope.out
+endif
+
+highlight CursorLine ctermfg=White ctermbg=8cdefa cterm=NONE 
+
 "1}}}
 
 " ---------- Plugins ----------
@@ -77,7 +85,6 @@ let g:deoplete#enable_at_startup = 1
 
 " Plugin Mappings
 nnoremap <leader>p <esc>:FZF<cr>
-nnoremap <leader>t <esc>:Tags<cr>
 
 function! g:grammarous#hooks.on_check(errs) abort
     echom "check triggered"
@@ -134,6 +141,21 @@ nnoremap <leader>ei :split ~/.i3/config<cr>
 nnoremap <leader>c :!ctags -R .<cr>
 nnoremap <a-left> <c-t>
 nnoremap <c-t> <nop>
+
+"""" cscope 
+" xrefs like ida
+nnoremap <leader>x :cs find c <c-r>=expand("<cword>")<cr><cr>:copen<cr><cr>
+" to to definition
+nnoremap <leader>g :cs find g <c-r>=expand("<cword>")<cr><cr>
+" (re)build tags + cscope database
+nnoremap <leader>t :!cscope -Rb<cr>:cs reset<cr><cr>:!ctags -R .<cr>
+
+" quickfix navigation
+nnoremap <down> :cnext<cr>
+nnoremap <up> :cprev<cr>
+
+
+
 
 "noremap <silent> <leader>m :<c-u>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
 

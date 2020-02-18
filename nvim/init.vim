@@ -39,7 +39,6 @@ if filereadable("cscope.out")
     silent cs add cscope.out
 endif
 
-highlight CursorLine ctermfg=White ctermbg=8cdefa cterm=NONE 
 
 "1}}}
 
@@ -225,6 +224,10 @@ endfunction
 
 " 1}}}
 
+" colors
+" {{{1
+highlight CursorLine ctermfg=White ctermbg=8cdefa cterm=NONE 
+" 1}}}
 
 " ---------- Project Settings ----------
 " {{{1 

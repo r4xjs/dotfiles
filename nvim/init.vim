@@ -148,6 +148,8 @@ nnoremap <leader>x :cs find c <c-r>=expand("<cword>")<cr><cr>:copen<cr><cr>
 nnoremap <leader>g :cs find g <c-r>=expand("<cword>")<cr><cr>
 " (re)build tags + cscope database
 nnoremap <leader>t :!cscope -Rb<cr>:cs reset<cr><cr>:!ctags -R .<cr>
+" cscope egrep 
+nnoremap <leader>e :cs find e <c-r>=expand("<cword>")<cr><cr>:copen<cr><cr>
 
 " quickfix navigation
 nnoremap <down> :cnext<cr>

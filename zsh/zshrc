@@ -136,7 +136,11 @@ sreplay(){
     scriptreplay -t "time$idx" "typescript$idx" -d 5 -m 1
 }
 
-
+gnmap(){
+    awk -e '/Ports: / { host=$2; sub(/.*Ports: /, ""); split($0, a, ","); for(idx in a){ printf "%s: %s\n", host, a[idx] } }' "$1" \
+        | sed "s/ //g" | tr "\t" " " | cut -d" " -f1
+}
+regex(){ gawk 'match($0,/'$1'/, ary) {print ary['${2:-'0'}']}'; }
 # 1}}}
 
 # ---------- Plugins ---------- 

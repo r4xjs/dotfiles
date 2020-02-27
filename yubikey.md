@@ -62,4 +62,5 @@ or
 auth required pam_u2f.so origin=pam://<HOSTNAME> appid=pam://<HOSTNAME> authfile=</path/to/u2f_mappings>
 auth include system-auth
 ```
+
 <!-- 1}}} --> 

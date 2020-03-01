@@ -171,3 +171,19 @@ ssh-add -L
 ```
 
 <!-- 1}}} --> 
+
+# udev
+<!-- {{{1 -->
+
+/etc/udev/rules.de/90-yubikey.rules
+```
+ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxxx", RUN+="/home/xxxxxx/.i3/udev_lock.sh"
+```
+
+find out parameter via:
+```
+udevadm monitor --environment --udev
+```
+
+
+<!-- 1}}} --> 

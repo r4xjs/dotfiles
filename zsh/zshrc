@@ -55,7 +55,6 @@ alias ll='ls -lh'
 alias ssh-p='ssh -o PreferredAuthentications=password'
 alias rgrep='grep -Ri --color=always'
 
-alias rsync='rsync -arvphsS --progress'
 
 alias grep='grep --color=always'
 alias ip='ip -c'
@@ -68,8 +67,8 @@ alias gs='git status'
 alias gl='git log'
 alias ga='git add'
 alias gcm='git commit -m'
-alias gpush='git push'
-alias gpull='git pull'
+# alias gpush='git push'
+# alias gpull='git pull'
 
 if  hash nvim 2>/dev/null; then
     alias vim='nvim'
@@ -182,10 +181,26 @@ enable_typescript_logging(){
 
 # 1}}}
 
-# gpg ssh settings
+# gpg ssh and pass settings
 # {{{1
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
-function sshx(){echo "gpg-agent hack :-/"| gpg -e -a -r 68472292A20C3BA1FE40A5F00DB5BE47EED2FC2C  | gpg -d 2> /dev/null && ssh $@}
+
+fix_pinentry(){gpg-connect-agent updatestartuptty /bye >/dev/null}
+if [ -f "/usr/local/bin/ssh" ]; then
+    ssh_path="/usr/local/bin/ssh"
+elif [ -f "/usr/bin/ssh" ]; then
+    ssh_path="/usr/bin/ssh"
+else
+    ssh_path=false
+fi
+if [ "$ssh_path" != false ];then 
+    ssh(){fix_pinentry; "$ssh_path" $@} 
+fi
+gpush(){fix_pinentry; /usr/bin/git push $@}
+gpull(){fix_pinentry; /usr/bin/git pull $@}
+rsync(){fix_pinentry; /usr/bin/rsync -arvphsS --progress $@}
+
+fzf_pass(){find "$HOME"/.password-store -iname "*.gpg" | sed "s/\.gpg//g;s#\./##g;s#$HOME/.password-store/##g" | rofi -dmenu -i }
 # 1}}}

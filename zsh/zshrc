@@ -181,3 +181,11 @@ enable_typescript_logging(){
 [ -s "$HOME/.typescript_log" ] && enable_typescript_logging
 
 # 1}}}
+
+# gpg ssh settings
+# {{{1
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+function sshx(){echo "gpg-agent hack :-/"| gpg -e -a -r 68472292A20C3BA1FE40A5F00DB5BE47EED2FC2C  | gpg -d 2> /dev/null && ssh $@}
+# 1}}}

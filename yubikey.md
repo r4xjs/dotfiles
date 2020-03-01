@@ -64,3 +64,110 @@ auth include system-auth
 ```
 
 <!-- 1}}} --> 
+
+# GPG
+<!-- {{{1 -->
+enable touch policy:
+https://developers.yubico.com/PGP/Card_edit.html
+
+new master:
+```
+gpg --expert --full-generate-key
+8
+E
+S
+Q
+2048
+0
+y
+```
+
+new sub keys:
+```
+gpg --expert --edit-key $keyid
+addkey
+4
+2048
+1y
+y
+y
+addkey
+6
+2048
+1y
+y
+y
+addkey
+8
+S
+E
+A
+Q
+2048
+1y
+y
+y
+save
+```
+
+export secret master and sub keys as backup:
+```
+gpg -a --export-secret-keys $keyid > master.key
+gpg -a --export-secret-subkeys $keyid > sub.key
+gpg -a --export $keyid > pub.key
+```
+
+transfere sub keys to yubikey:
+```
+gpg --edit-key $keyid
+key 1
+keytocard
+key 1
+key 2
+keytocard
+key 2
+key 3
+keytocard
+save
+```
+
+to use on new machine just import pub.key
+```
+gpg --import pub.key
+gpg --card-status
+gpg --list-keys
+gpg --list-secret-keys
+```
+
+to use the second yubikey:
+```
+rm -rf ~/.gnupg/private-keys-v1.d
+gpgconf --kill gpg-agent
+gpg --card-status
+```
+
+use gpg key as ssh key:
+```
+gpg --list-keys --with-keygrip 
+export Keygrip=...authentication sub key...
+echo $Keygrip > ~/.gnupg/sshcontrol
+
+cat ~/.gnupg/gpg-agent.conf
+enable-ssh-support
+default-cache-ttl 60
+max-cache-ttl 120
+pinentry-program /usr/bin/pinentry-gtk-2
+
+cat ~/.zshrc
+...
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+...
+
+ssh-add -L
+<ssh public key here>
+
+```
+
+<!-- 1}}} --> 

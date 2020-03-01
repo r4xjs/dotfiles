@@ -295,6 +295,19 @@ set $wifi_mode (s)can (l)ist
 bindsym $mod+c mode "$wifi_mode" 
 # 2}}}
 
+# pass mode
+mode "$pass_mode" {
+# {{{2
+set $pass_mode (p)assword (u)sername (a)utotype
+	bindsym p exec ~/.i3/i3pass.sh password; mode "default"
+	bindsym u exec ~/.i3/i3pass.sh username; mode "default"
+    bindsym a exec ~/.i3/i3pass.sh autotype; mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+p mode "$pass_mode" 
+
+# 2}}}
+
 # 1}}}
 
 # ---------- Window Rules ----------

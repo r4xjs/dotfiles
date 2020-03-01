@@ -180,6 +180,11 @@ ssh-add -L
 ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxxx", RUN+="/usr/bin/systemctl start --no-block i3lock.service"
 ```
 
+reload rules:
+```
+sudo udevadm control --reload-rules
+```
+
 find out parameter via:
 ```
 udevadm monitor --environment --udev

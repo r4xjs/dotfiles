@@ -177,7 +177,7 @@ ssh-add -L
 
 /etc/udev/rules.de/90-yubikey.rules
 ```
-ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxxx", RUN+="/root/udev_lock.sh"
+ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxxx", RUN+="/usr/bin/systemctl start --no-block i3lock.service"
 ```
 
 find out parameter via:
@@ -185,18 +185,17 @@ find out parameter via:
 udevadm monitor --environment --udev
 ```
 
-/root/udev_lock.sh
+systemd service:
 ```
-#!/bin/bash
-export DISPLAY=":0.0"
-export XAUTHORITY="/home/user/.Xauthority"
-/usr/bin/su user -c "/usr/bin/i3lock -c 090920 -d"
+[Unit]
+Description=i3lock
+
+[Service]
+User=<username>
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/i3lock -c 090920 -d 
 ```
 
-fix permissions:
-```
-chown root:root /root/udev_lock.sh
-chmod 700 /root/udev_lock.sh
-```
 
 <!-- 1}}} --> 

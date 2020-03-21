@@ -49,18 +49,13 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'rhysd/vim-grammarous'
-Plug 'keith/swift.vim'
-Plug 'leafgarland/typescript-vim'
 Plug 'plasticboy/vim-markdown'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-Plug 'zchee/deoplete-clang'
+Plug 'jamessan/vim-gnupg'
+
+" LSP Stuff
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'm-pilia/vim-ccls'
+
 
 call plug#end()
 " 1}}}
@@ -175,6 +170,16 @@ nnoremap <silent> <leader><leader> :let @/=''<cr>
 " Fix Email Subject (PEP shit)
 nnoremap <silent> <leader>z :!ruby ~/.scr/fixes/fix_subject.rb "%"<cr>L<cr>/Subject:<cr>
 
+" CoC key bindings
+"
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 "1}}}
 
 " ---------- Mouse ----------
@@ -228,7 +233,7 @@ endfunction
 
 " colors
 " {{{1
-highlight CursorLine ctermfg=White ctermbg=8cdefa cterm=NONE 
+" highlight CursorLine ctermfg=White ctermbg=8cdefa cterm=NONE 
 " 1}}}
 
 " ---------- Project Settings ----------

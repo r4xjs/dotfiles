@@ -180,6 +180,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" journal
+nnoremap <leader>d :put =strftime(\"# %Y.%m.%d\n<!-- {{{1 -->\n\n<!-- 1}}} -->\n\")<cr>
+
 "1}}}
 
 " ---------- Mouse ----------

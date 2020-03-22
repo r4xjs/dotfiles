@@ -103,8 +103,8 @@ colorscheme iceberg
 " {{{1
 
 " vnoremap <leader>c "+y
-vnoremap <c-c> "+y
-vnoremap <a-c> "+y
+vnoremap <silent><c-c> "*y :silent let @+=@*<cr>
+vnoremap <silent><a-c> "*y :silent let @+=@*<cr>
 nnoremap <leader>n <esc>:let @+ = expand("%")<cr>
 nnoremap <leader>v <esc>:set paste<cr>"+p<esc>:set nopaste<cr>
 

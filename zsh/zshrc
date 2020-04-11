@@ -17,6 +17,7 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt inc_append_history
 setopt share_history
+setopt rm_star_silent
 # 1}}}
 
 # ---------- auto completion ----------
@@ -35,14 +36,14 @@ zstyle ':completion:*:kill:*' force-list always
 
 # ---------- key bindings ----------
 # {{{1
-bindkey -v
+bindkey -e # emacs mode
 bindkey "^R" history-incremental-pattern-search-backward 
 bindkey -s '^n' 'nn\n'
 bindkey -s '^o' 'lfcd\n'
 
 # Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^E' edit-command-line
+#autoload edit-command-line; zle -N edit-command-line
+#bindkey '^E' edit-command-line
 
 # 1}}}
 
@@ -59,7 +60,6 @@ alias rgrep='grep -Ri --color=always'
 alias grep='grep --color=always'
 alias ip='ip -c'
 
-alias play='vlc "$(ph current)" && ph next'
 alias journalctl='sudo journalctl'
 
 # git
@@ -67,6 +67,7 @@ alias gs='git status'
 alias gl='git log'
 alias ga='git add'
 alias gcm='git commit -m'
+alias diff='diff --color=always -rdu'
 # alias gpush='git push'
 # alias gpull='git pull'
 
@@ -140,6 +141,13 @@ gnmap(){
         | sed "s/ //g" | tr "\t" " " | cut -d" " -f1
 }
 regex(){ gawk 'match($0,/'$1'/, ary) {print ary['${2:-'0'}']}'; }
+
+play() { vlc "$(ph current)" && ph next }
+
+em() {
+    emacsclient -t "$@"
+}
+
 # 1}}}
 
 # ---------- Plugins ---------- 
@@ -178,7 +186,7 @@ enable_typescript_logging(){
     fi
 }
 [ -s "$HOME/.typescript_log" ] && enable_typescript_logging
-
+[ ! -S "/tmp/emacs$(id -u)/server" ] && emacs --daemon 2>/dev/null
 # 1}}}
 
 # gpg ssh and pass settings
@@ -200,7 +208,7 @@ if [ "$ssh_path" != false ];then
 fi
 gpush(){fix_pinentry; /usr/bin/git push $@}
 gpull(){fix_pinentry; /usr/bin/git pull $@}
-rsync(){fix_pinentry; /usr/bin/rsync -arvphsS --progress $@}
+rsync(){fix_pinentry; /usr/bin/rsync -arvphS --progress $@}
 
 fzf_pass(){find "$HOME"/.password-store -iname "*.gpg" | sed "s/\.gpg//g;s#\./##g;s#$HOME/.password-store/##g" | rofi -dmenu -i }
 # 1}}}

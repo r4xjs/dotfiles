@@ -19,6 +19,9 @@ if [ "${1}" == "full" ]; then
     # zap hdpi fix
     mkdir "$HOME/.ZAP"
     ln -s $(pwd)/zap_jvm.properties "$HOME/.ZAP/.ZAP_JVM.properties"
+
+    # xmodmap
+    ln -s $(pwd)/xmodmap ~/.xmodmap
 fi
 
 if [ "${1}" == "remove" ]; then
@@ -37,7 +40,8 @@ if [ "${1}" == "remove" ]; then
     rm ~/bin/wakeup_fix.sh
     rm ~/.scr
     rm ~/.ZAP/.ZAP_JVM.properties
-
+    rm ~/.config/lf/lfrc
+    rm ~/.xmodmap
 else
     # tmux
     ln -s "$(pwd)"/tmux.conf ~/.tmux.conf
@@ -67,5 +71,8 @@ else
 
     # irssi
     ln -s $(pwd)/irssi ~/.irssi
+
+    # lf
+    ln -s $(pwd)/lfrc ~/.config/lf/lfrc
 fi
 

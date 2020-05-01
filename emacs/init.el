@@ -102,7 +102,8 @@
 (use-package rg
   :ensure t)
 
-
+(use-package dired-single
+  :ensure t)
 
 ;;;;;;;;;; settings ;;;;;;;;;;
 
@@ -281,9 +282,7 @@
 (define-key rg-mode-map (kbd "M-p") 'rg-prev-file)
 (define-key rg-mode-map (kbd "C-n") 'compilation-next-error)
 (define-key rg-mode-map (kbd "C-p") 'compilation-previous-error)
-(define-key rg-mode-map (kbd "<ret>") 'compilation-previous-error)
-
-
+(define-key rg-mode-map (kbd "<RET>") 'compilation-previous-error)
 
 
 
@@ -321,9 +320,6 @@
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
  '(org-agenda-files (quote ("~/todo.org")))
- '(package-selected-packages
-   (quote
-    (rg afternoon-theme emacs-afternoon-theme cyberpunk-theme inf-ruby counsel undo-tree markdown-mode projectile fzf magit expand-region sane-term sane-terme org-bullets swiper popup-kill-ring company avy ido-vertical-mode which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces

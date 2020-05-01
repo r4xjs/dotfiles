@@ -98,6 +98,9 @@
 (use-package afternoon-theme
   :ensure t)
 
+;; rg
+(use-package rg
+  :ensure t)
 
 
 
@@ -161,13 +164,14 @@
 
 
 
-;;;;;;;;;; custom functions ;;;;;;;;;;
+;;;;;;;;;; functions ;;;;;;;;;;
 
 
-;; always kill current buffer
-(defun kill-curr-buffer ()
+;; always kill current buffer and window if not the last
+(defun raxjs/kill-curr-buffer ()
   (interactive)
-  (kill-buffer (current-buffer)))
+  (kill-buffer-and-window)
+  )
 
 ;; open-line-below/above
 (defun raxjs/open-line-below ()
@@ -185,7 +189,6 @@
   (interactive)
   (unhighlight-regexp t)
   )
-
 
 
 
@@ -223,7 +226,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; always kill current buffer
-(global-set-key (kbd "C-x k") 'kill-curr-buffer)
+(global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
 ;; ido switch buffer binding
 (global-set-key (kbd "C-x b") 'ido-switch-buffer)
@@ -243,7 +246,9 @@
 (define-key window-prefix-map (kbd "2") 'split-window-below)
 (define-key window-prefix-map (kbd "3") 'split-window-right)
 (define-key window-prefix-map (kbd "0") 'delete-window)
+(define-key window-prefix-map (kbd "d") 'delete-window)
 (define-key window-prefix-map (kbd "a") 'ivy-push-view)
+(define-key window-prefix-map (kbd "x") 'ivy-pop-view)
 (define-key window-prefix-map (kbd "s") 'ivy-switch-view)
 
 ;; popup kill ring binding :not-working: shadowed by delete-selection-repeat-replace-region
@@ -269,6 +274,12 @@
   )
 (add-hook 'org-mode-hook 'raxjs/org-mode-keys)
 
+;; rg bindings
+(define-key rg-mode-map (kbd "M-n") 'rg-next-file)
+(define-key rg-mode-map (kbd "M-p") 'rg-prev-file)
+(define-key rg-mode-map (kbd "C-n") 'compilation-next-error)
+(define-key rg-mode-map (kbd "C-p") 'compilation-previous-error)
+(define-key rg-mode-map (kbd "<ret>") 'compilation-previous-error)
 
 
 
@@ -286,11 +297,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#080808" "#d70000" "#67b11d" "#875f00" "#268bd2" "#af00df" "#00ffff" "#b2b2b2"])
  '(custom-enabled-themes nil)
+ '(custom-safe-themes
+   (quote
+    ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(hl-todo-keyword-faces
    (quote
     (("TODO" . "#dc752f")
@@ -309,12 +319,16 @@
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
  '(org-agenda-files (quote ("~/todo.org")))
- )
+ '(package-selected-packages
+   (quote
+    (rg afternoon-theme emacs-afternoon-theme cyberpunk-theme inf-ruby counsel undo-tree markdown-mode projectile fzf magit expand-region sane-term sane-terme org-bullets swiper popup-kill-ring company avy ido-vertical-mode which-key use-package)))
+ '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+ '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "ADBO" :family "Source Code Pro")))))
+ )
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)

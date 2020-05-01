@@ -238,6 +238,7 @@
 ;; window movments
 (define-prefix-command 'window-prefix-map)
 (global-set-key (kbd "C-w") 'window-prefix-map)
+(define-key magit-mode-map (kbd "C-w") 'window-prefix-map)
 (define-key window-prefix-map (kbd "f") 'windmove-right)
 (define-key window-prefix-map (kbd "b") 'windmove-left)
 (define-key window-prefix-map (kbd "n") 'windmove-down)
@@ -250,6 +251,7 @@
 (define-key window-prefix-map (kbd "a") 'ivy-push-view)
 (define-key window-prefix-map (kbd "x") 'ivy-pop-view)
 (define-key window-prefix-map (kbd "s") 'ivy-switch-view)
+
 
 ;; popup kill ring binding :not-working: shadowed by delete-selection-repeat-replace-region
 ;; (global-set-key (kbd "M-v") 'popup-kill-ring)

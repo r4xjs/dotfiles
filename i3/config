@@ -80,6 +80,7 @@ exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 #bindsym $mod+Return exec xfce4-terminal
 #bindsym $mod+Return exec termite
 bindsym $mod+Return exec st
+#bindsym $mod+Return exec emacsclient -c -e '(shell)'
 
 
 # kill focused window
@@ -90,16 +91,16 @@ bindsym $mod+d exec rofi -show run
 bindsym $mod+w exec rofi -show window
 
 # change focus
-bindsym $mod+b focus left
-bindsym $mod+n focus down
-bindsym $mod+p focus up
-bindsym $mod+f focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # move focused window
-bindsym $mod+Shift+b move left
-bindsym $mod+Shift+n move down
-bindsym $mod+Shift+p move up
-bindsym $mod+Shift+f move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -294,12 +295,12 @@ bindsym $mod+c mode "$wifi_mode"
 mode "$pass_mode" {
 # {{{2
 set $pass_mode (p)assword (u)sername (a)utotype
-	bindsym p exec ~/.i3/i3pass.sh password; mode "default"
-	bindsym u exec ~/.i3/i3pass.sh username; mode "default"
+    bindsym p exec ~/.i3/i3pass.sh password; mode "default"
+    bindsym u exec ~/.i3/i3pass.sh username; mode "default"
     bindsym a exec ~/.i3/i3pass.sh autotype; mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+k mode "$pass_mode" 
+bindsym $mod+p mode "$pass_mode"
 
 # 2}}}
 

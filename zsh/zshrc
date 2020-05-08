@@ -4,7 +4,7 @@ cclear="free && sync && echo 3 > /proc/sys/vm/drop_caches && free"
 # {{{1
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-RPROMPT="%B%{$fg[blue]%}[%D{%y.%m.%f|%H:%M:%S}]%{$reset_color%}%b"
+#RPROMPT="%B%{$fg[blue]%}[%D{%y.%m.%f|%H:%M:%S}]%{$reset_color%}%b"
 
 # 1}}}
 
@@ -18,6 +18,8 @@ setopt hist_ignore_space
 setopt inc_append_history
 setopt share_history
 setopt rm_star_silent
+
+set -o ignoreeof # stop C+d from killing the shell&term
 # 1}}}
 
 # ---------- auto completion ----------
@@ -36,7 +38,7 @@ zstyle ':completion:*:kill:*' force-list always
 
 # ---------- key bindings ----------
 # {{{1
-bindkey -e # emacs mode
+bindkey -v # vim mode
 bindkey "^R" history-incremental-pattern-search-backward 
 bindkey -s '^n' 'nn\n'
 bindkey -s '^o' 'lfcd\n'
@@ -99,6 +101,7 @@ if hash nvim 2>/dev/null; then
 else
     export EDITOR=/usr/bin/vim
 fi
+export EDITOR=em
 # 1}}}
 
 # ---------- functions ----------
@@ -147,6 +150,8 @@ play() { vlc "$(ph current)" && ph next }
 em() {
     emacsclient -t "$@"
 }
+alias vim='em'
+export EDITOR='/usr/bin/emacsclient -t'
 
 # 1}}}
 

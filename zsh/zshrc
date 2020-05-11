@@ -101,7 +101,7 @@ if hash nvim 2>/dev/null; then
 else
     export EDITOR=/usr/bin/vim
 fi
-export EDITOR=em
+#export EDITOR=em
 # 1}}}
 
 # ---------- functions ----------
@@ -150,8 +150,8 @@ play() { vlc "$(ph current)" && ph next }
 em() {
     emacsclient -t "$@"
 }
-alias vim='em'
-export EDITOR='/usr/bin/emacsclient -t'
+#alias vim='em'
+#export EDITOR='/usr/bin/emacsclient -t'
 
 # 1}}}
 

@@ -42,6 +42,7 @@ if [ "${1}" == "remove" ]; then
     rm ~/.ZAP/.ZAP_JVM.properties
     rm ~/.config/lf/lfrc
     rm ~/.xmodmap
+    rm ~/.doom.d/{config.el,init.el,packages.el}
 else
     # tmux
     ln -s "$(pwd)"/tmux.conf ~/.tmux.conf
@@ -74,5 +75,12 @@ else
 
     # lf
     ln -s $(pwd)/lfrc ~/.config/lf/lfrc
+
+    # doom emacs
+    [ ! -d ~/.doom.d ] && mkdir ~/.doom.d 
+    for conf in config.el init.el packages.el; do
+        ln -s $(pwd)/doom/"$conf" ~/.doom.d/"$conf"
+    done
+
 fi
 

@@ -90,3 +90,6 @@
 (after! org
   (setq org-startup-folded t))
 
+
+;; remap find-file
+(map! :leader :n "." #'counsel-find-file)

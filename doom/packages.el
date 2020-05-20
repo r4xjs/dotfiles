@@ -47,5 +47,5 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! afternoon-theme)
-(package! fzf)
+
 ;;(package! mu4e-evil)

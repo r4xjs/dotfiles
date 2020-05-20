@@ -1,6 +1,9 @@
+
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+;;; melpa source
 (setq packages-archives
       '(("melpa" . "https://melpa.org/packages/")))
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -63,9 +66,6 @@
 ;; theme
 (load-theme 'afternoon t)
 
-;; modes
-(cua-mode t)
-
 ;; always kill current buffer and window if not the last
 (defun raxjs/kill-curr-buffer ()
   (interactive)
@@ -82,4 +82,11 @@
 (setq ido-create-new-buffer 'always)
 (setq ido-everywhere t)
 (ido-mode 1)
+
+
+;; fight slowdown
+(setq display-line-numbers-type nil)
+(set-default 'truncate-lines t)
+(after! org
+  (setq org-startup-folded t))
 

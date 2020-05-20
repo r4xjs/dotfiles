@@ -29,7 +29,6 @@ if [ "${1}" == "remove" ]; then
     rm ~/.tmux.conf
     rm ~/.zshrc
     rm ~/.zsh
-    rm ~/.config/htop/htoprc
     rm ~/.local/share/nvim/site/autoload/plug.vim
     rm ~/.config/nvim/init.vim
     rm ~/.nvimrc
@@ -50,10 +49,6 @@ else
     # zsh
     ln -s "$(pwd)"/zsh/zshrc ~/.zshrc
     ln -s "$(pwd)"/zsh ~/.zsh
-    
-    # htop
-    mkdir ~/.config/htop
-    ln -s $(pwd)/htoprc ~/.config/htop/htoprc
     
     # nvim
     mkdir -p ~/.config/nvim

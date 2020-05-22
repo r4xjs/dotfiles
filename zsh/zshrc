@@ -22,6 +22,11 @@ setopt rm_star_silent
 set -o ignoreeof # stop C+d from killing the shell&term
 # 1}}}
 
+# ---------- misc ---------- 
+# {{{1
+umask 077
+# 1}}}
+
 # ---------- auto completion ----------
 # {{{1
 autoload -Uz compinit

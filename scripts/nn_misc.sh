@@ -36,5 +36,10 @@ nn_qemu_img_vhd_vpc(){
 nn_qemu_img_clone(){
     print -z 'qemu-img create -f qcow2 -F qcow2 -b master.qcow2 clone.qcow2'
 }
-
+nn_qemu_create_disk(){
+    print -z 'qemu-img create -f qcow2 disk.qcow2 XG'
+}
+nn_qemu_start(){
+    print -z 'qemu-system-x86_64 -cdrom my.iso -boot menu=on -drive file=my.qcow2,format=qcow2 --enable-kvm -cpu host -m 1024'
+}
 

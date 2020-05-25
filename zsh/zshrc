@@ -22,6 +22,11 @@ setopt rm_star_silent
 set -o ignoreeof # stop C+d from killing the shell&term
 # 1}}}
 
+# ---------- misc ---------- 
+# {{{1
+umask 077
+# 1}}}
+
 # ---------- auto completion ----------
 # {{{1
 autoload -Uz compinit
@@ -77,7 +82,7 @@ if  hash nvim 2>/dev/null; then
     alias vim='nvim'
 fi
 
-alias fixbt='sudo systemctl restart bluetooth && pulseaudio --kill && pulseaudio --start'
+alias fixbt='sudo systemctl restart bluetooth && pulseaudio --kill && rm -rf ~/.config/pulse && pulseaudio --start'
 
 # 1}}}
 

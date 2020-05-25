@@ -52,11 +52,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'jamessan/vim-gnupg'
 
-" LSP Stuff
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'm-pilia/vim-ccls'
-
-
 call plug#end()
 " 1}}}
 

@@ -15,6 +15,24 @@ yubico-piv-tool -achange-puk -P12345678 -N${puk}
 
 <!-- 1}}} --> 
 
+# Unblock PIN
+<!-- {{{1 -->
+Option 1:
+```
+gpg --edit-card
+> admin
+> passwd
+> 2
+```
+
+Option 2:
+```
+ykman piv unblock-pin
+```
+
+<!-- 1}}} -->
+
+
 # SSH
 <!-- {{{1 -->
 

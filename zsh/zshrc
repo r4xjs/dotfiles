@@ -83,7 +83,7 @@ if  hash nvim 2>/dev/null; then
 fi
 
 alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start'
-
+alias fixadb='sudo adb kill-server; sudo adb start-server'
 # 1}}}
 
 # ---------- history settings ----------

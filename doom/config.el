@@ -61,7 +61,7 @@
 ;; they are implemented.
 
 ;; email
-;;(load-file (expand-file-name "~/.doom.d/email/email.el"))
+(load-file (expand-file-name "~/.doom.d/email/email.el"))
 
 ;; theme
 (load-theme 'afternoon t)
@@ -88,7 +88,14 @@
 (setq display-line-numbers-type nil)
 (set-default 'truncate-lines t)
 (after! org
-  (setq org-startup-folded t))
+  (setq org-startup-folded t)
+  )
+
+;; disable evil-ex-search-backward
+(defun raxjs/test1 ()
+  (interactive)
+  )
+(map! :n "?" 'raxjs/test1)
 
 
 ;; remap find-file

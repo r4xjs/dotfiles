@@ -75,7 +75,7 @@
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
 ;; dired
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;;(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 ;; ido
 (setq ido-enable-flex-matching t)

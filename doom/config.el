@@ -61,7 +61,7 @@
 ;; they are implemented.
 
 ;; email
-;;(load-file (expand-file-name "~/.doom.d/email/email.el"))
+(load-file (expand-file-name "~/.doom.d/email/email.el"))
 
 ;; theme
 (load-theme 'afternoon t)
@@ -75,7 +75,7 @@
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
 ;; dired
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;;(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 ;; ido
 (setq ido-enable-flex-matching t)
@@ -88,8 +88,54 @@
 (setq display-line-numbers-type nil)
 (set-default 'truncate-lines t)
 (after! org
-  (setq org-startup-folded t))
+  (setq org-startup-folded t)
+  )
+
+;; disable evil-ex-search-backward
+(defun raxjs/test1 ()
+  (interactive)
+  )
+(map! :n "?" 'raxjs/test1)
 
 
 ;; remap find-file
 (map! :leader :n "." #'counsel-find-file)
+
+
+;;(defmacro map! (&rest rest)
+;;  "A convenience macro for defining keybinds, powered by `general'.
+;;
+;;If evil isn't loaded, evil-specific bindings are ignored.
+;;
+;;States
+;;  :n  normal
+;;  :v  visual
+;;  :i  insert
+;;  :e  emacs
+;;  :o  operator
+;;  :m  motion
+;;  :r  replace
+;;  :g  global  (binds the key without evil `current-global-map')
+;;
+;;  These can be combined in any order, e.g. :nvi will apply to normal, visual and
+;;  insert mode. The state resets after the following key=>def pair. If states are
+;;  omitted the keybind will be global (no emacs state; this is different from
+;;  evil's Emacs state and will work in the absence of `evil-mode').
+;;
+;;Properties
+;;  :leader [...]                   an alias for (:prefix doom-leader-key ...)
+;;  :localleader [...]              bind to localleader; requires a keymap
+;;  :mode [MODE(s)] [...]           inner keybinds are applied to major MODE(s)
+;;  :map [KEYMAP(s)] [...]          inner keybinds are applied to KEYMAP(S)
+;;  :prefix [PREFIX] [...]          set keybind prefix for following keys. PREFIX
+;;                                  can be a cons cell: (PREFIX . DESCRIPTION)
+;;  :prefix-map [PREFIX] [...]      same as :prefix, but defines a prefix keymap
+;;                                  where the following keys will be bound. DO NOT
+;;                                  USE THIS IN YOUR PRIVATE CONFIG.
+;;  :after [FEATURE] [...]          apply keybinds when [FEATURE] loads
+;;  :textobj KEY INNER-FN OUTER-FN  define a text object keybind pair
+;;  :when [CONDITION] [...]
+;;  :unless [CONDITION] [...]
+;;
+;;  Any of the above properties may be nested, so that they only apply to a
+;;  certain group of keybinds."

@@ -84,6 +84,7 @@ fi
 
 alias fixbt='sudo systemctl restart bluetooth && pulseaudio --kill && rm -rf ~/.config/pulse && pulseaudio --start'
 
+alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
 # 1}}}
 
 # ---------- history settings ----------
@@ -222,3 +223,11 @@ rsync(){fix_pinentry; /usr/bin/rsync -arvphS --progress $@}
 
 fzf_pass(){find "$HOME"/.password-store -iname "*.gpg" | sed "s/\.gpg//g;s#\./##g;s#$HOME/.password-store/##g" | rofi -dmenu -i }
 # 1}}}
+
+find_ssh_auth_sock(){
+    find "/tmp" -type s -name agent.\* 2> /dev/null | grep '/ssh-.*/agent.*' --color=never | head -1
+}
+
+_ssh_auth_sock=$(find_ssh_auth_sock)
+[ -z $_ssh_auth_sock ] && start-ssh-agent && _ssh_auth_sock=$(find_ssh_auth_sock)
+export SSH_AUTH_SOCK=$_ssh_auth_sock

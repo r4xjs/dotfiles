@@ -217,8 +217,8 @@ fi
 if [ "$ssh_path" != false ];then 
     ssh(){fix_pinentry; "$ssh_path" $@} 
 fi
-gpush(){fix_pinentry; /usr/bin/git push $@}
-gpull(){fix_pinentry; /usr/bin/git pull $@}
+gpush(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git push $@}
+gpull(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git pull $@}
 rsync(){fix_pinentry; /usr/bin/rsync -arvphS --progress $@}
 
 fzf_pass(){find "$HOME"/.password-store -iname "*.gpg" | sed "s/\.gpg//g;s#\./##g;s#$HOME/.password-store/##g" | rofi -dmenu -i }

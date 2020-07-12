@@ -68,6 +68,13 @@
 
 ;; dired
 ;;(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(defun raxjs/dired-back ()
+  (interactive)
+  (find-alternate-file "..")
+  )
+(map! :map dired-mode-map :n "-" #'raxjs/dired-back)
+(map! :map dired-mode-map :n "RET" #'dired-find-alternate-file)
+
 
 ;; ido
 (setq ido-enable-flex-matching t)
@@ -92,6 +99,9 @@
 
 ;; remap find-file
 (map! :leader :n "." #'counsel-find-file)
+
+
+
 
 
 ;;(defmacro map! (&rest rest)

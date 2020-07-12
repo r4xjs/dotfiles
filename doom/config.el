@@ -8,12 +8,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "Martin Stoffel"
-      user-mail-address "martin.stoffel@lowsec.net")
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -60,8 +54,6 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-;; email
-(load-file (expand-file-name "~/.doom.d/email/email.el"))
 
 ;; theme
 (load-theme 'afternoon t)
@@ -139,3 +131,19 @@
 ;;
 ;;  Any of the above properties may be nested, so that they only apply to a
 ;;  certain group of keybinds."
+
+
+;; fix SSH_AUTH_SOCK
+(defun raxjs/get-string-from-file (filePath)
+  "Return filePath's file content."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (buffer-string)))
+(defun raxjs/trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+(replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string))
+)
+
+(setenv "SSH_AUTH_SOCK" (raxjs/trim-string (raxjs/get-string-from-file "/tmp/emacs_auth_sock")))
+(getenv "SSH_AUTH_SOCK")

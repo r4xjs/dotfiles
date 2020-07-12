@@ -231,3 +231,4 @@ find_ssh_auth_sock(){
 _ssh_auth_sock=$(find_ssh_auth_sock)
 [ -z $_ssh_auth_sock ] && start-ssh-agent && _ssh_auth_sock=$(find_ssh_auth_sock)
 export SSH_AUTH_SOCK=$_ssh_auth_sock
+echo $SSH_AUTH_SOCK > /tmp/emacs_auth_sock

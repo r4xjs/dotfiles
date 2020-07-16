@@ -157,7 +157,11 @@ regex(){ gawk 'match($0,/'$1'/, ary) {print ary['${2:-'0'}']}'; }
 play() { vlc "$(ph current)" && ph next }
 
 emx(){
-    setsid emacsclient -c $@
+    if [ $# -eq 0 ];then
+        setsid emacs .
+    else
+        setsid emacs $@
+    fi
     exit
 }
 

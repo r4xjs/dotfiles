@@ -157,3 +157,17 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (setenv "SSH_AUTH_SOCK" (raxjs/trim-string (raxjs/get-string-from-file "/tmp/emacs_auth_sock")))
 (getenv "SSH_AUTH_SOCK")
+
+
+;; org to markdown with pandoc
+(defun raxjs/org-to-md ()
+    "Convert selected org region to markdown with pandoc"
+    (interactive)
+(let (  (b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region
+     b e "pandoc --from org --to gfm"
+     )
+    )
+)
+(map! :leader :v "mm" #'raxjs/org-to-md)

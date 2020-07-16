@@ -84,7 +84,9 @@ fi
 
 alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start'
 alias fixadb='sudo adb kill-server; sudo adb start-server'
-alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
+if [ ! -f ~/.home ];then
+    alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
+fi
 # 1}}}
 
 # ---------- history settings ----------
@@ -140,6 +142,7 @@ lfcd() {
     fi
 }
 
+
 sreplay(){
     idx=$1
     scriptreplay -t "time$idx" "typescript$idx" -d 5 -m 1
@@ -153,9 +156,11 @@ regex(){ gawk 'match($0,/'$1'/, ary) {print ary['${2:-'0'}']}'; }
 
 play() { vlc "$(ph current)" && ph next }
 
-em() {
-    emacsclient -t "$@"
+emx(){
+    setsid emacsclient -c $@
+    exit
 }
+
 #alias vim='em'
 #export EDITOR='/usr/bin/emacsclient -t'
 
@@ -228,7 +233,9 @@ find_ssh_auth_sock(){
     find "/tmp" -type s -name agent.\* 2> /dev/null | grep '/ssh-.*/agent.*' --color=never | head -1
 }
 
-_ssh_auth_sock=$(find_ssh_auth_sock)
-[ -z $_ssh_auth_sock ] && start-ssh-agent && _ssh_auth_sock=$(find_ssh_auth_sock)
-export SSH_AUTH_SOCK=$_ssh_auth_sock
+if [ ! -f ~/.home ];then
+    _ssh_auth_sock=$(find_ssh_auth_sock)
+    [ -z $_ssh_auth_sock ] && start-ssh-agent && _ssh_auth_sock=$(find_ssh_auth_sock)
+    export SSH_AUTH_SOCK=$_ssh_auth_sock
+fi
 echo $SSH_AUTH_SOCK > /tmp/emacs_auth_sock

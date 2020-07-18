@@ -72,8 +72,9 @@
   (interactive)
   (find-alternate-file "..")
   )
-(map! :map dired-mode-map :n "-" #'raxjs/dired-back)
+(map! :map dired-mode-map :n "h" #'raxjs/dired-back)
 (map! :map dired-mode-map :n "RET" #'dired-find-alternate-file)
+(map! :map dired-mode-map :n "l" #'dired-find-alternate-file)
 
 
 ;; ido
@@ -97,10 +98,10 @@
 (map! :n "?" 'raxjs/test1)
 
 
+
 ;; remap find-file
 (map! :leader :n "." #'counsel-find-file)
-
-
+(setq evil-want-C-u-scroll nil)
 
 
 

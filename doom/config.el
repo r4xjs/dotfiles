@@ -104,6 +104,10 @@
 (setq evil-want-C-u-scroll nil)
 
 
+;; add new org agenda file
+(map! :leader :n "oaA" #'org-agenda-file-to-front)
+;(message "%s" org-agenda-files)
+
 
 ;;(defmacro map! (&rest rest)
 ;;  "A convenience macro for defining keybinds, powered by `general'.

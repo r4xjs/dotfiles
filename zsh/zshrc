@@ -165,9 +165,6 @@ emx(){
     exit
 }
 
-#alias vim='em'
-#export EDITOR='/usr/bin/emacsclient -t'
-
 # 1}}}
 
 # ---------- Plugins ---------- 
@@ -184,7 +181,7 @@ done
 # Syntax Highlighting
 if [ -d "/usr/share/zsh-syntax-highlighting" ]; then
     syntax_hl="/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-elif [ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting/" ];then 
+elif [ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting/" ];then
     syntax_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 [ -f "$syntax_hl" ] && source "$syntax_hl"
@@ -206,7 +203,7 @@ enable_typescript_logging(){
     fi
 }
 [ -s "$HOME/.typescript_log" ] && enable_typescript_logging
-[ ! -S "/tmp/emacs$(id -u)/server" ] && emacs --daemon 2>/dev/null
+[ ! -S "/run/user/$(id -u)/emacs/server" ] && emacs --daemon 2>/dev/null
 # 1}}}
 
 # gpg ssh and pass settings
@@ -223,8 +220,8 @@ elif [ -f "/usr/bin/ssh" ]; then
 else
     ssh_path=false
 fi
-if [ "$ssh_path" != false ];then 
-    ssh(){fix_pinentry; "$ssh_path" $@} 
+if [ "$ssh_path" != false ];then
+    ssh(){fix_pinentry; "$ssh_path" $@}
 fi
 gpush(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git push $@}
 gpull(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git pull $@}

@@ -14,5 +14,7 @@ nn_hashcat_rules(){
     print -z 'hashcat --stdout password.lst --rules /usr/share/hashcat/rules/best64.rule'
 }
 
-
+nn_wfuzz(){
+    print -z 'wfuzz -c -t 2 -f $(pwd)/out.log -z file,$(pwd)/u.lst -z file,$(pwd)/pass.lst -d 'post-data=FUZZ&x=FUZ2Z' 'https://targetlalal'
+}
 

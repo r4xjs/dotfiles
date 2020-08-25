@@ -15,6 +15,6 @@ nn_hashcat_rules(){
 }
 
 nn_wfuzz(){
-    print -z 'wfuzz -c -t 2 -f $(pwd)/out.log -z file,$(pwd)/u.lst -z file,$(pwd)/pass.lst -d 'post-data=FUZZ&x=FUZ2Z' 'https://targetlalal'
+    print -z "wfuzz -c -t 2 -f $(pwd)/out.log -z file,$(pwd)/u.lst -z file,$(pwd)/pass.lst -d 'post-data=FUZZ&x=FUZ2Z' 'https://targetlalal'"
 }
 

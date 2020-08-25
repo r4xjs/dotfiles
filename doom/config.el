@@ -72,9 +72,15 @@
   (interactive)
   (find-alternate-file "..")
   )
+(defun raxjs/dired-open ()
+  (interactive)
+    (if (file-directory-p (dired-get-file-for-visit))
+      (dired-find-alternate-file)
+      (dired-find-file)))
 (map! :map dired-mode-map :n "h" #'raxjs/dired-back)
-(map! :map dired-mode-map :n "RET" #'dired-find-alternate-file)
-(map! :map dired-mode-map :n "l" #'dired-find-alternate-file)
+(map! :map dired-mode-map :n "l" #'raxjs/dired-open)
+;(map! :map dired-mode-map :n "RET" #'dired-find-file)
+;(map! :map dired-mode-map :n "l" #'dired-find-alternate-file)
 
 
 ;; ido

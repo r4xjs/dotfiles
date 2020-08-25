@@ -36,7 +36,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -97,22 +96,26 @@
   (setq org-startup-folded t)
   )
 
+
+;;;;;;; evil fixes ;;;;;;;
+
 ;; disable evil-ex-search-backward
 (defun raxjs/test1 ()
   (interactive)
   )
 (map! :n "?" 'raxjs/test1)
+;; remap C-u back to normal
+(map! :v "C-u" #'universal-argument)
+
+
 
 
 
 ;; remap find-file
 (map! :leader :n "." #'counsel-find-file)
-(setq evil-want-C-u-scroll nil)
-
 
 ;; add new org agenda file
 (map! :leader :n "oaA" #'org-agenda-file-to-front)
-;(message "%s" org-agenda-files)
 
 
 ;;(defmacro map! (&rest rest)

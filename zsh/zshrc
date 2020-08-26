@@ -203,7 +203,8 @@ enable_typescript_logging(){
     fi
 }
 [ -s "$HOME/.typescript_log" ] && enable_typescript_logging
-[ ! -S "/run/user/$(id -u)/emacs/server" ] && emacs --daemon 2>/dev/null
+[ ! -S "/run/user/$(id -u)/emacs/server" ] && [ ! -S "/tmp/emacs$(id -u)/server" ] && emacs --daemon 2>/dev/null
+
 # 1}}}
 
 # gpg ssh and pass settings

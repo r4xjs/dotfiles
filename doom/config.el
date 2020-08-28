@@ -66,7 +66,6 @@
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
 ;; dired
-;;(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 (defun raxjs/dired-back ()
   (interactive)
   ;;(dired-up-directory)
@@ -80,11 +79,10 @@
 (map! :map dired-mode-map :n "C-h" #'raxjs/dired-back)
 (map! :map dired-mode-map :n "C-l" #'raxjs/dired-open)
 
-(setq dired-async-mode t)
-(setq dired-hide-details-mode t)
-;(map! :map dired-mode-map :n "RET" #'dired-find-file)
-;(map! :map dired-mode-map :n "l" #'dired-find-alternate-file)
-
+(defun raxjs/dired-mode-hook ()
+  (dired-hide-details-mode 1)
+  (dired-async-mode 1))
+(add-hook 'dired-mode-hook 'raxjs/dired-mode-hook)
 
 ;; ido
 (setq ido-enable-flex-matching t)

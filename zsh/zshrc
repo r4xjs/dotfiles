@@ -78,6 +78,8 @@ alias diff='diff --color=always -rdu'
 # alias gpush='git push'
 # alias gpull='git pull'
 
+alias fixencoding='iconv -f utf-8 -t utf-8 -c'
+
 if  hash nvim 2>/dev/null; then
     alias vim='nvim'
 fi

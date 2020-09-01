@@ -84,11 +84,14 @@
   (dired-async-mode 1))
 (add-hook 'dired-mode-hook 'raxjs/dired-mode-hook)
 
+(setq dired-recursive-copies (quote always))
+(setq dired-recursive-deletes (quote top))
+
 ;; ido
-(setq ido-enable-flex-matching t)
-(setq ido-create-new-buffer 'always)
-(setq ido-everywhere t)
-(ido-mode 1)
+;;(setq ido-enable-flex-matching nill)
+;;(setq ido-create-new-buffer 'always)
+;;(setq ido-everywhere t)
+;;(ido-mode 1)
 
 
 ;; fight slowdown

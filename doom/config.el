@@ -76,8 +76,10 @@
     (if (file-directory-p (dired-get-file-for-visit))
       (dired-find-alternate-file)
       (dired-find-file)))
-(map! :map dired-mode-map :n "C-h" #'raxjs/dired-back)
-(map! :map dired-mode-map :n "C-l" #'raxjs/dired-open)
+;(map! :map dired-mode-map :n "C-h" #'raxjs/dired-back)
+;(map! :map dired-mode-map :n "C-l" #'raxjs/dired-open)
+(map! :map dired-mode-map :n "C-h" #'dired-up-directory)
+(map! :map dired-mode-map :n "C-l" #'dired-find-file)
 
 (defun raxjs/dired-mode-hook ()
   (dired-hide-details-mode 1)

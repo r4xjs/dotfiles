@@ -17,7 +17,7 @@ nn_nmap_heartbleed(){
 }
 
 nmap_ip_list(){
-    nmap -sL -n -iL "$1" | cut -d' ' -f5 | grep -P '^\d' --color=never 
+    nmap -sL -n -iL "$1" | cut -d' ' -f5 | grep -P '^\d' --color=never | sort -u
 }
 
 nn_nmap_list_scripts(){

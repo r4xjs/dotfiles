@@ -89,6 +89,8 @@ alias fixadb='sudo adb kill-server; sudo adb start-server'
 if [ ! -f ~/.home ];then
     alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
 fi
+
+alias r2help="r2 -qq -c '?*~...' --"
 # 1}}}
 
 # ---------- history settings ----------

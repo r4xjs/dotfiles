@@ -5,6 +5,11 @@
 (setq packages-archives
       '(("melpa" . "https://melpa.org/packages/")))
 
+
+(use-package! peep-dired
+  :ensure t)
+
+
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
@@ -80,6 +85,20 @@
 ;(map! :map dired-mode-map :n "C-l" #'raxjs/dired-open)
 (map! :map dired-mode-map :n "C-h" #'dired-up-directory)
 (map! :map dired-mode-map :n "C-l" #'dired-find-file)
+(map! :map dired-mode-map :n "C-p" #'peep-dired)
+;;(defun raxjs/peep-dired-keys ()
+;;  (interactive)
+;;  (if (bound-and-true-p peep-dired-mode)
+;;      ((progn
+;;        (map! :map dired-mode-map :n "j" #'dired-next-line)
+;;        (map! :map dired-mode-map :n "k" #'dired-previous-line)))
+;;    ((progn
+;;        (map! :map dired-mode-map :n "j" #'peep-dired-next-file)
+;;        (map! :map dired-mode-map :n "k" #'peep-dired-prev-file)))
+;;    ))
+;;
+;;
+;;(add-hook 'peep-dired-hook 'raxjs/peep-dired-keys)
 
 (defun raxjs/dired-mode-hook ()
   (dired-hide-details-mode 1)

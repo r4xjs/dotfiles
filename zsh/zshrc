@@ -102,7 +102,7 @@ SAVEHIST="$HISTSIZE"
 
 # ---------- exports ----------
 # {{{1
-export PATH="$PATH:${HOME}/.scripts/:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools:${HOME}/.emacs.d/bin"
+export PATH="$PATH:${HOME}/.scripts/:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools:${HOME}/.emacs.d/bin:$HOME/.cargo/bin"
 if [ "$SSH_CONNECTION" ]; then
     export TERM=xterm
 fi

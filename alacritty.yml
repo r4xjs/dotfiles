@@ -1,0 +1,6 @@
+key_bindings:
+    - { key: 5,   mods: Shift,         mode: Vi, action: Last  }
+    - { key: 8,   mods: Shift,         mode: Vi, action: First }
+    - { key: A,   mods: Shift,         mode: Vi, action: First }
+#debug:
+  #log_level: Warn

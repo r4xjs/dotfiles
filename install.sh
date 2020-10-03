@@ -22,6 +22,11 @@ if [ "${1}" == "full" ]; then
 
     # xmodmap
     ln -s $(pwd)/xmodmap ~/.xmodmap
+
+    # alacritty terminal
+    mkdir "$HOME/.config/alacritty"
+    ln -s "$(pwd)/alacritty.yml"  "$HOME/.config/alacritty/alacritty.yml"
+
 fi
 
 if [ "${1}" == "remove" ]; then
@@ -31,6 +36,7 @@ if [ "${1}" == "remove" ]; then
     rm ~/.zsh
     rm ~/.local/share/nvim/site/autoload/plug.vim
     rm ~/.config/nvim/init.vim
+    rm -rf ~/.config/alacritty
     rm ~/.nvimrc
     rm ~/.vimrc
     rm ~/.vim/autoload/plug.vim

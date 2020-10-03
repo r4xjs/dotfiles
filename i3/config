@@ -79,7 +79,8 @@ exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 #bindsym $mod+Return exec gnome-terminal
 #bindsym $mod+Return exec xfce4-terminal
 #bindsym $mod+Return exec termite
-bindsym $mod+Return exec st
+#bindsym $mod+Return exec st
+bindsym $mod+Return exec alacritty
 #bindsym $mod+Return exec emacsclient -c -e '(shell)'
 
 

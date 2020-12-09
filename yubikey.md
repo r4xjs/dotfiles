@@ -196,16 +196,17 @@ ssh-add -L
 /etc/udev/rules.de/90-yubikey.rules
 ```
 ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxxx", RUN+="/usr/bin/systemctl start --no-block i3lock.service"
+ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxx", RUN+="/bin/su user /bin/sh -c '/usr/bin/gpg --card-status > /dev/null'" 
 ```
 
 reload rules:
 ```
-sudo udevadm control --reload-rules
+sudo udevadm control -R
 ```
 
 find out parameter via:
 ```
-udevadm monitor --environment --udev
+sudo udevadm monitor --environment --udev
 ```
 
 systemd service:

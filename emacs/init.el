@@ -1,9 +1,27 @@
-g;;;;;;;;;; packages ;;;;;;;;;;
+;; TODO:
+;; - [x] setup lsp keybindings for go to definition and jump back and ...
+;; - [x] smart kill buffer such that it kills the window as well if it is not the last window 
+;; - [x] ctrl-p replacment for emacs
+;; - [ ] setup hydra: https://github.com/abo-abo/hydra
+;; - [ ] setup dired
+;; - [ ] setup magit
+;; src: https://github.com/daviwil/emacs-from-scratch
+;; src: https://protesilaos.com/dotemacs/
+
+;; Cheat Sheet:
+;; (define-key ...) for creating new key bindings (adding a binding to a keymap/list) 
+;; (add-hook ...) for adding a function to a hook/list
+;; (defun raxjs/funcname () (interactive) ...) for creating new functions that can be called with M-x
+
+
+;;;;;;;;;; packages ;;;;;;;;;;
 
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/")
+	     '("org" . "https://orgmode.org/elpa/")
+	     )
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -11,67 +29,121 @@ g;;;;;;;;;; packages ;;;;;;;;;;
   (package-install 'use-package)
   )
 
-;; which key
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode))
-
-;; swiper
-(use-package swiper
-  :ensure t
-  )
-
-;; popup-kill-ring
-(use-package popup-kill-ring
-  :ensure t
-  )
-
-;; company (auto compleation)
-(use-package company
-  :ensure t
-  :init
-  (add-hook 'after-init-hook 'global-company-mode))
-
-;; org-bullets
-(use-package org-bullets
-  :ensure t
-  :init
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-(setq org-bullets-bullet-list '(
-			       "❶"
-			       "❷"
-			       "❸"
-			       "❹"
-			       "❺"
-			       "❻"
-			       "❼"
-			       "❽"
-			       "❾"
-			       "❿"
-			       ))
-
-;; magit
-(use-package magit
+(use-package diminish
+  :after use-package
   :ensure t)
 
-;; sane-term
-(use-package sane-term
+;;(use-package inkpot-theme
+;;  :ensure t
+;;  :config
+;;  (load-theme 'inkpot t))
+
+(use-package doom-themes
   :ensure t
+  :config
+  (load-theme 'doom-one t))
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+
+;; --------------------------------------------------------
+;; evil
+;; C-z to toggle between vim and emacs bindings
+(use-package evil
+  :diminish
+  :ensure t
+  :init
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-minibuffer t)
+  :config
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key global-map (kbd "C-x C-u") 'universal-argument)
+  (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
+  (evil-define-key 'insert ivy-minibuffer-map (kbd "C-j") 'ivy-next-line) 
+  (evil-define-key 'insert ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
+  (evil-set-leader 'normal (kbd "SPC"))
+  (evil-mode 1)
   )
+;; evil-overriding-maps and evil-intercept-maps variables.
 
-;; ido-vertical-mode
-(use-package ido-vertical-mode
+;; pulls in more vim bindings suport for several other modes
+(use-package evil-collection
   :ensure t
+  :after evil
   :init
-  (ido-vertical-mode 1))
-(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+  (setq evil-collection-setup-minibuffer t)
+  :config
+  (evil-collection-init)
+  (setq evil-collection-mode-list '(dired))
 
-;; smex
-(use-package smex
+  ;; fix dired key bindings
+  (evil-collection-define-key 'normal 'dired-mode-map "h" 'dired-single-up-directory)
+  (evil-collection-define-key 'normal 'dired-mode-map "l" 'dired-single-buffer)
+  (evil-collection-define-key 'normal 'dired-mode-map "SPC" 'dired-single-buffer))
+
+(use-package dired-single
   :ensure t
+  :after evil-collection)
+(use-package dired
+  :ensure nil
+  :config
+  (setq dired-listing-switches "-ahl --group-directories-first"))
+  ;; fix evil leader key in dired-mode
+  (add-hook 'dired-mode-hook (lambda () 
+    (evil-define-key 'normal dired-mode-map (kbd "SPC") 'evil-send-leader)))
+
+
+
+;; ivy
+(use-package ivy
+  :after general
+  :diminish
+  :ensure t
+  :config
+  (define-key evil-insert-state-map (kbd "C-j") 'ivy-next-line)
+  (define-key evil-insert-state-map (kbd "C-k") 'ivy-previous-line)
+  (define-key evil-insert-state-map (kbd "C-l") 'ivy-done)
+
+  (ivy-mode 1))
+;; add extera infos for example for counsel-M-x
+(use-package ivy-rich
+  :ensure t
+  :after ivy
   :init
-  (smex-initialize)
+  (ivy-rich-mode 1))
+
+;; counsel some improvments for ivy
+(use-package counsel
+  :ensure t
+  ;;:after ivy
+  :diminish
+  :config
+  (define-key global-map (kbd "M-x") 'counsel-M-x)
+  (define-key global-map (kbd "C-x b") 'counsel-switch-buffer)
+  (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
+  (define-key evil-normal-state-map (kbd "<leader>.") 'counsel-find-file)
+  (define-key evil-normal-state-map (kbd "<leader>b") 'counsel-switch-buffer)
+  ;;(define-key evil-normal-state-map (kbd "<leader>f") 'counsel-find-file)
+  ;;(define-key evil-normal-state-map (kbd "<leader>p") 'counsel-fzf)
+  ;;(define-key evil-normal-state-map (kbd "<leader>r") 'counsel-rg)
+  (define-key evil-normal-state-map (kbd "<leader>s") 'swiper)
+
+  
+  (defun raxjs/counsel-fzf () (interactive)
+	(counsel-fzf nil default-directory))
+  (defun raxjs/counsel-rg () (interactive)
+	(counsel-rg nil default-directory))
+  (define-key evil-normal-state-map (kbd "<leader>r") 'raxjs/counsel-rg)
+  (define-key evil-normal-state-map (kbd "<leader>pr") 'counsel-rg)
+  (define-key evil-normal-state-map (kbd "<leader>f") 'raxjs/counsel-fzf)
+  (define-key evil-normal-state-map (kbd "<leader>pf") 'counsel-fzf)
+  ;;(define-key global-map (kbd "C-c C-r") 'counsel-rg)
+  ;;(define-key global-map (kbd "C-c C-f") 'counsel-fzf)
+
+
+
+  (setq ivy-initial-inputs-alist nil) ;; no prefixes in ivy searches like "^"
   )
 
 ;; projectile
@@ -80,224 +152,322 @@ g;;;;;;;;;; packages ;;;;;;;;;;
   :init
   (projectile-mode t))
 
-;; undo-tree
-(use-package undo-tree
+;; company (auto compleation)
+(use-package company
   :ensure t
   :init
-  (global-undo-tree-mode t))
+  (setq company-idle-delay 0.0
+      company-minimum-prefix-length 3)
+  :config
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+  (define-key company-active-map (kbd "C-j") 'company-select-next)
+  (define-key company-active-map (kbd "C-k") 'company-select-previous)
 
-;; expand-region keybinding
-(use-package expand-region
+
+  (add-hook 'c++-mode-hook 'company-mode)
+  (add-hook 'c-mode-hook 'company-mode)
+  (add-hook 'python-mode-hook 'company-mode)
+  (add-hook 'slime-mode-hook 'company-mode)
+
+    (defface company-tooltip
+    '((default :foreground "green")
+	(((class color) (min-colors 88) (background light))
+	(:background "cornsilk"))
+	(((class color) (min-colors 88) (background dark))
+	(:background "yellow"))
+	(t
+	(:background "yellow")))
+    "Face used for the tooltip.")
+
+
+  
+  (company-tng-mode 1)
+  (global-company-mode t)
+  )
+;;(use-package company-box
+;;  :ensure t
+;;  :config
+;;  (add-hook 'company-mode-hook 'company-box-mode))
+
+;; lsp-mode
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq gc-cons-threshold 100000000
+      ead-process-output-max (* 1024 1024))
+  (setq lsp-prefer-capf t)
+  (setq lsp-completion-provider :capf)
+  (setq lsp-completion-enable t)
+  :config
+  (add-hook 'lsp-mode 'lsp-enable-which-key-integration)
+  ;;(add-hook 'c++-mode-hook 'lsp-deferred)
+  ;;(add-hook 'c-mode-hook 'lsp-deferred)
+  (add-hook 'ruby-mode-hook 'lsp-deferred)
+  (add-hook 'python-mode-hook 'lsp-deferred)
+  (add-hook 'rust-mode-hook 'lsp-deferred)
+
+  (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+  (define-key lsp-mode-map (kbd "<leader>gd") 'lsp-ui-peek-find-definitions)
+  (define-key lsp-mode-map (kbd "<leader>go") 'lsp-ui-peek-jump-backward)
+  (define-key lsp-mode-map (kbd "<leader>gr") 'lsp-find-references))
+
+;; company-lsp
+(use-package company-lsp
   :ensure t)
 
-;; counsel: package for some fuzzy search things
-(use-package counsel
+;; ccls
+(use-package ccls
+  :ensure t
+  :init
+  (setq ccls-executable "/usr/bin/ccls"))
+;; rust
+(use-package rust-mode
+  :ensure t
+  :init
+  (setq lsp-rust-server "/usr/bin/rls")
+  (setq lsp-rust-analyzer-server-command "/usr/bin/rust-analyzer"))
+
+;; eTAGS
+(setq tags-add-tables nil)
+(define-key evil-normal-state-map (kbd "<leader>td") 'xref-find-definitions)
+(define-key evil-normal-state-map (kbd "<leader>tf") 'xref-find-apropos)
+(define-key evil-normal-state-map (kbd "<leader>ts") 'xref-find-references)
+(define-key evil-normal-state-map (kbd "<leader>tv") 'visit-tags-table)
+(add-hook 'c-mode-hook (lambda ()
+			 (xref-etags-mode t)))
+
+
+;; popup help menu with all avilable keys when typing prefix key combo
+(use-package which-key
+  :ensure t
+  :diminish
+  :init 
+  (which-key-mode)
+  :config
+  (setq wich-key-idle-delay 0.1))
+
+
+;; nicer help pages 
+(use-package helpful
+  :ensure t
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+
+(use-package magit
   :ensure t)
-
-;; theme
-(use-package afternoon-theme
-  :ensure t)
-
-;; rg
-(use-package rg
-  :ensure t)
-
-(use-package dired-single
-  :ensure t)
-
-;;;;;;;;;; settings ;;;;;;;;;;
-
-;; org-agenda-files
-(setq org-agenda-files '("~/todo.org"))
-
-;; enable disabled functions
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
-
-;; basic stuff
-(defalias 'yes-or-no-p 'y-or-n-p)
-(setq scroll-conservatively 100)
-(setq ring-bell-function 'ignore)
-(global-auto-revert-mode t)
-(setq auto-revert-verbose nil)
-
-;; backup files
-(setq make-backup-files nil) ; stop creating backup~ files
-(setq auto-save-default nil) ; stop creating #autosave# files
-(setq create-lockfiles nil)  ; stop creating .# files
-
-;; use i3 for window management C-x 5 b for new frame
-;; (setq pop-up-frames nil)
-;; (setq pop-up-windows nil)
-;; (setq iswitchb-default-method 'samewindow) 
-;; (setq ido-default-buffer-method 'samewindow)
-
-;; some modes
-(setq cua-rectangle-mark-key (kbd "C-c v v"))
-(setq save-interprogram-paste-before-kill t)
-(cua-mode t)
-(setq show-paren-when-point-inside-paren nil)
-(show-paren-mode t)
-
-;; Disable some minor modes
-(auto-save-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-
-;; clock in mode line
-(setq display-time-24hr-format t)
-(display-time-mode 1)
-
-;; modeline lines and columns (L,C)
-(line-number-mode 1)
-(column-number-mode 1)
-
-;; default ansi-term shell is zsh
-(defvar my-term-shell "/usr/bin/zsh")
-(defadvice ansi-term (before force-bash)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
-
-;; ido
-(setq ido-enable-flex-matching t)
-(setq ido-create-new-buffer 'always)
-(setq ido-everywhere t)
-(ido-mode 1)
+(use-package evil-magit
+  :ensure t
+  :after magit)
 
 
 
+(use-package org
+  :ensure t
+  :config
+  (setq org-use-fast-todo-selection t)
+  ;; (org-indent-mode)
+  (setq org-agenda-files '(
+			 "~/s/org/"
+			 ))
+  (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
+  (setq org-return-follows-link t) ;; follow links with RET
+
+  ;; load some functions from doom emacs
+  (load (concat user-emacs-directory "doom-stuff.el"))
+  ;; remap some keys
+  (add-hook 'org-mode-hook (lambda ()
+	    (define-key org-mode-map  [remap org-insert-heading-respect-content] '+org/insert-item-below)  
+	    ))
+
+  ;; some custom stuff
+  (setq raxjs/org-dir (expand-file-name "~/org"))
+
+  (define-key evil-normal-state-map (kbd "<leader>np")
+    '(lambda () (interactive) (counsel-fzf nil raxjs/org-dir "org-notes: ")))
+  (define-key evil-normal-state-map (kbd "<leader>nf")
+    '(lambda () (interactive) (counsel-find-file raxjs/org-dir)))
+  (define-key evil-normal-state-map (kbd "<leader>nc") 'org-capture)
+  (define-key global-map (kbd "C-c l") 'org-store-link)
+  (define-key global-map (kbd "C-c C-l") 'org-insert-link)
+  (define-key evil-normal-state-map (kbd "C-c C-l") 'org-insert-link)
+
+  ;; capture templates
+  (setq org-capture-templates
+	(quote (("t" "task" entry (file "~/org/refile.org") "* TODO %?\n")
+		)))
+
+  ;; This is needed as of Org 9.2
+  (require 'org-tempo)
+  (setq org-structure-template-alist '(
+             ("p" . "src python")
+	     ("s" . "src shell :results output replace")
+	     ("t" . "src text")
+	     ("x" . "src xml")
+	     ("j" . "src json")
+	     ("d" . "src diff")
+	     ("l" . "src emacs-lisp")
+	     ("r" . "src rust")
+	     ("c" . "src c")
+	     ))
+
+  ;; get C-c C-c working in code blocks
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (shell . t)
+     (ruby . t)
+     (dot . t)
+     (C . t)
+     (gnuplot . t)
+     (haskell . t)
+     )
+   )
+   (setq org-confirm-babel-evaluate nil)
+  ) ;; end of org use-package
+
+(use-package org-bullets
+  :ensure t
+  :after org
+  :init
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (setq org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾" "❿"))
+)
+
+;; vterm 
+(use-package vterm
+  :ensure t
+  :config
+  (define-key evil-normal-state-map (kbd "<leader>ot") 'vterm)
+  )
 
 
+;;;; recursive search packages
+;;(use-package deadgrep
+;;  :ensure t
+;;  :config
+;;  (define-key global-map (kbd "C-c C-r") 'deadgrep)
+;;  )
+
+;; maybe hydra could be usefull its like i3 modes
+
+;; --------------------------------------------------------
+
+;; some settings 
+
+    ;; basic stuff
+    (defalias 'yes-or-no-p 'y-or-n-p)
+    (setq scroll-conservatively 100)
+    (setq ring-bell-function 'ignore)
+    (global-auto-revert-mode t)
+    (setq auto-revert-verbose nil)
+    (show-paren-mode 1)
+
+    ;; modeline lines and columns (L,C)
+    (line-number-mode 1)
+    (column-number-mode 1)
+
+    ;; no startup message screen
+    (setq inhibit-startup-message t)
+
+    ;; no gui stuff
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (tooltip-mode -1)
+    ;;(set-fringe-mode 10) ;; not sure what this is so don't use it
+    (menu-bar-mode -1)
 
 
-;;;;;;;;;; functions ;;;;;;;;;;
+    ;; theme
+    ;;(load-theme 'deeper-blue)
 
+    ;; backup files
+    (setq make-backup-files nil) ; stop creating backup~ files
+    (setq auto-save-default nil) ; stop creating #autosave# files
+    (setq create-lockfiles nil)  ; stop creating .# files
+
+
+    ;; enable disabled functions
+    (put 'narrow-to-region 'disabled nil)
+    (put 'dired-find-alternate-file 'disabled nil)
+
+    ;; stop asking to follow symlinks to vc files
+    (setq vc-follow-symlinks t)
+
+    ;; hl line mode
+    (global-hl-line-mode t)
+ 
+
+
+;; -----------------------------------------------------------------
+
+;; some key bindings
+
+;; c-g = esc
+(define-key global-map (kbd "<escape>") 'keyboard-escape-quit)
+
+;; ibuffer
+(define-key global-map (kbd "C-x C-b") 'ibuffer)
 
 ;; always kill current buffer and window if not the last
 (defun raxjs/kill-curr-buffer ()
   (interactive)
-  (kill-buffer-and-window)
-  )
-
-;; open-line-below/above
-(defun raxjs/open-line-below ()
-  (interactive)
-  (move-end-of-line nil)
-  (newline-and-indent))
-(defun raxjs/open-line-above ()
-  (interactive)
-  (move-beginning-of-line nil)
-  (newline-and-indent)
-  (previous-line))
-
-;; highlighting keybidnings
-(defun raxjs/unhighlight-all ()
-  (interactive)
-  (unhighlight-regexp t)
-  )
-
-
-
-
-
-
-;;;;;;;;;; key bindings ;;;;;;;;;;
-
-;; better key bindings for end-of-buffer and beginning-of-buffer
-(global-set-key (kbd "C-c g g") 'beginning-of-buffer)
-(global-set-key (kbd "C-c G") 'end-of-buffer)
-
-;; marking bindings
-(global-set-key (kbd "C-c m p") 'er/mark-paragraph)
-(global-set-key (kbd "C-c m w") 'er/mark-word)
-(global-set-key (kbd "C-c m \"") 'er/mark-inside-quotes)
-(global-set-key (kbd "C-c m (") 'er/mark-inside-pairs)
-(global-set-key (kbd "C-c m )") 'er/mark-inside-pairs)
-(global-set-key (kbd "C-c m s") 'er/mark-symbol)
-
-;; highlight bindings
-(global-set-key (kbd "C-c h h") 'highlight-symbol-at-point)
-(global-set-key (kbd "C-c h u") 'unhighlight-regexp)
-(global-set-key (kbd "C-c h U") 'raxjs/unhighlight-all)
-
-;; open line below/above bindings
-(global-set-key (kbd "C-o") 'raxjs/open-line-below)
-(global-set-key (kbd "C-S-o") 'raxjs/open-line-above)
-
-;; page up and page down better keybindings
-(global-set-key (kbd "C-c n") 'cua-scroll-up)
-(global-set-key (kbd "C-c p") 'cua-scroll-down)
-
-;; ibuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; always kill current buffer
+  ;;  (kill-buffer-and-window)
+  (kill-buffer (current-buffer))
+  (if (< 1 (count-windows)) (delete-window) nil))
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
-;; ido switch buffer binding
-(global-set-key (kbd "C-x b") 'ido-switch-buffer)
-
-;; search bindings
-(global-set-key (kbd "C-s") 'isearch-forward)
-(global-set-key (kbd "M-s") 'swiper)
-
-;; window movments
-(define-prefix-command 'window-prefix-map)
-(global-set-key (kbd "C-w") 'window-prefix-map)
-(define-key magit-mode-map (kbd "C-w") 'window-prefix-map)
-(define-key window-prefix-map (kbd "f") 'windmove-right)
-(define-key window-prefix-map (kbd "b") 'windmove-left)
-(define-key window-prefix-map (kbd "n") 'windmove-down)
-(define-key window-prefix-map (kbd "p") 'windmove-up)
-(define-key window-prefix-map (kbd "1") 'delete-other-windows)
-(define-key window-prefix-map (kbd "2") 'split-window-below)
-(define-key window-prefix-map (kbd "3") 'split-window-right)
-(define-key window-prefix-map (kbd "0") 'delete-window)
-(define-key window-prefix-map (kbd "d") 'delete-window)
-(define-key window-prefix-map (kbd "a") 'ivy-push-view)
-(define-key window-prefix-map (kbd "x") 'ivy-pop-view)
-(define-key window-prefix-map (kbd "s") 'ivy-switch-view)
-
-
-;; popup kill ring binding :not-working: shadowed by delete-selection-repeat-replace-region
-;; (global-set-key (kbd "M-v") 'popup-kill-ring)
-(global-set-key (kbd "M-y") 'popup-kill-ring)
-
-;; counsel fuzzy search bindings
-(define-key shell-mode-map (kbd "C-r") 'counsel-shell-history)
-(global-set-key (kbd "C-x C-p") 'counsel-fzf)
-
-;; sane-term bindings
-(global-set-key  (kbd "C-c t") 'sane-term)
-(global-set-key (kbd "C-c T") 'sane-term-create)
-
-;; smex meta x binding
-(global-set-key  (kbd "M-x") 'smex)
-
-;; org-mode custom key bindings
-(defun raxjs/org-mode-keys ()
-  (interactive)
-  (define-key (current-local-map) (kbd "C-c a a") 'org-agenda-list)
-  (define-key (current-local-map) (kbd "C-c a t") 'org-todo-list)
-  )
-(add-hook 'org-mode-hook 'raxjs/org-mode-keys)
-
-;; rg bindings
-(define-key rg-mode-map (kbd "M-n") 'rg-next-file)
-(define-key rg-mode-map (kbd "M-p") 'rg-prev-file)
-(define-key rg-mode-map (kbd "C-n") 'compilation-next-error)
-(define-key rg-mode-map (kbd "C-p") 'compilation-previous-error)
-(define-key rg-mode-map (kbd "<RET>") 'compilation-previous-error)
 
 
 
-;;;;;;;;;; shell stuff ;;;;;;;;;;
+;; fix SSH_AUTH_SOCK
+(defun raxjs/get-string-from-file (filePath)
+  "Return filePath's file content."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (buffer-string)))
+(defun raxjs/trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+(replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
+(setenv "SSH_AUTH_SOCK" (raxjs/trim-string (raxjs/get-string-from-file "/tmp/emacs_auth_sock")))
+(getenv "SSH_AUTH_SOCK")
 
-(setenv "PAGER" "")
 
 
-;;;;;;;;;; customize ;;;;;;;;;;
+;;;; lisp setup ;;;;
+;;
+;; wget https://beta.quicklisp.org/quicklisp.lisp
+;; sbcl --load quicklisp.lisp
+;; (quicklisp-quickstart:install)
+;; (ql:add-to-init-file)
+;; (ql:quickload "quicklisp-slime-helper")
+(when (file-exists-p "~/quicklisp/slime-helper.el")
+    (load (expand-file-name "~/quicklisp/slime-helper.el"))
+    (setq inferior-lisp-program "sbcl"
+	  slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+	  )
+
+    (use-package slime-company
+	:ensure t
+	:after (slime company)
+	:config
+	(setq slime-company-completion 'fuzzy
+	      slime-company-after-completion 'slime-company-just-one-space
+	      )
+	(slime-setup '(slime-fancy slime-company))
+	)
+    )
+
+
+;; -----------------------------------------------------------------
 
 ;; keep my config clean
 (setq custom-file (concat user-emacs-directory "/custom.el"))

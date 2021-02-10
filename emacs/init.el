@@ -238,6 +238,12 @@
 (add-hook 'c-mode-hook (lambda ()
 			 (xref-etags-mode t)))
 
+;; php
+(use-package php-mode
+  :ensure t
+  :init
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode)))
 
 ;; popup help menu with all avilable keys when typing prefix key combo
 (use-package which-key
@@ -263,11 +269,6 @@
 
 (use-package magit
   :ensure t)
-(use-package evil-magit
-  :ensure t
-  :after magit)
-
-
 
 (use-package org
   :ensure t

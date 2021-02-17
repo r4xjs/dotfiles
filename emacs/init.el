@@ -131,13 +131,28 @@
 
   
   (defun raxjs/counsel-fzf () (interactive)
-	(counsel-fzf nil default-directory))
+	(counsel-fzf nil (raxjs/get-search-root)))
   (defun raxjs/counsel-rg () (interactive)
-	(counsel-rg nil default-directory))
+	(counsel-rg nil (raxjs/get-search-root)))
+  (defun raxjs/set-search-root (search-root) (interactive)
+	 (setq raxjs/search-root search-root))
+  (defun raxjs/get-search-root () (interactive)
+	 (if (bound-and-true-p raxjs/search-root)
+	     raxjs/search-root
+	     default-directory
+	     ))
+
   (define-key evil-normal-state-map (kbd "<leader>r") 'raxjs/counsel-rg)
-  (define-key evil-normal-state-map (kbd "<leader>pr") 'counsel-rg)
+  ;;(define-key evil-normal-state-map (kbd "<leader>pr") 'counsel-rg)
   (define-key evil-normal-state-map (kbd "<leader>f") 'raxjs/counsel-fzf)
-  (define-key evil-normal-state-map (kbd "<leader>pf") 'counsel-fzf)
+  ;;(define-key evil-normal-state-map (kbd "<leader>pf") 'counsel-fzf)
+  (define-key evil-normal-state-map (kbd "<leader>ps") '(lambda
+							 () (interactive)
+							 (raxjs/set-search-root default-directory)))
+  (define-key evil-normal-state-map (kbd "<leader>pu") '(lambda
+							 () (interactive)
+							 (raxjs/set-search-root nil)))
+
   ;;(define-key global-map (kbd "C-c C-r") 'counsel-rg)
   ;;(define-key global-map (kbd "C-c C-f") 'counsel-fzf)
 
@@ -244,6 +259,12 @@
   :init
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode)))
+
+(use-package swift-mode
+  :ensure t
+  :init
+(add-to-list 'auto-mode-alist '("\\.swift$" . php-mode)))
+
 
 ;; popup help menu with all avilable keys when typing prefix key combo
 (use-package which-key

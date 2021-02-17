@@ -42,6 +42,7 @@ nn_qemu_create_disk(){
 nn_qemu_start(){
     print -z 'qemu-system-x86_64 -cdrom my.iso -boot menu=on -drive file=my.qcow2,format=qcow2 --enable-kvm -cpu host -m 1024'
 }
-nn_rdb(){
-    print -z 'xfreerdp /u:"user" /v:127.0.0.1:3389'
+nn_rdp(){
+    print -z "xfreerdp /u:domain\\user /p:'password' /w:1920 /h:1440  /proxy:socks5://localhost:1234 /v:10.60.14.46:3389"
 }
+

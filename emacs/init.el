@@ -18,11 +18,13 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
+(setq use-package-verbose nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
 	     '("org" . "https://orgmode.org/elpa/")
 	     )
 (package-initialize)
+
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -269,16 +271,17 @@
 ;; popup help menu with all avilable keys when typing prefix key combo
 (use-package which-key
   :ensure t
-  :diminish
-  :init 
-  (which-key-mode)
+  :defer 0
+  :diminish which-key-mode
   :config
+  (which-key-mode)
   (setq wich-key-idle-delay 0.1))
 
 
 ;; nicer help pages 
 (use-package helpful
   :ensure t
+  :commands (helpfull-callable helpfull-variable helpfull-command helpfull-key)
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)
@@ -358,7 +361,7 @@
 (use-package org-bullets
   :ensure t
   :after org
-  :init
+  :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (setq org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾" "❿"))
 )
@@ -466,6 +469,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (getenv "SSH_AUTH_SOCK")
 
 
+;; email
+(setq email-config (expand-file-name "~/.emacs.d/email.el"))
+(when (file-exists-p email-config)
+  (load email-config))
+
+
 
 ;;;; lisp setup ;;;;
 ;;
@@ -490,6 +499,57 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 	(slime-setup '(slime-fancy slime-company))
 	)
     )
+
+;; clojure setup
+
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t)
+
+(use-package symex
+  :ensure t
+  :config
+  (setq symex--user-evil-keyspec
+  ;; must be defined bofore symex-initialize
+	'(("h" . symex-go-down)
+	  ("j" . symex-go-forward)
+	  ("k" . symex-go-backward)
+	  ("l" . symex-go-up)
+	  ("t" . symex-mode-interface)
+	  ))
+  (symex-initialize)
+  (define-key evil-normal-state-map (kbd "t") 'symex-mode-interface)
+  (symex--toggle-highlight)
+  :custom
+  (symex-modal-backend 'evil)
+  (symex-remember-branch-position-p nil))
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :config
+  (setq python-shell-interpreter "jupyter"
+	python-shell-interpreter-args "console --simple-prompt"
+	python-shell-prompt-detect-failure-warning nil)
+  (add-to-list 'python-shell-completion-native-disabled-interpreters
+	       "jupyter")
+  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-statement)
+  )
+
+
+;; misc
+(defun raxjs/display-startup-time ()
+  (message "Emacs loaded in %s with %d  garbage collections."
+	   (format "%.2f seconds"
+		   (float-time
+		    (time-subtract after-init-time before-init-time)))
+	   gcs-done))
+(add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
+
 
 
 ;; -----------------------------------------------------------------

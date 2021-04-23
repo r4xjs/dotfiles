@@ -114,6 +114,9 @@ else
     export EDITOR=/usr/bin/vim
 fi
 #export EDITOR=em
+export PIP_REQUIRE_VIRTUALENV=true
+
+
 # 1}}}
 
 # ---------- functions ----------

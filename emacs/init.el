@@ -363,6 +363,9 @@
   (setq org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾" "❿"))
 )
 
+(use-package ob-async
+  :ensure t)
+
 ;; vterm 
 (use-package vterm
   :ensure t

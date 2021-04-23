@@ -523,16 +523,20 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (symex-modal-backend 'evil)
   (symex-remember-branch-position-p nil))
 
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :config
+  (setq python-shell-interpreter "jupyter"
+	python-shell-interpreter-args "console --simple-prompt"
+	python-shell-prompt-detect-failure-warning nil)
+  (add-to-list 'python-shell-completion-native-disabled-interpreters
+	       "jupyter")
+  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-statement)
+  )
 
-;;(use-package paredit
-;;  :ensure t)
-;;(use-package lispy
-;;  :ensure t)
-;; paredit
-;; lispy
-;; smartparens
-;; lispyville
-;; symex
 
 ;; misc
 (defun raxjs/display-startup-time ()

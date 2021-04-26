@@ -500,31 +500,31 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 	)
     )
 
-;; clojure setup
-
-(use-package clojure-mode
-  :ensure t)
-
-(use-package cider
-  :ensure t)
-
-(use-package symex
-  :ensure t
-  :config
-  (setq symex--user-evil-keyspec
-  ;; must be defined bofore symex-initialize
-	'(("h" . symex-go-down)
-	  ("j" . symex-go-forward)
-	  ("k" . symex-go-backward)
-	  ("l" . symex-go-up)
-	  ("t" . symex-mode-interface)
-	  ))
-  (symex-initialize)
-  (define-key evil-normal-state-map (kbd "t") 'symex-mode-interface)
-  (symex--toggle-highlight)
-  :custom
-  (symex-modal-backend 'evil)
-  (symex-remember-branch-position-p nil))
+;;;; clojure setup
+;;
+;;(use-package clojure-mode
+;;  :ensure t)
+;;
+;;(use-package cider
+;;  :ensure t)
+;;
+;;(use-package symex
+;;  :ensure t
+;;  :config
+;;  (setq symex--user-evil-keyspec
+;;  ;; must be defined bofore symex-initialize
+;;	'(("h" . symex-go-down)
+;;	  ("j" . symex-go-forward)
+;;	  ("k" . symex-go-backward)
+;;	  ("l" . symex-go-up)
+;;	  ("t" . symex-mode-interface)
+;;	  ))
+;;  (symex-initialize)
+;;  (define-key evil-normal-state-map (kbd "t") 'symex-mode-interface)
+;;  (symex--toggle-highlight)
+;;  :custom
+;;  (symex-modal-backend 'evil)
+;;  (symex-remember-branch-position-p nil))
 
 (use-package elpy
   :ensure t

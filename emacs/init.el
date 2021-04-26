@@ -534,7 +534,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 	python-shell-prompt-detect-failure-warning nil)
   (add-to-list 'python-shell-completion-native-disabled-interpreters
 	       "jupyter")
-  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-statement)
+  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)
+  (define-key elpy-mode-map (kbd "C-x C-e") 'elpy-shell-send-statement)
   )
 
 

@@ -366,6 +366,9 @@
   (setq org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾" "❿"))
 )
 
+(use-package ob-async
+  :ensure t)
+
 ;; vterm 
 (use-package vterm
   :ensure t
@@ -532,6 +535,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (setq python-shell-interpreter "jupyter"
 	python-shell-interpreter-args "console --simple-prompt"
 	python-shell-prompt-detect-failure-warning nil)
+  (setenv "WORKON_HOME" "~/.pyenv/versions/")
   (add-to-list 'python-shell-completion-native-disabled-interpreters
 	       "jupyter")
   (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)

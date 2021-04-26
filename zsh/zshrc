@@ -224,6 +224,11 @@ elif [ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting/" ];then
 fi
 [ -f "$syntax_hl" ] && source "$syntax_hl"
 
+# pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 
 # typescript logging
 enable_typescript_logging(){

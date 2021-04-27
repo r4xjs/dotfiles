@@ -532,6 +532,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   :config
+  (flymake-mode-off)
   (setq python-shell-interpreter "jupyter"
 	python-shell-interpreter-args "console --simple-prompt"
 	python-shell-prompt-detect-failure-warning nil)

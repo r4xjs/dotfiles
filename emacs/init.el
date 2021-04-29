@@ -58,6 +58,7 @@
   (setq evil-want-C-u-scroll t)
   (setq evil-want-keybinding nil)
   (setq evil-want-minibuffer t)
+  (setq evil-search-module 'evil-search)
   :config
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key global-map (kbd "C-x C-u") 'universal-argument)

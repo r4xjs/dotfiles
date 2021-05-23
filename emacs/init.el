@@ -534,12 +534,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (advice-add 'python-mode :before 'elpy-enable)
   :config
   (flymake-mode-off)
-  (setq python-shell-interpreter "jupyter"
-	python-shell-interpreter-args "console --simple-prompt"
-	python-shell-prompt-detect-failure-warning nil)
+  ;;(setq python-shell-interpreter "jupyter"
+  ;;	python-shell-interpreter-args "console --simple-prompt"
+  ;;	python-shell-prompt-detect-failure-warning nil)
   (setenv "WORKON_HOME" "~/.pyenv/versions/")
-  (add-to-list 'python-shell-completion-native-disabled-interpreters
-	       "jupyter")
+  ;;(add-to-list 'python-shell-completion-native-disabled-interpreters
+  ;;	       "jupyter")
   (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)
   (define-key elpy-mode-map (kbd "C-x C-e") 'elpy-shell-send-statement)
   )

@@ -164,6 +164,7 @@
   (setq ivy-initial-inputs-alist nil) ;; no prefixes in ivy searches like "^"
   )
 
+
 ;; projectile
 (use-package projectile
   :ensure t
@@ -431,7 +432,7 @@
     (setq vc-follow-symlinks t)
 
     ;; hl line mode
-    (global-hl-line-mode t)
+    ;;(global-hl-line-mode t)
  
 
 
@@ -555,6 +556,29 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
 
 
+;;(use-package idle-highlight-mode
+;;  :ensure t
+;;  :config
+;;  (setq idle-highlight-idle-time 0.1)
+;;  (add-hook 'prog-mode-hook (lambda ()
+;;			      (idle-highlight-mode t))))
+
+(use-package hi-lock
+  :ensure nil
+  :config
+(set-face-background 'hi-yellow   "#ebdc8a")
+(set-face-foreground 'hi-yellow   "#403d31")
+(set-face-background 'hi-pink     "#c15dcf")
+(set-face-foreground 'hi-pink     "#1e181f")
+(set-face-background 'hi-green    "#68d164")
+(set-face-foreground 'hi-green    "#131f13")
+(set-face-background 'hi-blue     "#4070de")
+(set-face-foreground 'hi-blue     "#d1d7e3"))
+
+(define-key evil-normal-state-map (kbd "<leader>hs") 'highlight-symbol-at-point)
+(define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
+						       (interactive)
+						       (unhighlight-regexp t)))
 
 ;; -----------------------------------------------------------------
 

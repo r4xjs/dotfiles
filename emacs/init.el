@@ -300,6 +300,10 @@
   :ensure t
   :config
   (setq org-use-fast-todo-selection t)
+  (setq org-adapt-indentation nil)
+  (setq electric-indent-mode nil)
+  (setq org-src-preserve-indentation nil)
+  (setq org-edit-src-content-indentation 0)
   ;; (org-indent-mode)
   (setq org-agenda-files '(
 			 "~/s/org/"

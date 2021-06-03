@@ -403,6 +403,7 @@
     (global-auto-revert-mode t)
     (setq auto-revert-verbose nil)
     (show-paren-mode 1)
+    (electric-indent-mode 1)
 
     ;; modeline lines and columns (L,C)
     (line-number-mode 1)

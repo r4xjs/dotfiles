@@ -375,7 +375,7 @@
 (use-package ob-async
   :ensure t)
 
-;; vterm 
+;; vterm
 (use-package vterm
   :ensure t
   :config
@@ -394,7 +394,7 @@
 
 ;; --------------------------------------------------------
 
-;; some settings 
+;; some settings
 
     ;; basic stuff
     (defalias 'yes-or-no-p 'y-or-n-p)
@@ -404,6 +404,8 @@
     (setq auto-revert-verbose nil)
     (show-paren-mode 1)
     (electric-indent-mode 1)
+    (global-whitespace-mode t)
+    (global-so-long-mode t)
 
     ;; modeline lines and columns (L,C)
     (line-number-mode 1)
@@ -549,7 +551,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)
   (define-key elpy-mode-map (kbd "C-x C-e") 'elpy-shell-send-statement)
   )
-
+;; use pyenv-mode-set to set the virtualenv
+(use-package pyenv-mode
+  :ensure t)
 
 ;; misc
 (defun raxjs/display-startup-time ()

@@ -1,6 +1,6 @@
 ;; TODO:
 ;; - [x] setup lsp keybindings for go to definition and jump back and ...
-;; - [x] smart kill buffer such that it kills the window as well if it is not the last window 
+;; - [x] smart kill buffer such that it kills the window as well if it is not the last window
 ;; - [x] ctrl-p replacment for emacs
 ;; - [ ] setup hydra: https://github.com/abo-abo/hydra
 ;; - [ ] setup dired
@@ -9,7 +9,7 @@
 ;; src: https://protesilaos.com/dotemacs/
 
 ;; Cheat Sheet:
-;; (define-key ...) for creating new key bindings (adding a binding to a keymap/list) 
+;; (define-key ...) for creating new key bindings (adding a binding to a keymap/list)
 ;; (add-hook ...) for adding a function to a hook/list
 ;; (defun raxjs/funcname () (interactive) ...) for creating new functions that can be called with M-x
 
@@ -63,7 +63,7 @@
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key global-map (kbd "C-x C-u") 'universal-argument)
   (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
-  (evil-define-key 'insert ivy-minibuffer-map (kbd "C-j") 'ivy-next-line) 
+  (evil-define-key 'insert ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
   (evil-define-key 'insert ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-mode 1)
@@ -93,7 +93,7 @@
   :config
   (setq dired-listing-switches "-ahl --group-directories-first"))
   ;; fix evil leader key in dired-mode
-  (add-hook 'dired-mode-hook (lambda () 
+  (add-hook 'dired-mode-hook (lambda ()
     (evil-define-key 'normal dired-mode-map (kbd "SPC") 'evil-send-leader)))
 
 
@@ -132,7 +132,6 @@
   ;;(define-key evil-normal-state-map (kbd "<leader>r") 'counsel-rg)
   (define-key evil-normal-state-map (kbd "<leader>s") 'swiper)
 
-  
   (defun raxjs/counsel-fzf () (interactive)
 	(counsel-fzf nil (raxjs/get-search-root)))
   (defun raxjs/counsel-rg () (interactive)
@@ -150,11 +149,11 @@
   (define-key evil-normal-state-map (kbd "<leader>f") 'raxjs/counsel-fzf)
   ;;(define-key evil-normal-state-map (kbd "<leader>pf") 'counsel-fzf)
   (define-key evil-normal-state-map (kbd "<leader>ps") '(lambda
-							 () (interactive)
-							 (raxjs/set-search-root default-directory)))
+                             () (interactive)
+                             (raxjs/set-search-root default-directory)))
   (define-key evil-normal-state-map (kbd "<leader>pu") '(lambda
 							 () (interactive)
-							 (raxjs/set-search-root nil)))
+                                                (raxjs/set-search-root nil)))
 
   ;;(define-key global-map (kbd "C-c C-r") 'counsel-rg)
   ;;(define-key global-map (kbd "C-c C-f") 'counsel-fzf)
@@ -201,7 +200,7 @@
     "Face used for the tooltip.")
 
 
-  
+
   (company-tng-mode 1)
   (global-company-mode t)
   )
@@ -280,7 +279,7 @@
   (setq wich-key-idle-delay 0.1))
 
 
-;; nicer help pages 
+;; nicer help pages
 (use-package helpful
   :ensure t
   :commands (helpfull-callable helpfull-variable helpfull-command helpfull-key)
@@ -315,8 +314,7 @@
   (load (concat user-emacs-directory "doom-stuff.el"))
   ;; remap some keys
   (add-hook 'org-mode-hook (lambda ()
-	    (define-key org-mode-map  [remap org-insert-heading-respect-content] '+org/insert-item-below)  
-	    ))
+(define-key org-mode-map [remap org-insert-heading-respect-content] '+org/insert-item-below)))
 
   ;; some custom stuff
   (setq raxjs/org-dir (expand-file-name "~/org"))
@@ -396,51 +394,51 @@
 
 ;; some settings
 
-    ;; basic stuff
-    (defalias 'yes-or-no-p 'y-or-n-p)
-    (setq scroll-conservatively 100)
-    (setq ring-bell-function 'ignore)
-    (global-auto-revert-mode t)
-    (setq auto-revert-verbose nil)
-    (show-paren-mode 1)
-    (electric-indent-mode 1)
-    (global-whitespace-mode t)
-    (global-so-long-mode t)
+;; basic stuff
+(defalias 'yes-or-no-p 'y-or-n-p)
+(setq scroll-conservatively 100)
+(setq ring-bell-function 'ignore)
+(global-auto-revert-mode t)
+(setq auto-revert-verbose nil)
+(show-paren-mode 1)
+(electric-indent-mode 1)
+(global-whitespace-mode t)
+(global-so-long-mode t)
 
-    ;; modeline lines and columns (L,C)
-    (line-number-mode 1)
-    (column-number-mode 1)
+;; modeline lines and columns (L,C)
+(line-number-mode 1)
+(column-number-mode 1)
 
-    ;; no startup message screen
-    (setq inhibit-startup-message t)
+;; no startup message screen
+(setq inhibit-startup-message t)
 
-    ;; no gui stuff
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-    (tooltip-mode -1)
-    ;;(set-fringe-mode 10) ;; not sure what this is so don't use it
-    (menu-bar-mode -1)
-
-
-    ;; theme
-    ;;(load-theme 'deeper-blue)
-
-    ;; backup files
-    (setq make-backup-files nil) ; stop creating backup~ files
-    (setq auto-save-default nil) ; stop creating #autosave# files
-    (setq create-lockfiles nil)  ; stop creating .# files
+;; no gui stuff
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+;;(set-fringe-mode 10) ;; not sure what this is so don't use it
+(menu-bar-mode -1)
 
 
-    ;; enable disabled functions
-    (put 'narrow-to-region 'disabled nil)
-    (put 'dired-find-alternate-file 'disabled nil)
+;; theme
+;;(load-theme 'deeper-blue)
 
-    ;; stop asking to follow symlinks to vc files
-    (setq vc-follow-symlinks t)
+;; backup files
+(setq make-backup-files nil) ; stop creating backup~ files
+(setq auto-save-default nil) ; stop creating #autosave# files
+(setq create-lockfiles nil)  ; stop creating .# files
 
-    ;; hl line mode
-    ;;(global-hl-line-mode t)
- 
+
+;; enable disabled functions
+(put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+
+;; stop asking to follow symlinks to vc files
+(setq vc-follow-symlinks t)
+
+;; hl line mode
+;;(global-hl-line-mode t)
+
 
 
 ;; -----------------------------------------------------------------

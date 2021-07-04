@@ -402,7 +402,7 @@
 (setq auto-revert-verbose nil)
 (show-paren-mode 1)
 (electric-indent-mode 1)
-(global-whitespace-mode t)
+;;(global-whitespace-mode t)
 (global-so-long-mode t)
 
 ;; modeline lines and columns (L,C)

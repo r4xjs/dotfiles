@@ -10,3 +10,4 @@ do
         fi
 done
 chmod o+w /sys/class/backlight/intel_backlight/brightness
+rmmod pcspkr

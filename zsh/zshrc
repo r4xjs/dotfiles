@@ -84,7 +84,7 @@ if  hash nvim 2>/dev/null; then
     alias vim='nvim'
 fi
 
-alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start ; sleep 0.5; pulsaudio --kill; sleep 0.5; pulsaudio --start'
+alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start ; sleep 0.5; pulseaudio --kill; sleep 0.5; pulseaudio --start'
 alias fixadb='sudo adb kill-server; sudo adb start-server'
 if [ ! -f ~/.home ];then
     alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
@@ -109,11 +109,10 @@ fi
 export wlan0=wlx00c0ca56bbff
 export okular_cache=/home/user/.config/okularrc
 if hash nvim 2>/dev/null; then
-    export EDITOR=/usr/bin/nvim
+    export EDITOR=$(which nvim)
 else
-    export EDITOR=/usr/bin/vim
+    export EDITOR=$(which vim)
 fi
-#export EDITOR=em
 export PIP_REQUIRE_VIRTUALENV=true
 
 

@@ -3,8 +3,8 @@
 ;; - [x] smart kill buffer such that it kills the window as well if it is not the last window
 ;; - [x] ctrl-p replacment for emacs
 ;; - [ ] setup hydra: https://github.com/abo-abo/hydra
-;; - [ ] setup dired
-;; - [ ] setup magit
+;; - [x] setup dired
+;; - [x] setup magit
 ;; src: https://github.com/daviwil/emacs-from-scratch
 ;; src: https://protesilaos.com/dotemacs/
 
@@ -21,24 +21,17 @@
 (setq use-package-verbose nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
-	     '("org" . "https://orgmode.org/elpa/")
-	     )
+	     '("org" . "https://orgmode.org/elpa/"))
 (package-initialize)
 
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package)
-  )
+  (package-install 'use-package))
 
 (use-package diminish
   :after use-package
   :ensure t)
-
-;;(use-package inkpot-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'inkpot t))
 
 (use-package doom-themes
   :ensure t
@@ -130,9 +123,6 @@
   (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
   (define-key evil-normal-state-map (kbd "<leader>.") 'counsel-find-file)
   (define-key evil-normal-state-map (kbd "<leader>b") 'counsel-switch-buffer)
-  ;;(define-key evil-normal-state-map (kbd "<leader>f") 'counsel-find-file)
-  ;;(define-key evil-normal-state-map (kbd "<leader>p") 'counsel-fzf)
-  ;;(define-key evil-normal-state-map (kbd "<leader>r") 'counsel-rg)
   (define-key evil-normal-state-map (kbd "<leader>s") 'swiper)
 
   (defun raxjs/counsel-fzf () (interactive)
@@ -191,6 +181,7 @@
   (add-hook 'c-mode-hook 'company-mode)
   (add-hook 'python-mode-hook 'company-mode)
   (add-hook 'slime-mode-hook 'company-mode)
+  (add-hook 'rust-mode-hook 'company-mode)
 
     (defface company-tooltip
     '((default :foreground "green")
@@ -205,12 +196,8 @@
 
 
   (company-tng-mode 1)
-  (global-company-mode t)
-  )
-;;(use-package company-box
-;;  :ensure t
-;;  :config
-;;  (add-hook 'company-mode-hook 'company-box-mode))
+  (global-company-mode t))
+
 
 ;; lsp-mode
 (use-package lsp-mode
@@ -243,8 +230,8 @@
 (use-package rust-mode
   :ensure t
   :init
-  (setq lsp-rust-server "/usr/bin/rls")
-  (setq lsp-rust-analyzer-server-command "/usr/bin/rust-analyzer"))
+  (setq lsp-rust-server "/usr/local/bin/rls")
+  (setq lsp-rust-analyzer-server-command "/usr/local/bin/rust-analyzer"))
 
 ;; eTAGS
 (setq tags-add-tables nil)
@@ -254,18 +241,6 @@
 (define-key evil-normal-state-map (kbd "<leader>tv") 'visit-tags-table)
 (add-hook 'c-mode-hook (lambda ()
 			 (xref-etags-mode t)))
-
-;; php
-(use-package php-mode
-  :ensure t
-  :init
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode)))
-
-(use-package swift-mode
-  :ensure t
-  :init
-(add-to-list 'auto-mode-alist '("\\.swift$" . php-mode)))
 
 
 ;; popup help menu with all avilable keys when typing prefix key combo
@@ -355,9 +330,7 @@
      (dot . t)
      (C . t)
      (gnuplot . t)
-     (haskell . t)
-     )
-   )
+     (haskell . t)))
    (setq org-confirm-babel-evaluate nil)
   ) ;; end of org use-package
 
@@ -371,23 +344,6 @@
 
 (use-package ob-async
   :ensure t)
-
-;;;; vterm
-;;(use-package vterm
-;;  :ensure t
-;;  :config
-;;  (define-key evil-normal-state-map (kbd "<leader>ot") 'vterm)
-;;  )
-
-
-;;;; recursive search packages
-;;(use-package deadgrep
-;;  :ensure t
-;;  :config
-;;  (define-key global-map (kbd "C-c C-r") 'deadgrep)
-;;  )
-
-;; maybe hydra could be usefull its like i3 modes
 
 ;; --------------------------------------------------------
 
@@ -415,12 +371,8 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-;;(set-fringe-mode 10) ;; not sure what this is so don't use it
 (menu-bar-mode -1)
 
-
-;; theme
-;;(load-theme 'deeper-blue)
 
 ;; backup files
 (setq make-backup-files nil) ; stop creating backup~ files
@@ -434,10 +386,6 @@
 
 ;; stop asking to follow symlinks to vc files
 (setq vc-follow-symlinks t)
-
-;; hl line mode
-;;(global-hl-line-mode t)
-
 
 
 ;; -----------------------------------------------------------------
@@ -457,6 +405,9 @@
   (kill-buffer (current-buffer))
   (if (< 1 (count-windows)) (delete-window) nil))
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
+
+;; open terminal key binding
+(define-key evil-normal-state-map (kbd "<leader>ot") 'ansi-term)
 
 
 
@@ -480,57 +431,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (when (file-exists-p email-config)
   (load email-config))
 
-
-
-;;;; lisp setup ;;;;
-;;
-;; wget https://beta.quicklisp.org/quicklisp.lisp
-;; sbcl --load quicklisp.lisp
-;; (quicklisp-quickstart:install)
-;; (ql:add-to-init-file)
-;; (ql:quickload "quicklisp-slime-helper")
-(when (file-exists-p "~/quicklisp/slime-helper.el")
-    (load (expand-file-name "~/quicklisp/slime-helper.el"))
-    (setq inferior-lisp-program "sbcl"
-	  slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-	  )
-
-    (use-package slime-company
-	:ensure t
-	:after (slime company)
-	:config
-	(setq slime-company-completion 'fuzzy
-	      slime-company-after-completion 'slime-company-just-one-space
-	      )
-	(slime-setup '(slime-fancy slime-company))
-	)
-    )
-
-;;;; clojure setup
-;;
-;;(use-package clojure-mode
-;;  :ensure t)
-;;
-;;(use-package cider
-;;  :ensure t)
-;;
-;;(use-package symex
-;;  :ensure t
-;;  :config
-;;  (setq symex--user-evil-keyspec
-;;  ;; must be defined bofore symex-initialize
-;;	'(("h" . symex-go-down)
-;;	  ("j" . symex-go-forward)
-;;	  ("k" . symex-go-backward)
-;;	  ("l" . symex-go-up)
-;;	  ("t" . symex-mode-interface)
-;;	  ))
-;;  (symex-initialize)
-;;  (define-key evil-normal-state-map (kbd "t") 'symex-mode-interface)
-;;  (symex--toggle-highlight)
-;;  :custom
-;;  (symex-modal-backend 'evil)
-;;  (symex-remember-branch-position-p nil))
 
 (use-package elpy
   :ensure t
@@ -562,15 +462,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
 
 
-(define-key evil-normal-state-map (kbd "<leader>ot") 'ansi-term)
-
-;;(use-package idle-highlight-mode
-;;  :ensure t
-;;  :config
-;;  (setq idle-highlight-idle-time 0.1)
-;;  (add-hook 'prog-mode-hook (lambda ()
-;;			      (idle-highlight-mode t))))
-
 (use-package hi-lock
   :ensure nil
   :config
@@ -587,6 +478,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
 						       (interactive)
 						       (unhighlight-regexp t)))
+
 
 ;; -----------------------------------------------------------------
 

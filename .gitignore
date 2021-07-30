@@ -6,3 +6,4 @@ emacs/auto-save-list
 emacs/elpa
 emacs/projectile-bookmarks.eld
 emacs/transient
+emacs/.lsp-session*

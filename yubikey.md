@@ -83,6 +83,8 @@ auth required pam_u2f.so origin=pam://<HOSTNAME> appid=pam://<HOSTNAME> authfile
 auth include system-auth
 ```
 
+for i3lock, make sure that `u2f_mappings` file is readable by the user
+
 <!-- 1}}} --> 
 
 # GPG

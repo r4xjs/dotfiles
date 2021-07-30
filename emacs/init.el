@@ -44,7 +44,10 @@
   :ensure t
   :config
   (load-theme 'doom-one t))
+
 (use-package doom-modeline
+  ;; This package requires the fonts included with all-the-icons to be installed.
+  ;; Run M-x all-the-icons-install-fonts to do so
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
@@ -231,10 +234,6 @@
   (define-key lsp-mode-map (kbd "<leader>go") 'lsp-ui-peek-jump-backward)
   (define-key lsp-mode-map (kbd "<leader>gr") 'lsp-find-references))
 
-;; company-lsp
-(use-package company-lsp
-  :ensure t)
-
 ;; ccls
 (use-package ccls
   :ensure t
@@ -373,12 +372,12 @@
 (use-package ob-async
   :ensure t)
 
-;; vterm
-(use-package vterm
-  :ensure t
-  :config
-  (define-key evil-normal-state-map (kbd "<leader>ot") 'vterm)
-  )
+;;;; vterm
+;;(use-package vterm
+;;  :ensure t
+;;  :config
+;;  (define-key evil-normal-state-map (kbd "<leader>ot") 'vterm)
+;;  )
 
 
 ;;;; recursive search packages

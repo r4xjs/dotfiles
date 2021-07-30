@@ -562,6 +562,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
 
 
+(define-key evil-normal-state-map (kbd "<leader>ot") 'ansi-term)
+
 ;;(use-package idle-highlight-mode
 ;;  :ensure t
 ;;  :config

@@ -60,6 +60,8 @@ need opensc package on the client for this to work.
 
 # PAM
 <!-- {{{1 -->
+https://blogg.spofify.se/index.php/2020/09/05/use-yubikey-for-sudo-authentication/
+
 create `u2f_mappings` file
 ```
 pamu2fcfg -u `whoami` -opam://`hostname` -ipam://`hostname`

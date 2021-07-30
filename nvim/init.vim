@@ -1,7 +1,7 @@
 call plug#begin(stdpath('data') . '/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
-    Plug 'nvim-treesitter/nvim-treesitter'
+    " Plug 'nvim-treesitter/nvim-treesitter'
     " Plug 'neovim/nvim-lspconfig'
     " Plug 'ojroques/vim-oscyank'
     " Plug 'tpope/vim-surround'
@@ -46,7 +46,7 @@ filetype plugin on
 
 
 " source ~/.config/nvim/treesitter-settings.vim
-source ~/.config/nvim/markdown-settings.vim
+" source ~/.config/nvim/markdown-settings.vim
 
 " neovim specific
 if has("nvim")

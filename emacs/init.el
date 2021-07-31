@@ -378,6 +378,47 @@
   :ensure t)
 
 
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :config
+  (flymake-mode-off)
+  ;;(setq python-shell-interpreter "jupyter"
+  ;;	python-shell-interpreter-args "console --simple-prompt"
+  ;;	python-shell-prompt-detect-failure-warning nil)
+  (setenv "WORKON_HOME" "~/.pyenv/versions/")
+  ;;(add-to-list 'python-shell-completion-native-disabled-interpreters
+  ;;	       "jupyter")
+  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)
+  (define-key elpy-mode-map (kbd "C-x C-e") 'elpy-shell-send-statement)
+  )
+;; use pyenv-mode-set to set the virtualenv
+(use-package pyenv-mode
+  :ensure t)
+
+
+(use-package hi-lock
+  :ensure nil
+  :config
+    (set-face-background 'hi-yellow   "#ebdc8a")
+    (set-face-foreground 'hi-yellow   "#403d31")
+    (set-face-background 'hi-pink     "#c15dcf")
+    (set-face-foreground 'hi-pink     "#1e181f")
+    (set-face-background 'hi-green    "#68d164")
+    (set-face-foreground 'hi-green    "#131f13")
+    (set-face-background 'hi-blue     "#4070de")
+    (set-face-foreground 'hi-blue     "#d1d7e3")
+
+    ;; key bindings
+    (define-key evil-normal-state-map (kbd "<leader>hs") 'highlight-symbol-at-point)
+    (define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
+							(interactive)
+							(unhighlight-regexp t))))
+
+
+
 ;; --------------------------------------------------------
 
 ;; some settings
@@ -465,25 +506,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (load email-config))
 
 
-(use-package elpy
-  :ensure t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  :config
-  (flymake-mode-off)
-  ;;(setq python-shell-interpreter "jupyter"
-  ;;	python-shell-interpreter-args "console --simple-prompt"
-  ;;	python-shell-prompt-detect-failure-warning nil)
-  (setenv "WORKON_HOME" "~/.pyenv/versions/")
-  ;;(add-to-list 'python-shell-completion-native-disabled-interpreters
-  ;;	       "jupyter")
-  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)
-  (define-key elpy-mode-map (kbd "C-x C-e") 'elpy-shell-send-statement)
-  )
-;; use pyenv-mode-set to set the virtualenv
-(use-package pyenv-mode
-  :ensure t)
 
 ;; misc
 (defun raxjs/display-startup-time ()
@@ -495,22 +517,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
 
 
-(use-package hi-lock
-  :ensure nil
-  :config
-(set-face-background 'hi-yellow   "#ebdc8a")
-(set-face-foreground 'hi-yellow   "#403d31")
-(set-face-background 'hi-pink     "#c15dcf")
-(set-face-foreground 'hi-pink     "#1e181f")
-(set-face-background 'hi-green    "#68d164")
-(set-face-foreground 'hi-green    "#131f13")
-(set-face-background 'hi-blue     "#4070de")
-(set-face-foreground 'hi-blue     "#d1d7e3"))
-
-(define-key evil-normal-state-map (kbd "<leader>hs") 'highlight-symbol-at-point)
-(define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
-						       (interactive)
-						       (unhighlight-regexp t)))
 
 
 

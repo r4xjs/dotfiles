@@ -511,9 +511,13 @@
   (if (< 1 (count-windows)) (delete-window) nil))
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
-;; open terminal key binding
-(define-key evil-normal-state-map (kbd "<leader>ot") 'ansi-term)
 
+;; ansi-term settings
+(setq kill-buffer-query-functions nil) ;; do not ask, kill the buffer with the process
+(defun raxjs/ansi-term (&optional new-buffer-name)
+  (interactive)
+  (ansi-term "/usr/bin/zsh" new-buffer-name))
+(define-key evil-normal-state-map (kbd "<leader>ot") 'raxjs/ansi-term)
 
 
 

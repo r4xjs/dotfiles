@@ -206,21 +206,6 @@ export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
-fix_pinentry(){gpg-connect-agent updatestartuptty /bye >/dev/null}
-if [ -f "/usr/local/bin/ssh" ]; then
-    ssh_path="/usr/local/bin/ssh"
-elif [ -f "/usr/bin/ssh" ]; then
-    ssh_path="/usr/bin/ssh"
-else
-    ssh_path=false
-fi
-if [ "$ssh_path" != false ];then
-    ssh(){fix_pinentry; "$ssh_path" $@}
-fi
-gpush(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git push $@}
-gpull(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git pull $@}
-rsync(){fix_pinentry; /usr/bin/rsync -arvphS --progress $@}
-
 fzf_pass(){find "$HOME"/.password-store -iname "*.gpg" | sed "s/\.gpg//g;s#\./##g;s#$HOME/.password-store/##g" | rofi -dmenu -i }
 # 1}}}
 

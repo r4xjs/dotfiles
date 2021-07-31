@@ -541,7 +541,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (load email-config))
 
 
-
 ;; misc
 (defun raxjs/display-startup-time ()
   (message "Emacs loaded in %s with %d  garbage collections."
@@ -550,8 +549,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 		    (time-subtract after-init-time before-init-time)))
 	   gcs-done))
 (add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
-
-
 
 
 

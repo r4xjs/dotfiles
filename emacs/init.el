@@ -382,9 +382,32 @@
 
 
   (org-roam-setup)
-  
-  :ensure t)
+  (require 'org-roam-protocol)
 
+  ;; https://www.orgroam.com/manual.html#Org_002droam-Protocol
+  ;; add bookmarklet:
+  ;; ----------------
+  ;; javascript:location.href =
+  ;;   'org-protocol://roam-ref?template=r&ref='
+  ;;   + encodeURIComponent(location.href)
+  ;;   + '&title='
+  ;;   + encodeURIComponent(document.title)
+  ;;   + '&body='
+  ;;   + encodeURIComponent(window.getSelection())
+
+  ;; add new appliaction (~/.local/share/applications/org-protocol.desktop)
+  ;; [Desktop Entry]
+  ;; Name=Org-Protocol
+  ;; Exec=emacsclient %u
+  ;; Icon=emacs-icon
+  ;; Type=Application
+  ;; Terminal=false
+  ;; MimeType=x-scheme-handler/org-protocol
+
+  ;; add org-protocol:
+  ;; xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+
+  :ensure t)
 
 (use-package elpy
   :ensure t

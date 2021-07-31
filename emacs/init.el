@@ -96,7 +96,6 @@
 
 ;; ivy
 (use-package ivy
-  :after general
   :diminish
   :ensure t
   :config
@@ -293,11 +292,6 @@
   ;; some custom stuff
   (setq raxjs/org-dir (expand-file-name "~/org"))
 
-  (define-key evil-normal-state-map (kbd "<leader>np")
-    '(lambda () (interactive) (counsel-fzf nil raxjs/org-dir "org-notes: ")))
-  (define-key evil-normal-state-map (kbd "<leader>nf")
-    '(lambda () (interactive) (counsel-find-file raxjs/org-dir)))
-  (define-key evil-normal-state-map (kbd "<leader>nc") 'org-capture)
   (define-key global-map (kbd "C-c l") 'org-store-link)
   (define-key global-map (kbd "C-c C-l") 'org-insert-link)
   (define-key evil-normal-state-map (kbd "C-c C-l") 'org-insert-link)
@@ -344,6 +338,44 @@
 
 (use-package ob-async
   :ensure t)
+
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
+  :config
+  (setq org-roam-directory (file-truename "~/s/roam")
+	org-roam-completion-everywhere t)
+
+  ;; roam buffer window settings
+  (add-to-list 'display-buffer-alist
+	'("\\*org-roam\\*"
+	(display-buffer-in-side-window)
+	(side . right)
+	(slot . 0)
+	(window-width . 0.33)
+	(window-parameters . ((no-other-window . nil)
+				(no-delete-other-windows . t)))))
+
+
+  ;; key bindings
+
+  ;;;; global
+  (define-key evil-normal-state-map (kbd "<leader>nf") 'org-roam-node-find) 
+
+  ;;;; org
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nl") 'org-roam-buffer-toggle) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nc") 'org-id-get-create) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>ni") 'org-roam-node-insert) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>na") 'org-roam-alias-add) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nr") 'org-roam-ref-add) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nt") 'org-roam-tag-add)
+  ;; jump to link with C-c C-o (org-open-at-point)
+
+
+  (org-roam-setup)
+  
+  :ensure t)
+
 
 ;; --------------------------------------------------------
 
@@ -478,6 +510,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
 						       (interactive)
 						       (unhighlight-regexp t)))
+
+
 
 
 ;; -----------------------------------------------------------------

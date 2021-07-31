@@ -196,22 +196,6 @@ fi
 #eval "$(pyenv init -)"
 #eval "$(pyenv virtualenv-init -)"
 
-# typescript logging
-enable_typescript_logging(){
-    if [ -z "${TYPESCRIP_LOG+x}" ];then
-        export TYPESCRIP_LOG="on"
-        log_dir="$(cat $HOME/.typescript_log)"
-        max_log_num=$(ls "$log_dir" | grep -Px --color=never "time\d+" | \
-            sed 's/time//' | \
-            sort -nr | \
-            head -1)
-        let next_log_num="$max_log_num+1"
-        tslog="$log_dir/typescript$next_log_num"
-        tstimelog="$log_dir/time$next_log_num"
-        script -t"$tstimelog" "$tslog"
-    fi
-}
-[ -s "$HOME/.typescript_log" ] && enable_typescript_logging
 [ ! -S "/run/user/$(id -u)/emacs/server" ] && [ ! -S "/tmp/emacs$(id -u)/server" ] && emacs --daemon 2>/dev/null
 
 # 1}}}

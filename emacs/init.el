@@ -344,7 +344,8 @@
   (setq org-roam-v2-ack t)
   :config
   (setq org-roam-directory (file-truename "~/s/roam")
-	org-roam-completion-everywhere t)
+	org-roam-completion-everywhere t
+	org-roam-node-display-template "${title:80} ${tags}")
 
   ;; roam buffer window settings
   (add-to-list 'display-buffer-alist
@@ -361,10 +362,10 @@
 
   ;;;; global
   (define-key evil-normal-state-map (kbd "<leader>nf") 'org-roam-node-find) 
+  (define-key evil-normal-state-map (kbd "<leader>nc") 'org-roam-capture) 
 
   ;;;; org
   (evil-define-key 'normal org-mode-map (kbd "<leader>nl") 'org-roam-buffer-toggle) 
-  (evil-define-key 'normal org-mode-map (kbd "<leader>nc") 'org-id-get-create) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>ni") 'org-roam-node-insert) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>na") 'org-roam-alias-add) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>nr") 'org-roam-ref-add) 

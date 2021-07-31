@@ -344,6 +344,12 @@
   (setq org-roam-v2-ack t)
   :config
   (setq org-roam-directory (file-truename "~/s/roam")
+	org-roam-dailies-directory "daily"
+	org-roam-dailies-capture-templates
+	    '(("d" "default" entry
+	    ""
+	    :if-new (file+head "%<%Y-%m-%d>.org"
+				"#+title: %<%Y-%m-%d>\n")))
 	org-roam-completion-everywhere t
 	org-roam-node-display-template "${title:80} ${tags}")
 
@@ -363,6 +369,8 @@
   ;;;; global
   (define-key evil-normal-state-map (kbd "<leader>nf") 'org-roam-node-find) 
   (define-key evil-normal-state-map (kbd "<leader>nc") 'org-roam-capture) 
+  (define-key evil-normal-state-map (kbd "<leader>ndt") 'org-roam-dailies-goto-today) 
+  (define-key evil-normal-state-map (kbd "<leader>ndd") 'org-roam-dailies-goto-date) 
 
   ;;;; org
   (evil-define-key 'normal org-mode-map (kbd "<leader>nl") 'org-roam-buffer-toggle) 

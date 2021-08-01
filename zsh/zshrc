@@ -136,6 +136,11 @@ gnmap(){
 }
 regex(){ gawk 'match($0,/'$1'/, ary) {print ary['${2:-'0'}']}'; }
 
+cshell(){
+    container=podman
+    $container run -it --rm -v"$(pwd):/share" "$1" "${2:-/bin/sh}"
+}
+
 # ---------- Plugins ---------- 
 # {{{1
 

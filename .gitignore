@@ -9,3 +9,4 @@ emacs/transient
 emacs/.*
 emacs/org-roam.db
 emacs/bookmarks
+/emacs/eln-cache/

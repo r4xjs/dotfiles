@@ -29,6 +29,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
 (use-package diminish
   :after use-package
   :ensure t)
@@ -340,16 +341,28 @@
   :ensure t)
 
 (use-package org-roam
+  :ensure t
   :init
   (setq org-roam-v2-ack t)
   :config
   (setq org-roam-directory (file-truename "~/s/roam")
+	org-roam-capture-templates
+	'(
+	    ("n" "note" plain "%?" :if-new
+		(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+		:unnarrowed t)
+	    ("v" "vcdb" plain "%?* Description\n* Code\n#+begin_src\n#+end_src\n* Solution\n#+begin_src\n#+end_src\n"
+	     :if-new
+	       (file+head "vcdb/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :vcdb:\n")
+	     :unnarrowd t)
+	  )
+
 	org-roam-dailies-directory "daily"
 	org-roam-dailies-capture-templates
 	    '(("d" "default" entry
-	    ""
-	    :if-new (file+head "%<%Y-%m-%d>.org"
-				"#+title: %<%Y-%m-%d>\n")))
+		"%?"
+		:if-new (file+head "%<%Y-%m-%d>.org"
+			       "#+title: %<%Y-%m-%d>\n")))
 	org-roam-completion-everywhere t
 	org-roam-node-display-template "${title:80} ${tags}")
 
@@ -367,7 +380,7 @@
   ;; key bindings
 
   ;;;; global
-  (define-key evil-normal-state-map (kbd "<leader>nf") 'org-roam-node-find) 
+  (define-key evil-normal-state-map (kbd "<leader>nf") 'raxjs/org-roam-node-find) 
   (define-key evil-normal-state-map (kbd "<leader>nc") 'org-roam-capture) 
   (define-key evil-normal-state-map (kbd "<leader>ndt") 'org-roam-dailies-goto-today) 
   (define-key evil-normal-state-map (kbd "<leader>ndd") 'org-roam-dailies-goto-date) 
@@ -375,6 +388,7 @@
   ;;;; org
   (evil-define-key 'normal org-mode-map (kbd "<leader>nl") 'org-roam-buffer-toggle) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>ni") 'org-roam-node-insert) 
+  (evil-define-key 'visual org-mode-map (kbd "<leader>ni") 'org-roam-node-insert) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>na") 'org-roam-alias-add) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>nr") 'org-roam-ref-add) 
   (evil-define-key 'normal org-mode-map (kbd "<leader>nt") 'org-roam-tag-add)
@@ -406,8 +420,25 @@
 
   ;; add org-protocol:
   ;; xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+)
 
-  :ensure t)
+;; some custom functions for org-roam
+(defun raxjs/org-roam-node-file-contains (node string)
+  "Helper function to determine if the nodes files-name contains a string"
+  (not (equal nil (member string
+	  (split-string
+	   (file-name-directory (org-roam-node-file node)) "/")))
+    ))
+(defun raxjs/org-roam-node-find ()
+  "Wrapper for org-roam-node-find that will filter out daily and vcdb sub-dirs"
+    (interactive)
+    (org-roam-node-find nil nil (lambda (node)
+			      (when (not (or
+					  (raxjs/org-roam-node-file-contains node "daily")
+					  (raxjs/org-roam-node-file-contains node "vcdb")))
+				node))))
+
+
 
 (use-package elpy
   :ensure t
@@ -445,10 +476,15 @@
     ;; key bindings
     (define-key evil-normal-state-map (kbd "<leader>hs") 'highlight-symbol-at-point)
     (define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
-							(interactive)
-							(unhighlight-regexp t))))
+							    (interactive)
+							    (unhighlight-regexp t))))
 
 
+(use-package dockerfile-mode
+  :ensure t)
+
+(use-package csharp-mode
+  :ensure t)
 
 ;; --------------------------------------------------------
 
@@ -539,16 +575,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq email-config (expand-file-name "~/.emacs.d/email.el"))
 (when (file-exists-p email-config)
   (load email-config))
-
-
-;; misc
-(defun raxjs/display-startup-time ()
-  (message "Emacs loaded in %s with %d  garbage collections."
-	   (format "%.2f seconds"
-		   (float-time
-		    (time-subtract after-init-time before-init-time)))
-	   gcs-done))
-(add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
 
 
 

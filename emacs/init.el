@@ -30,6 +30,28 @@
   (package-install 'use-package))
 
 
+;; --------------------- benchmark stuff -----------------------------
+
+(setq native-comp-speed 3)
+
+;; misc
+(defun raxjs/display-startup-time ()
+  (message "Emacs loaded in %s with %d  garbage collections."
+	   (format "%.2f seconds"
+		   (float-time
+		    (time-subtract after-init-time before-init-time)))
+	   gcs-done))
+(add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
+
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+
+;; --------------------- benchmark stuff end ------------------------
+
 (use-package diminish
   :after use-package
   :ensure t)
@@ -233,6 +255,9 @@
   (setq lsp-rust-server "/usr/local/bin/rls")
   (setq lsp-rust-analyzer-server-command "/usr/local/bin/rust-analyzer"))
 
+(use-package solidity-mode
+  :ensure t)
+
 ;; eTAGS
 (setq tags-add-tables nil)
 (define-key evil-normal-state-map (kbd "<leader>td") 'xref-find-definitions)
@@ -341,7 +366,6 @@
   :ensure t)
 
 (use-package org-roam
-  :ensure t
   :init
   (setq org-roam-v2-ack t)
   :config
@@ -380,7 +404,7 @@
   ;; key bindings
 
   ;;;; global
-  (define-key evil-normal-state-map (kbd "<leader>nf") 'raxjs/org-roam-node-find) 
+  (define-key evil-normal-state-map (kbd "<leader>nf") 'org-roam-node-find) 
   (define-key evil-normal-state-map (kbd "<leader>nc") 'org-roam-capture) 
   (define-key evil-normal-state-map (kbd "<leader>ndt") 'org-roam-dailies-goto-today) 
   (define-key evil-normal-state-map (kbd "<leader>ndd") 'org-roam-dailies-goto-date) 
@@ -420,25 +444,8 @@
 
   ;; add org-protocol:
   ;; xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
-)
 
-;; some custom functions for org-roam
-(defun raxjs/org-roam-node-file-contains (node string)
-  "Helper function to determine if the nodes files-name contains a string"
-  (not (equal nil (member string
-	  (split-string
-	   (file-name-directory (org-roam-node-file node)) "/")))
-    ))
-(defun raxjs/org-roam-node-find ()
-  "Wrapper for org-roam-node-find that will filter out daily and vcdb sub-dirs"
-    (interactive)
-    (org-roam-node-find nil nil (lambda (node)
-			      (when (not (or
-					  (raxjs/org-roam-node-file-contains node "daily")
-					  (raxjs/org-roam-node-file-contains node "vcdb")))
-				node))))
-
-
+  :ensure t)
 
 (use-package elpy
   :ensure t
@@ -485,6 +492,7 @@
 
 (use-package csharp-mode
   :ensure t)
+
 
 ;; --------------------------------------------------------
 
@@ -575,7 +583,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq email-config (expand-file-name "~/.emacs.d/email.el"))
 (when (file-exists-p email-config)
   (load email-config))
-
 
 
 

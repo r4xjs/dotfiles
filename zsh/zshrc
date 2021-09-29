@@ -87,7 +87,8 @@ SAVEHIST="$HISTSIZE"
 
 # ---------- exports ----------
 # {{{1
-export PATH="$PATH:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools:${HOME}/Android/Sdk/emulator:${HOME}/.emacs.d/bin:$HOME/.cargo/bin"
+export DOWNLOAD_KEYSERVER=hkp://pgp.mit.edu
+export PATH="$PATH:/sbin:/usr/sbin:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools:${HOME}/Android/Sdk/emulator:${HOME}/.emacs.d/bin:$HOME/.cargo/bin"
 if [ "$SSH_CONNECTION" ]; then
     export TERM=xterm
 fi

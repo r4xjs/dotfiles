@@ -69,6 +69,10 @@ alias diff='diff --color=always -rdu'
 alias gpush='git push'
 alias gpull='git pull'
 
+# lxc
+alias lxc-start=lxc-unpriv-start
+alias lxc-attach=lxc-unpriv-attach
+
 alias fixencoding='iconv -f utf-8 -t utf-8 -c'
 alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start ; sleep 0.5; pulseaudio --kill; sleep 0.5; pulseaudio --start'
 alias fixadb='sudo adb kill-server; sudo adb start-server'

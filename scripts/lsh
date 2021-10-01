@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# list all container if no argument is given
+[ $# -eq 0 ] && lxc-ls -f && exit 0
+
+
+container_is_running() {
+    lxc-info -n "$1" | grep -P "State:\s+RUNNING" >/dev/null
+}
+
+container_run() {
+    logfile="${2:-}"
+    lxc_attach_args="--clear-env -v TERM=xterm"
+
+    container_is_running "$1" || lxc-unpriv-start -n "$1"
+    if [ "$logfile" = "" ]; then
+	lxc-unpriv-attach -n "$1" $lxc_attach_args
+    else
+	lxc-unpriv-attach -n "$1" -L "$logfile" $lxc_attach_args
+    fi
+
+}
+
+container_kill() {
+    if [ "$1" != "all" ]; then
+	container_is_running "$1" && lxc-stop -kn "$1"
+    else
+	# kill them all
+	for c in $(lxc-ls); do
+	    container_is_running "$c" && lxc-stop -kn "$c"
+	done
+    fi
+}
+
+# argument parsing
+container="$1"
+option="${2:-run}"
+option_arg="${3:-}"
+
+# do it
+case "$option" in
+"run")
+    container_run "$container" "$option_arg"
+    ;;
+"kill")
+    container_kill "$container"
+    ;;
+esac
+

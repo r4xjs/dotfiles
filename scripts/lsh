@@ -9,16 +9,31 @@ container_is_running() {
 }
 
 container_run() {
-    logfile="${2:-}"
-    lxc_attach_args="--clear-env -v TERM=xterm"
+    # TODO: uid is hardcoded for now as long as I don't have
+    #       container builds that automatically use the current
+    #       users uid.
 
-    container_is_running "$1" || lxc-unpriv-start -n "$1"
-    if [ "$logfile" = "" ]; then
-	lxc-unpriv-attach -n "$1" $lxc_attach_args
+    # Note: always keep $attach_args at the end such that we
+    #       can use -- for running commands inside the container
+    container="$1"
+    if [ $# -ge 2 ];then
+	shift 1
+	attach_args="$@"
+	# if no -u option is given by the user set -u 1000 -g 1000 as default
+	echo $attach_args | grep -e '-u' > /dev/null || attach_args="-u 1000 -g 1000 $attach_args"
     else
-	lxc-unpriv-attach -n "$1" -L "$logfile" $lxc_attach_args
+	attach_args="-u 1000 -g 1000"
     fi
+    attach_args="--clear-env -v TERM=xterm $attach_args"
 
+    container_is_running "$container" || lxc-unpriv-start -n "$container"
+    cmd="lxc-unpriv-attach -n $container $attach_args"
+    echo "$cmd"
+    $cmd
+}
+
+container_eth0_ip() {
+    lxc-info -n "$1" | grep IP | head -1 | sed 's/ //g' | cut -d':' -f2
 }
 
 container_kill() {
@@ -35,7 +50,12 @@ container_kill() {
 # argument parsing
 container="$1"
 option="${2:-run}"
-option_arg="${3:-}"
+if [ $# -ge 3 ]; then
+    shift 2
+    option_arg="$@"
+else
+    option_arg=""
+fi
 
 # do it
 case "$option" in
@@ -44,6 +64,9 @@ case "$option" in
     ;;
 "kill")
     container_kill "$container"
+    ;;
+"x11")
+    ssh -i ~/.ssh/lxc -X user@$(container_eth0_ip "$container") $option_arg
     ;;
 esac
 

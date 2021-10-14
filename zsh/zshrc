@@ -26,6 +26,7 @@ umask 077
 
 # ---------- auto completion ----------
 # {{{1
+export fpath=("${HOME}/.zsh/completion" $fpath)
 autoload -Uz compinit
 compinit
 
@@ -36,7 +37,6 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
-[ -f ~/git/lxcenv/zsh.comp ] && source ~/git/lxcenv/zsh.comp 
 # 1}}}
 
 # ---------- key bindings ----------

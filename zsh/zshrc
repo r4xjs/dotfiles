@@ -80,6 +80,7 @@ alias fixadb='sudo adb kill-server; sudo adb start-server'
 if [ -f ~/.work ];then
     alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
 fi
+alias pwsh='pwsh -nologo'
 
 # 1}}}
 

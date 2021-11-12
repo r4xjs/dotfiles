@@ -269,7 +269,8 @@
   :init
 (add-to-list 'auto-mode-alist '("\\.swift$" . php-mode)))
 
-
+(use-package csharp-mode 
+  :ensure t)
 ;; popup help menu with all avilable keys when typing prefix key combo
 (use-package which-key
   :ensure t
@@ -583,6 +584,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
 						       (interactive)
 						       (unhighlight-regexp t)))
+
+
+
+(use-package ox-reveal
+  :ensure t)
+(use-package go-mode
+  :ensure t)
 
 ;; -----------------------------------------------------------------
 

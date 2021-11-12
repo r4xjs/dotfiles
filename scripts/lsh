@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# list all container if no argument is given
+[ $# -eq 0 ] && lxc-ls -f && exit 0
+
+
+container_is_running() {
+    lxc-info -n "$1" | grep -P "State:\s+RUNNING" >/dev/null
+}
+
+container_run() {
+    # TODO: uid is hardcoded for now as long as I don't have
+    #       container builds that automatically use the current
+    #       users uid.
+
+    # Note: always keep $attach_args at the end such that we
+    #       can use -- for running commands inside the container
+    container="$1"
+    if [ $# -ge 2 ];then
+	shift 1
+	attach_args="$@"
+	# if no -u option is given by the user set -u 1000 -g 1000 as default
+	echo $attach_args | grep -e '-u' > /dev/null || attach_args="-u 1000 -g 1000 $attach_args"
+    else
+	attach_args="-u 1000 -g 1000"
+    fi
+    attach_args="--clear-env -v TERM=xterm $attach_args"
+
+    container_is_running "$container" || lxc-unpriv-start -n "$container"
+    cmd="lxc-unpriv-attach -n $container $attach_args"
+    echo "$cmd"
+    $cmd
+}
+
+container_eth0_ip() {
+    lxc-info -n "$1" | grep IP | head -1 | sed 's/ //g' | cut -d':' -f2
+}
+
+container_kill() {
+    if [ "$1" != "all" ]; then
+	container_is_running "$1" && lxc-stop -kn "$1"
+    else
+	# kill them all
+	for c in $(lxc-ls); do
+	    container_is_running "$c" && lxc-stop -kn "$c"
+	done
+    fi
+}
+
+# argument parsing
+container="$1"
+option="${2:-run}"
+if [ $# -ge 3 ]; then
+    shift 2
+    option_arg="$@"
+else
+    option_arg=""
+fi
+
+# do it
+case "$option" in
+"run")
+    container_run "$container" "$option_arg"
+    ;;
+"kill")
+    container_kill "$container"
+    ;;
+"x11")
+    ssh -i ~/.ssh/lxc -X user@$(container_eth0_ip "$container") $option_arg
+    ;;
+esac
+

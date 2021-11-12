@@ -1,5 +1,5 @@
 #!/bin/bash
-
+python3 ~/.i3/set-default-sink.py
 sink=$(pacmd info | grep "Default sink" | cut -d' ' -f 4)
 volume_changed=/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 

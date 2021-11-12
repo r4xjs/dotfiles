@@ -1,15 +1,15 @@
 ;; TODO:
 ;; - [x] setup lsp keybindings for go to definition and jump back and ...
-;; - [x] smart kill buffer such that it kills the window as well if it is not the last window 
+;; - [x] smart kill buffer such that it kills the window as well if it is not the last window
 ;; - [x] ctrl-p replacment for emacs
 ;; - [ ] setup hydra: https://github.com/abo-abo/hydra
-;; - [ ] setup dired
-;; - [ ] setup magit
+;; - [x] setup dired
+;; - [x] setup magit
 ;; src: https://github.com/daviwil/emacs-from-scratch
 ;; src: https://protesilaos.com/dotemacs/
 
 ;; Cheat Sheet:
-;; (define-key ...) for creating new key bindings (adding a binding to a keymap/list) 
+;; (define-key ...) for creating new key bindings (adding a binding to a keymap/list)
 ;; (add-hook ...) for adding a function to a hook/list
 ;; (defun raxjs/funcname () (interactive) ...) for creating new functions that can be called with M-x
 
@@ -21,30 +21,49 @@
 (setq use-package-verbose nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/")
-	     '("org" . "https://orgmode.org/elpa/")
-	     )
+	     '("org" . "https://orgmode.org/elpa/"))
 (package-initialize)
 
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package)
-  )
+  (package-install 'use-package))
+
+
+;; --------------------- benchmark stuff -----------------------------
+
+(setq native-comp-speed 3)
+
+;; misc
+(defun raxjs/display-startup-time ()
+  (message "Emacs loaded in %s with %d  garbage collections."
+	   (format "%.2f seconds"
+		   (float-time
+		    (time-subtract after-init-time before-init-time)))
+	   gcs-done))
+(add-hook 'emacs-startup-hook #'raxjs/display-startup-time)
+
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+
+;; --------------------- benchmark stuff end ------------------------
 
 (use-package diminish
   :after use-package
   :ensure t)
 
-;;(use-package inkpot-theme
-;;  :ensure t
-;;  :config
-;;  (load-theme 'inkpot t))
-
 (use-package doom-themes
   :ensure t
   :config
   (load-theme 'doom-one t))
+
 (use-package doom-modeline
+  ;; This package requires the fonts included with all-the-icons to be installed.
+  ;; Run M-x all-the-icons-install-fonts to do so
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
@@ -63,7 +82,7 @@
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key global-map (kbd "C-x C-u") 'universal-argument)
   (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
-  (evil-define-key 'insert ivy-minibuffer-map (kbd "C-j") 'ivy-next-line) 
+  (evil-define-key 'insert ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
   (evil-define-key 'insert ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-mode 1)
@@ -93,14 +112,13 @@
   :config
   (setq dired-listing-switches "-ahl --group-directories-first"))
   ;; fix evil leader key in dired-mode
-  (add-hook 'dired-mode-hook (lambda () 
+  (add-hook 'dired-mode-hook (lambda ()
     (evil-define-key 'normal dired-mode-map (kbd "SPC") 'evil-send-leader)))
 
 
 
 ;; ivy
 (use-package ivy
-  :after general
   :diminish
   :ensure t
   :config
@@ -127,12 +145,8 @@
   (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
   (define-key evil-normal-state-map (kbd "<leader>.") 'counsel-find-file)
   (define-key evil-normal-state-map (kbd "<leader>b") 'counsel-switch-buffer)
-  ;;(define-key evil-normal-state-map (kbd "<leader>f") 'counsel-find-file)
-  ;;(define-key evil-normal-state-map (kbd "<leader>p") 'counsel-fzf)
-  ;;(define-key evil-normal-state-map (kbd "<leader>r") 'counsel-rg)
   (define-key evil-normal-state-map (kbd "<leader>s") 'swiper)
 
-  
   (defun raxjs/counsel-fzf () (interactive)
 	(counsel-fzf nil (raxjs/get-search-root)))
   (defun raxjs/counsel-rg () (interactive)
@@ -150,11 +164,11 @@
   (define-key evil-normal-state-map (kbd "<leader>f") 'raxjs/counsel-fzf)
   ;;(define-key evil-normal-state-map (kbd "<leader>pf") 'counsel-fzf)
   (define-key evil-normal-state-map (kbd "<leader>ps") '(lambda
-							 () (interactive)
-							 (raxjs/set-search-root default-directory)))
+                             () (interactive)
+                             (raxjs/set-search-root default-directory)))
   (define-key evil-normal-state-map (kbd "<leader>pu") '(lambda
 							 () (interactive)
-							 (raxjs/set-search-root nil)))
+                                                (raxjs/set-search-root nil)))
 
   ;;(define-key global-map (kbd "C-c C-r") 'counsel-rg)
   ;;(define-key global-map (kbd "C-c C-f") 'counsel-fzf)
@@ -189,6 +203,7 @@
   (add-hook 'c-mode-hook 'company-mode)
   (add-hook 'python-mode-hook 'company-mode)
   (add-hook 'slime-mode-hook 'company-mode)
+  (add-hook 'rust-mode-hook 'company-mode)
 
     (defface company-tooltip
     '((default :foreground "green")
@@ -201,14 +216,10 @@
     "Face used for the tooltip.")
 
 
-  
+
   (company-tng-mode 1)
-  (global-company-mode t)
-  )
-;;(use-package company-box
-;;  :ensure t
-;;  :config
-;;  (add-hook 'company-mode-hook 'company-box-mode))
+  (global-company-mode t))
+
 
 ;; lsp-mode
 (use-package lsp-mode
@@ -232,10 +243,6 @@
   (define-key lsp-mode-map (kbd "<leader>go") 'lsp-ui-peek-jump-backward)
   (define-key lsp-mode-map (kbd "<leader>gr") 'lsp-find-references))
 
-;; company-lsp
-(use-package company-lsp
-  :ensure t)
-
 ;; ccls
 (use-package ccls
   :ensure t
@@ -245,8 +252,11 @@
 (use-package rust-mode
   :ensure t
   :init
-  (setq lsp-rust-server "/usr/bin/rls")
-  (setq lsp-rust-analyzer-server-command "/usr/bin/rust-analyzer"))
+  (setq lsp-rust-server "/usr/local/bin/rls")
+  (setq lsp-rust-analyzer-server-command "/usr/local/bin/rust-analyzer"))
+
+(use-package solidity-mode
+  :ensure t)
 
 ;; eTAGS
 (setq tags-add-tables nil)
@@ -281,7 +291,7 @@
   (setq wich-key-idle-delay 0.1))
 
 
-;; nicer help pages 
+;; nicer help pages
 (use-package helpful
   :ensure t
   :commands (helpfull-callable helpfull-variable helpfull-command helpfull-key)
@@ -316,17 +326,11 @@
   (load (concat user-emacs-directory "doom-stuff.el"))
   ;; remap some keys
   (add-hook 'org-mode-hook (lambda ()
-	    (define-key org-mode-map  [remap org-insert-heading-respect-content] '+org/insert-item-below)  
-	    ))
+(define-key org-mode-map [remap org-insert-heading-respect-content] '+org/insert-item-below)))
 
   ;; some custom stuff
   (setq raxjs/org-dir (expand-file-name "~/org"))
 
-  (define-key evil-normal-state-map (kbd "<leader>np")
-    '(lambda () (interactive) (counsel-fzf nil raxjs/org-dir "org-notes: ")))
-  (define-key evil-normal-state-map (kbd "<leader>nf")
-    '(lambda () (interactive) (counsel-find-file raxjs/org-dir)))
-  (define-key evil-normal-state-map (kbd "<leader>nc") 'org-capture)
   (define-key global-map (kbd "C-c l") 'org-store-link)
   (define-key global-map (kbd "C-c C-l") 'org-insert-link)
   (define-key evil-normal-state-map (kbd "C-c C-l") 'org-insert-link)
@@ -359,9 +363,7 @@
      (dot . t)
      (C . t)
      (gnuplot . t)
-     (haskell . t)
-     )
-   )
+     (haskell . t)))
    (setq org-confirm-babel-evaluate nil)
   ) ;; end of org use-package
 
@@ -376,69 +378,179 @@
 (use-package ob-async
   :ensure t)
 
-;; vterm 
-(use-package vterm
-  :ensure t
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
   :config
-  (define-key evil-normal-state-map (kbd "<leader>ot") 'vterm)
+  (setq org-roam-directory (file-truename "~/s/roam")
+	org-roam-capture-templates
+	'(
+	    ("n" "note" plain "%?" :if-new
+		(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+		:unnarrowed t)
+	    ("v" "vcdb" plain "%?* Description\n* Code\n#+begin_src\n#+end_src\n* Solution\n#+begin_src\n#+end_src\n"
+	     :if-new
+	       (file+head "vcdb/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :vcdb:\n")
+	     :unnarrowd t)
+	  )
+
+	org-roam-dailies-directory "daily"
+	org-roam-dailies-capture-templates
+	    '(("d" "default" entry
+		"%?"
+		:if-new (file+head "%<%Y-%m-%d>.org"
+			       "#+title: %<%Y-%m-%d>\n")))
+	org-roam-completion-everywhere t
+	org-roam-node-display-template "${title:80} ${tags}")
+
+  ;; roam buffer window settings
+  (add-to-list 'display-buffer-alist
+	'("\\*org-roam\\*"
+	(display-buffer-in-side-window)
+	(side . right)
+	(slot . 0)
+	(window-width . 0.33)
+	(window-parameters . ((no-other-window . nil)
+				(no-delete-other-windows . t)))))
+
+
+  ;; key bindings
+
+  ;;;; global
+  (define-key evil-normal-state-map (kbd "<leader>nf") 'org-roam-node-find) 
+  (define-key evil-normal-state-map (kbd "<leader>nc") 'org-roam-capture) 
+  (define-key evil-normal-state-map (kbd "<leader>ndt") 'org-roam-dailies-goto-today) 
+  (define-key evil-normal-state-map (kbd "<leader>ndd") 'org-roam-dailies-goto-date) 
+
+  ;;;; org
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nl") 'org-roam-buffer-toggle) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>ni") 'org-roam-node-insert) 
+  (evil-define-key 'visual org-mode-map (kbd "<leader>ni") 'org-roam-node-insert) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>na") 'org-roam-alias-add) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nr") 'org-roam-ref-add) 
+  (evil-define-key 'normal org-mode-map (kbd "<leader>nt") 'org-roam-tag-add)
+  ;; jump to link with C-c C-o (org-open-at-point)
+
+
+  (org-roam-setup)
+  (require 'org-roam-protocol)
+
+  ;; https://www.orgroam.com/manual.html#Org_002droam-Protocol
+  ;; add bookmarklet:
+  ;; ----------------
+  ;; javascript:location.href =
+  ;;   'org-protocol://roam-ref?template=r&ref='
+  ;;   + encodeURIComponent(location.href)
+  ;;   + '&title='
+  ;;   + encodeURIComponent(document.title)
+  ;;   + '&body='
+  ;;   + encodeURIComponent(window.getSelection())
+
+  ;; add new appliaction (~/.local/share/applications/org-protocol.desktop)
+  ;; [Desktop Entry]
+  ;; Name=Org-Protocol
+  ;; Exec=emacsclient %u
+  ;; Icon=emacs-icon
+  ;; Type=Application
+  ;; Terminal=false
+  ;; MimeType=x-scheme-handler/org-protocol
+
+  ;; add org-protocol:
+  ;; xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+
+  :ensure t)
+
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :config
+  (flymake-mode-off)
+  ;;(setq python-shell-interpreter "jupyter"
+  ;;	python-shell-interpreter-args "console --simple-prompt"
+  ;;	python-shell-prompt-detect-failure-warning nil)
+  (setenv "WORKON_HOME" "~/.pyenv/versions/")
+  ;;(add-to-list 'python-shell-completion-native-disabled-interpreters
+  ;;	       "jupyter")
+  (define-key elpy-mode-map (kbd "C-c C-c") 'elpy-shell-send-buffer)
+  (define-key elpy-mode-map (kbd "C-x C-e") 'elpy-shell-send-statement)
   )
+;; use pyenv-mode-set to set the virtualenv
+(use-package pyenv-mode
+  :ensure t)
 
 
-;;;; recursive search packages
-;;(use-package deadgrep
-;;  :ensure t
-;;  :config
-;;  (define-key global-map (kbd "C-c C-r") 'deadgrep)
-;;  )
+(use-package hi-lock
+  :ensure nil
+  :config
+    (set-face-background 'hi-yellow   "#ebdc8a")
+    (set-face-foreground 'hi-yellow   "#403d31")
+    (set-face-background 'hi-pink     "#c15dcf")
+    (set-face-foreground 'hi-pink     "#1e181f")
+    (set-face-background 'hi-green    "#68d164")
+    (set-face-foreground 'hi-green    "#131f13")
+    (set-face-background 'hi-blue     "#4070de")
+    (set-face-foreground 'hi-blue     "#d1d7e3")
 
-;; maybe hydra could be usefull its like i3 modes
+    ;; key bindings
+    (define-key evil-normal-state-map (kbd "<leader>hs") 'highlight-symbol-at-point)
+    (define-key evil-normal-state-map (kbd "<leader>hx") (lambda ()
+							    (interactive)
+							    (unhighlight-regexp t))))
+
+
+(use-package dockerfile-mode
+  :ensure t)
+
+(use-package csharp-mode
+  :ensure t)
+(use-package yaml-mode
+  :ensure t)
+
+
 
 ;; --------------------------------------------------------
 
-;; some settings 
+;; some settings
 
-    ;; basic stuff
-    (defalias 'yes-or-no-p 'y-or-n-p)
-    (setq scroll-conservatively 100)
-    (setq ring-bell-function 'ignore)
-    (global-auto-revert-mode t)
-    (setq auto-revert-verbose nil)
-    (show-paren-mode 1)
+;; basic stuff
+(defalias 'yes-or-no-p 'y-or-n-p)
+(setq scroll-conservatively 100)
+(setq ring-bell-function 'ignore)
+(global-auto-revert-mode t)
+(setq auto-revert-verbose nil)
+(show-paren-mode 1)
+(electric-indent-mode 1)
+;;(global-whitespace-mode t)
+(global-so-long-mode t)
 
-    ;; modeline lines and columns (L,C)
-    (line-number-mode 1)
-    (column-number-mode 1)
+;; modeline lines and columns (L,C)
+(line-number-mode 1)
+(column-number-mode 1)
 
-    ;; no startup message screen
-    (setq inhibit-startup-message t)
+;; no startup message screen
+(setq inhibit-startup-message t)
 
-    ;; no gui stuff
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-    (tooltip-mode -1)
-    ;;(set-fringe-mode 10) ;; not sure what this is so don't use it
-    (menu-bar-mode -1)
-
-
-    ;; theme
-    ;;(load-theme 'deeper-blue)
-
-    ;; backup files
-    (setq make-backup-files nil) ; stop creating backup~ files
-    (setq auto-save-default nil) ; stop creating #autosave# files
-    (setq create-lockfiles nil)  ; stop creating .# files
+;; no gui stuff
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(menu-bar-mode -1)
 
 
-    ;; enable disabled functions
-    (put 'narrow-to-region 'disabled nil)
-    (put 'dired-find-alternate-file 'disabled nil)
+;; backup files
+(setq make-backup-files nil) ; stop creating backup~ files
+(setq auto-save-default nil) ; stop creating #autosave# files
+(setq create-lockfiles nil)  ; stop creating .# files
 
-    ;; stop asking to follow symlinks to vc files
-    (setq vc-follow-symlinks t)
 
-    ;; hl line mode
-    ;;(global-hl-line-mode t)
- 
+;; enable disabled functions
+(put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+
+;; stop asking to follow symlinks to vc files
+(setq vc-follow-symlinks t)
 
 
 ;; -----------------------------------------------------------------
@@ -459,6 +571,13 @@
   (if (< 1 (count-windows)) (delete-window) nil))
 (global-set-key (kbd "C-x k") 'raxjs/kill-curr-buffer)
 
+
+;; ansi-term settings
+(setq kill-buffer-query-functions nil) ;; do not ask, kill the buffer with the process
+(defun raxjs/ansi-term (&optional new-buffer-name)
+  (interactive)
+  (ansi-term "/usr/bin/zsh" new-buffer-name))
+(define-key evil-normal-state-map (kbd "<leader>ot") 'raxjs/ansi-term)
 
 
 
@@ -482,56 +601,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (load email-config))
 
 
-
-;;;; lisp setup ;;;;
-;;
-;; wget https://beta.quicklisp.org/quicklisp.lisp
-;; sbcl --load quicklisp.lisp
-;; (quicklisp-quickstart:install)
-;; (ql:add-to-init-file)
-;; (ql:quickload "quicklisp-slime-helper")
-(when (file-exists-p "~/quicklisp/slime-helper.el")
-    (load (expand-file-name "~/quicklisp/slime-helper.el"))
-    (setq inferior-lisp-program "sbcl"
-	  slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-	  )
-
-    (use-package slime-company
-	:ensure t
-	:after (slime company)
-	:config
-	(setq slime-company-completion 'fuzzy
-	      slime-company-after-completion 'slime-company-just-one-space
-	      )
-	(slime-setup '(slime-fancy slime-company))
-	)
-    )
-
-;;;; clojure setup
-;;
-;;(use-package clojure-mode
-;;  :ensure t)
-;;
-;;(use-package cider
-;;  :ensure t)
-;;
-;;(use-package symex
-;;  :ensure t
-;;  :config
-;;  (setq symex--user-evil-keyspec
-;;  ;; must be defined bofore symex-initialize
-;;	'(("h" . symex-go-down)
-;;	  ("j" . symex-go-forward)
-;;	  ("k" . symex-go-backward)
-;;	  ("l" . symex-go-up)
-;;	  ("t" . symex-mode-interface)
-;;	  ))
-;;  (symex-initialize)
-;;  (define-key evil-normal-state-map (kbd "t") 'symex-mode-interface)
-;;  (symex--toggle-highlight)
-;;  :custom
-;;  (symex-modal-backend 'evil)
-;;  (symex-remember-branch-position-p nil))
 
 (use-package elpy
   :ensure t

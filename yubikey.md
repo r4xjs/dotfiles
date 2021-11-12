@@ -60,6 +60,8 @@ need opensc package on the client for this to work.
 
 # PAM
 <!-- {{{1 -->
+https://blogg.spofify.se/index.php/2020/09/05/use-yubikey-for-sudo-authentication/
+
 create `u2f_mappings` file
 ```
 pamu2fcfg -u `whoami` -opam://`hostname` -ipam://`hostname`
@@ -80,6 +82,8 @@ or
 auth required pam_u2f.so origin=pam://<HOSTNAME> appid=pam://<HOSTNAME> authfile=</path/to/u2f_mappings>
 auth include system-auth
 ```
+
+for i3lock, make sure that `u2f_mappings` file is readable by the user
 
 <!-- 1}}} --> 
 
@@ -193,7 +197,7 @@ ssh-add -L
 # udev
 <!-- {{{1 -->
 
-/etc/udev/rules.de/90-yubikey.rules
+/etc/udev/rules.d/90-yubikey.rules
 ```
 ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxxx", RUN+="/usr/bin/systemctl start --no-block i3lock.service"
 ACTION=="add", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="xxx", ENV{ID_VENDOR_ID}=="xxx", ENV{ID_SERIAL}=="xxx", RUN+="/bin/su user /bin/sh -c '/usr/bin/gpg --card-status > /dev/null'" 

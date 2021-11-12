@@ -4,6 +4,7 @@
 #sleep 3
 #xrandr --output eDP-1 --mode 1920x1080 --primary
 xset r rate 250 100
+/usr/local/bin/wakeup_fix.sh
 #xrandr --output HDMI-2 --mode 3840x2160  --primary --scale 0.9x0.9 --dpi 120
 xrandr --output DP-1-1 --mode 3840x2160  --primary --scale 0.9x0.9 --dpi 120
 #xrandr --output DP-2-3 --auto --primary

@@ -1,10 +1,7 @@
-cclear="free && sync && echo 3 > /proc/sys/vm/drop_caches && free"
-
 # ---------- prompt ----------
 # {{{1
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-#RPROMPT="%B%{$fg[blue]%}[%D{%y.%m.%f|%H:%M:%S}]%{$reset_color%}%b"
 
 # 1}}}
 
@@ -29,6 +26,7 @@ umask 077
 
 # ---------- auto completion ----------
 # {{{1
+export fpath=("${HOME}/.zsh/completion" $fpath)
 autoload -Uz compinit
 compinit
 
@@ -47,11 +45,6 @@ bindkey -v # vim mode
 bindkey "^R" history-incremental-pattern-search-backward 
 bindkey -s '^n' 'nn\n'
 bindkey -s '^o' 'lfcd\n'
-
-# Edit line in vim with ctrl-e:
-#autoload edit-command-line; zle -N edit-command-line
-#bindkey '^E' edit-command-line
-
 # 1}}}
 
 # ---------- aliases ----------
@@ -62,7 +55,6 @@ alias ll='ls -lh'
 
 alias ssh-p='ssh -o PreferredAuthentications=password'
 alias rgrep='grep -Ri --color=always'
-
 
 alias grep='grep --color=always'
 alias ip='ip -c'
@@ -75,22 +67,20 @@ alias gl='git log'
 alias ga='git add'
 alias gcm='git commit -m'
 alias diff='diff --color=always -rdu'
-# alias gpush='git push'
-# alias gpull='git pull'
+alias gpush='git push'
+alias gpull='git pull'
 
-alias fixencoding='iconv -f utf-8 -t utf-8 -c'
+# lxc
+alias lxc-start=lxc-unpriv-start
+alias lxc-attach=lxc-unpriv-attach
 
-if  hash nvim 2>/dev/null; then
-    alias vim='nvim'
-fi
-
-alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start ; sleep 0.5; pulsaudio --kill; sleep 0.5; pulsaudio --start'
+alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start ; sleep 0.5; pulseaudio --kill; sleep 0.5; pulseaudio --start'
 alias fixadb='sudo adb kill-server; sudo adb start-server'
-if [ ! -f ~/.home ];then
+if [ -f ~/.work ];then
     alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
 fi
+alias pwsh='pwsh -nologo'
 
-alias r2help="r2 -qq -c '?*~...' --"
 # 1}}}
 
 # ---------- history settings ----------
@@ -102,21 +92,20 @@ SAVEHIST="$HISTSIZE"
 
 # ---------- exports ----------
 # {{{1
-export PATH="$PATH:${HOME}/.scripts/:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools:${HOME}/Android/Sdk/emulator:${HOME}/.emacs.d/bin:$HOME/.cargo/bin"
+export DOWNLOAD_KEYSERVER=hkp://keyserver.ubuntu.com
+export PATH="$PATH:/sbin:/usr/sbin:${HOME}/bin:${HOME}/.local/bin:${HOME}/go/bin:${HOME}/Android/Sdk/platform-tools:${HOME}/Android/Sdk/emulator:${HOME}/.emacs.d/bin:$HOME/.cargo/bin"
 if [ "$SSH_CONNECTION" ]; then
     export TERM=xterm
 fi
-export wlan0=wlx00c0ca56bbff
 export okular_cache=/home/user/.config/okularrc
 if hash nvim 2>/dev/null; then
-    export EDITOR=/usr/bin/nvim
+    export EDITOR=$(which nvim)
+    alias vim='nvim'
 else
-    export EDITOR=/usr/bin/vim
+    export EDITOR=$(which vim)
 fi
-#export EDITOR=em
-export PIP_REQUIRE_VIRTUALENV=true
-
-
+export POWERSHELL_TELEMETRY_OPTOUT=1
+export APPINSIGHTS_TELEMETRY_OPTOUT=1
 # 1}}}
 
 # ---------- functions ----------
@@ -149,61 +138,16 @@ lfcd() {
     fi
 }
 
-
-sreplay(){
-    idx=$1
-    scriptreplay -t "time$idx" "typescript$idx" -d 5 -m 1
-}
-
 gnmap(){
     awk -e '/Ports: / { host=$2; sub(/.*Ports: /, ""); split($0, a, ","); for(idx in a){ printf "%s: %s\n", host, a[idx] } }' "$1" \
         | sed "s/ //g" | tr "\t" " " | cut -d" " -f1
 }
 regex(){ gawk 'match($0,/'$1'/, ary) {print ary['${2:-'0'}']}'; }
 
-play() { vlc "$(ph current)" && ph next }
-
-emx(){
-    if [ $# -eq 0 ];then
-        setsid emacs .
-    else
-        setsid emacs $@
-    fi
-    exit
+cshell(){
+    container=podman
+    $container run -it --rm -v"$(pwd):/share" "$1" "${2:-/bin/sh}"
 }
-
-# emacs vterm settings
-vterm_printf(){
-    if [ -n "$TMUX" ]; then
-        # Tell tmux to pass the escape sequences through
-        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
-}
-setopt PROMPT_SUBST
-PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
-vterm_cmd() {
-    local vterm_elisp
-    vterm_elisp=""
-    while [ $# -gt 0 ]; do
-        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-        shift
-    done
-    vterm_printf "51;E$vterm_elisp"
-}
-open() {
-    vterm_cmd find-file "$(realpath "${@:-.}")"
-}
-
-# 1}}}
 
 # ---------- Plugins ---------- 
 # {{{1
@@ -222,31 +166,8 @@ if [ -d "/usr/share/zsh-syntax-highlighting" ]; then
 elif [ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting/" ];then
     syntax_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
+
 [ -f "$syntax_hl" ] && source "$syntax_hl"
-
-# pyenv
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-
-# typescript logging
-enable_typescript_logging(){
-    if [ -z "${TYPESCRIP_LOG+x}" ];then
-        export TYPESCRIP_LOG="on"
-        log_dir="$(cat $HOME/.typescript_log)"
-        max_log_num=$(ls "$log_dir" | grep -Px --color=never "time\d+" | \
-            sed 's/time//' | \
-            sort -nr | \
-            head -1)
-        let next_log_num="$max_log_num+1"
-        tslog="$log_dir/typescript$next_log_num"
-        tstimelog="$log_dir/time$next_log_num"
-        script -t"$tstimelog" "$tslog"
-    fi
-}
-[ -s "$HOME/.typescript_log" ] && enable_typescript_logging
 [ ! -S "/run/user/$(id -u)/emacs/server" ] && [ ! -S "/tmp/emacs$(id -u)/server" ] && emacs --daemon 2>/dev/null
 
 # 1}}}
@@ -256,21 +177,6 @@ enable_typescript_logging(){
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
-
-fix_pinentry(){gpg-connect-agent updatestartuptty /bye >/dev/null}
-if [ -f "/usr/local/bin/ssh" ]; then
-    ssh_path="/usr/local/bin/ssh"
-elif [ -f "/usr/bin/ssh" ]; then
-    ssh_path="/usr/bin/ssh"
-else
-    ssh_path=false
-fi
-if [ "$ssh_path" != false ];then
-    ssh(){fix_pinentry; "$ssh_path" $@}
-fi
-gpush(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git push $@}
-gpull(){fix_pinentry; SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh /usr/bin/git pull $@}
-rsync(){fix_pinentry; /usr/bin/rsync -arvphS --progress $@}
 
 fzf_pass(){find "$HOME"/.password-store -iname "*.gpg" | sed "s/\.gpg//g;s#\./##g;s#$HOME/.password-store/##g" | rofi -dmenu -i }
 # 1}}}

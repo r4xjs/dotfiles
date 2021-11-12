@@ -1,2 +1,12 @@
 htoprc
 zsh/cache/
+emacs/custom.el
+emacs/email.el
+emacs/auto-save-list
+emacs/elpa
+emacs/projectile-bookmarks.eld
+emacs/transient
+emacs/.*
+emacs/org-roam.db
+emacs/bookmarks
+/emacs/eln-cache/

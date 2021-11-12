@@ -43,6 +43,8 @@ nn_qemu_start(){
     print -z 'qemu-system-x86_64 -cdrom my.iso -boot menu=on -drive file=my.qcow2,format=qcow2 --enable-kvm -cpu host -m 1024'
 }
 nn_rdp(){
-    print -z "xfreerdp /u:domain\\user /p:'password' /w:1920 /h:1440  /proxy:socks5://localhost:1234 /v:10.60.14.46:3389"
+    print -z "xfreerdp /u:domain\\\\\\\\user /p:'password' /pth:password-hash  /w:1920 /h:1440  /proxy:socks5://localhost:1234 /v:10.60.14.46:3389"
 }
-
+nn_smb_mount() {
+    print -z "sudo mount -t cifs -o username=user //ip/share ./mnt"
+}

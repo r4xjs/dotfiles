@@ -48,3 +48,7 @@ nn_rdp(){
 nn_smb_mount() {
     print -z "sudo mount -t cifs -o username=user //ip/share ./mnt"
 }
+nn_r2_evm() {
+    print -z "r2 -a evm -D evm 'evm://localhost:8545@0xcontracthash'"
+}
+

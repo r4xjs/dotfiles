@@ -148,6 +148,12 @@ cshell(){
     container=podman
     $container run -it --rm -v"$(pwd):/share" "$1" "${2:-/bin/sh}"
 }
+function play(){
+    local fn="$(ph current)"
+    vlc "$fn"
+    ph next
+}
+
 
 # ---------- Plugins ---------- 
 # {{{1

@@ -75,7 +75,7 @@ alias lxc-start=lxc-unpriv-start
 alias lxc-attach=lxc-unpriv-attach
 
 alias fixbt='sudo systemctl restart bluetooth ; pulseaudio --kill ; rm -rf ~/.config/pulse ; pulseaudio --start ; sleep 0.5; pulseaudio --kill; sleep 0.5; pulseaudio --start'
-alias fixadb='sudo adb kill-server; sudo adb start-server'
+alias fixadb='sudo ~/Android/Sdk/platform-tools/adb kill-server; sudo ~/Android/Sdk/platform-tools/adb start-server'
 if [ -f ~/.work ];then
     alias start-ssh-agent='eval $(ssh-agent) && ssh-add ~/.ssh/martin_bfs'
 fi

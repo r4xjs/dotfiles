@@ -21,7 +21,7 @@ set -o ignoreeof # stop C+d from killing the shell&term
 
 # ---------- misc ---------- 
 # {{{1
-umask 077
+umask 022
 # 1}}}
 
 # ---------- auto completion ----------

@@ -388,6 +388,9 @@
 	    ("n" "note" plain "%?" :if-new
 		(file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 		:unnarrowed t)
+	    ("w" "work" plain "%?" :if-new
+		(file+head "work/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :work:\n")
+		:unnarrowed t)
 	    ("v" "vcdb" plain "%?* Description\n* Code\n#+begin_src\n#+end_src\n* Solution\n#+begin_src\n#+end_src\n"
 	     :if-new
 	       (file+head "vcdb/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :vcdb:\n")

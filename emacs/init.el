@@ -317,7 +317,7 @@
   (setq org-edit-src-content-indentation 0)
   ;; (org-indent-mode)
   (setq org-agenda-files '(
-			 "~/s/org/"
+			 "/tmp/org/"
 			 ))
   (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DONE(d)")))
   (setq org-return-follows-link t) ;; follow links with RET
@@ -326,13 +326,14 @@
   (load (concat user-emacs-directory "doom-stuff.el"))
   ;; remap some keys
   (add-hook 'org-mode-hook (lambda ()
-(define-key org-mode-map [remap org-insert-heading-respect-content] '+org/insert-item-below)))
+			     (define-key org-mode-map [remap org-insert-heading-respect-content] '+org/insert-item-below)))
 
   ;; some custom stuff
   (setq raxjs/org-dir (expand-file-name "~/org"))
 
   (define-key global-map (kbd "C-c l") 'org-store-link)
   (define-key global-map (kbd "C-c C-l") 'org-insert-link)
+  (define-key global-map (kbd "C-c a") 'org-agenda)
   (define-key evil-normal-state-map (kbd "C-c C-l") 'org-insert-link)
 
   ;; capture templates

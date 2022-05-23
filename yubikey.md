@@ -1,3 +1,10 @@
+# Packages
+
+- scdaemon
+- libpam-u2f
+- yubico-piv-tool
+- opensc
+
 # Setup PIV
 <!-- {{{1 -->
 

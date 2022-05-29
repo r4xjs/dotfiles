@@ -269,15 +269,14 @@ bindsym $mod+i mode "$sound_mode"
 # 2}}}
 
 # lang mode
-mode "$lang_mode" {
+mode "$decode_mode" {
 # {{{2
-set $lang_mode (u)s, (g)erman
-    bindsym u exec --no-startup-id setxkbmap -layout us -variant altgr-intl -option nodeadkeys
-    bindsym g exec --no-startup-id setxkbmap de && i3-msg mode default
+set $decode_mode (j)son
+    bindsym j exec --no-startup-id ~/.i3/i3json.sh; mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
-bindsym $mod+o mode "$lang_mode"
+bindsym $mod+o mode "$decode_mode"
 # 2}}}
 
 # wifi
@@ -309,6 +308,19 @@ bindsym $mod+p mode "$pass_mode"
 
 # ---------- Window Rules ----------
 # {{{1
+
+# ida
 for_window [title="References to .*"] floating enable
-for_window [title="References to .*"] resize set 1024 480 
+for_window [title="References to .*"] resize set 1024 480
+
+# zap
+for_window [title="Options"] floating disable
+for_window [title="Fuzzer"] floating disable
+for_window [title="Spider"] floating disable
+for_window [title="Active Scan"] floating disable
+for_window [title="Session Properties"] floating disable
+for_window [title="Scan Policy"] floating disable
+for_window [title="Generate Report"] floating disable
+for_window [title="Diff"] floating disable
+
 # 1}}}

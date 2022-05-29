@@ -319,7 +319,9 @@
   :ensure t
   :init
   (setq lsp-rust-server "/usr/local/bin/rls")
-  (setq lsp-rust-analyzer-server-command "/usr/local/bin/rust-analyzer"))
+  (setq lsp-rust-analyzer-server-command "/usr/local/bin/rust-analyzer")
+  (setq rust-rustfmt-bin "~/.cargo/bin/rustfmt")
+  )
 
 (use-package solidity-mode
   :ensure t)
@@ -439,7 +441,9 @@
      (dot . t)
      (C . t)
      (gnuplot . t)
-     (haskell . t)))
+     (haskell . t)
+     (sqlite . t)
+     ))
    (setq org-confirm-babel-evaluate nil)
   ) ;; end of org use-package
 
@@ -448,8 +452,17 @@
   :after org
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾" "❿"))
-)
+  (setq org-bullets-bullet-list '("❶" "❷" "❸" "❹" "❺" "❻" "❼" "❽" "❾" "❿")))
+
+(use-package org-ql
+  :ensure t
+  :init
+  (require 'org-ql-search)
+  :config
+(add-to-list 'org-dynamic-block-alist
+	  '("org-ql"  org-dblock-write:org-ql)))
+
+
 
 (use-package ob-async
   :ensure t)
@@ -631,6 +644,8 @@
 ;; stop asking to follow symlinks to vc files
 (setq vc-follow-symlinks t)
 
+
+(add-to-list 'auto-mode-alist '("\\.kt$" . java-mode))
 
 ;; -----------------------------------------------------------------
 

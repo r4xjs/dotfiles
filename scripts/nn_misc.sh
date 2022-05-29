@@ -22,6 +22,14 @@ nn_dot_to_png(){
     print -z 'dot -Tpng in.dot -o out.png'
 }
 
+nn_kali() {
+    print -z 'lxc run kali zsh'
+}
+
+nn_kalix() {
+    print -z 'lxc runx kali'
+}
+
 
 nn_qemu_img_vmdk(){
     print -z 'qemu-img convert -f vmdk -O qcow2 image.vmdk image.qcow2'

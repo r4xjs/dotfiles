@@ -426,7 +426,7 @@
 	     ("t" . "src text")
 	     ("x" . "src xml")
 	     ("j" . "src json")
-	     ("d" . "src diff")
+	     ("d" . "src dot :file out.png :cmdline -Kdot -Tpng")
 	     ("l" . "src emacs-lisp")
 	     ("r" . "src rust")
 	     ("c" . "src c")
@@ -445,6 +445,11 @@
      (sqlite . t)
      ))
    (setq org-confirm-babel-evaluate nil)
+
+   (defun my/fix-inline-images ()
+     (when org-inline-image-overlays
+	(org-redisplay-inline-images)))
+    (add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
   ) ;; end of org use-package
 
 (use-package org-bullets

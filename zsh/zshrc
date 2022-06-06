@@ -81,6 +81,7 @@ if [ -f ~/.work ];then
 fi
 alias pwsh='pwsh -nologo'
 
+
 # 1}}}
 
 # ---------- history settings ----------
@@ -154,6 +155,9 @@ function play(){
     ph next
 }
 
+function reputation() {
+    curl "https://reputation.noc.org/api/?ip=$1"
+}
 
 # ---------- Plugins ---------- 
 # {{{1

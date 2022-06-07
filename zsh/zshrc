@@ -70,6 +70,10 @@ alias diff='diff --color=always -rdu'
 alias gpush='git push'
 alias gpull='git pull'
 
+# docker
+alias docp='docker-compose'
+alias doc='docker'
+
 # lxc
 alias lxc-start=lxc-unpriv-start
 alias lxc-attach=lxc-unpriv-attach

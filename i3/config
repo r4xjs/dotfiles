@@ -322,5 +322,6 @@ for_window [title="Session Properties"] floating disable
 for_window [title="Scan Policy"] floating disable
 for_window [title="Generate Report"] floating disable
 for_window [title="Diff"] floating disable
+for_window [title="Macro Editor"] floating disable
 
 # 1}}}

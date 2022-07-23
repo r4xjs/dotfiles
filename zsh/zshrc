@@ -85,6 +85,8 @@ if [ -f ~/.work ];then
 fi
 alias pwsh='pwsh -nologo'
 
+alias sl-domain='rev | cut -d'.' -f1,2 | rev | sort -u'
+alias subdomains="awk -F'.' '{for(i = 0; ++i <=NF-2;) print \$i}' | sort -u"
 
 # 1}}}
 

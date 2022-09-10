@@ -56,7 +56,7 @@ alias ll='ls -lh'
 alias ssh-p='ssh -o PreferredAuthentications=password'
 alias rgrep='grep -Ri --color=always'
 
-alias grep='grep --color=always'
+#alias grep='grep --color=always'
 alias ip='ip -c'
 
 alias journalctl='sudo journalctl'
@@ -211,3 +211,6 @@ echo $SSH_AUTH_SOCK > /tmp/emacs_auth_sock
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/user/bin/terraform terraform

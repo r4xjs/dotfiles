@@ -23,7 +23,7 @@ set completeopt=noinsert,noselect,menuone
 set shortmess=c
 set hidden " allow switching buffer without :w
 
-set textwidth=79
+" set textwidth=79
 set colorcolumn=80
 highlight ColoColumn ctermbg=233
 

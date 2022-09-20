@@ -142,7 +142,7 @@
                 "location_of_jruby_jar_file":""
             },
             "settings":{
-                "automatically_reload_extensions_on_startup":true,
+                "automatically_reload_extensions_on_startup":false,
                 "automatically_update_bapps_on_startup":true
             }
         },
@@ -194,6 +194,10 @@
                 {
                     "action":"add_highlight",
                     "hotkey":"Ctrl+Shift+Alt+H"
+                },
+                {
+                    "action":"do_active_scan",
+                    "hotkey":"Ctrl+Shift+Alt+A"
                 },
                 {
                     "action":"issue_repeater_request",
@@ -252,7 +256,7 @@
                     "hotkey":"Ctrl+Right"
                 },
                 {
-                    "action":"editor_cut",
+                    "action":"close_tab",
                     "hotkey":"Ctrl+X"
                 },
                 {

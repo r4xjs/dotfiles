@@ -41,6 +41,16 @@
         "extender":{
             "extensions":[
                 {
+                    "bapp_serial_version":21,
+                    "bapp_uuid":"9cff8c55432a45808432e26dbb2b41d8",
+                    "errors":"ui",
+                    "extension_file":"bapps/9cff8c55432a45808432e26dbb2b41d8/build/libs/backslash-powered-scanner-all.jar",
+                    "extension_type":"java",
+                    "loaded":true,
+                    "name":"Backslash Powered Scanner",
+                    "output":"ui"
+                },
+                {
                     "bapp_serial_version":8,
                     "bapp_uuid":"ef6d970f0d11452ea024691dffb4b39c",
                     "errors":"ui",
@@ -91,22 +101,32 @@
                     "output":"ui"
                 },
                 {
-                    "bapp_serial_version":35,
+                    "bapp_serial_version":36,
                     "bapp_uuid":"65033cbd2c344fbabe57ac060b5dd100",
                     "errors":"ui",
                     "extension_file":"bapps/65033cbd2c344fbabe57ac060b5dd100/build/libs/hackvertor-all.jar",
                     "extension_type":"java",
-                    "loaded":false,
+                    "loaded":true,
                     "name":"Hackvertor",
                     "output":"ui"
                 },
                 {
-                    "bapp_serial_version":24,
+                    "bapp_serial_version":20,
+                    "bapp_uuid":"f9bbac8c4acf4aefa4d7dc92a991af2f",
+                    "errors":"ui",
+                    "extension_file":"bapps/f9bbac8c4acf4aefa4d7dc92a991af2f/Autorize.py",
+                    "extension_type":"python",
+                    "loaded":false,
+                    "name":"Autorize",
+                    "output":"ui"
+                },
+                {
+                    "bapp_serial_version":25,
                     "bapp_uuid":"17d2949a985c4b7ca092728dba871943",
                     "errors":"ui",
                     "extension_file":"bapps/17d2949a985c4b7ca092728dba871943/build/libs/param-miner-all.jar",
                     "extension_type":"java",
-                    "loaded":false,
+                    "loaded":true,
                     "name":"Param Miner",
                     "output":"ui"
                 },
@@ -142,7 +162,7 @@
                 "location_of_jruby_jar_file":""
             },
             "settings":{
-                "automatically_reload_extensions_on_startup":false,
+                "automatically_reload_extensions_on_startup":true,
                 "automatically_update_bapps_on_startup":true
             }
         },
@@ -194,10 +214,6 @@
                 {
                     "action":"add_highlight",
                     "hotkey":"Ctrl+Shift+Alt+H"
-                },
-                {
-                    "action":"do_active_scan",
-                    "hotkey":"Ctrl+Shift+Alt+A"
                 },
                 {
                     "action":"issue_repeater_request",
@@ -256,7 +272,7 @@
                     "hotkey":"Ctrl+Right"
                 },
                 {
-                    "action":"close_tab",
+                    "action":"editor_cut",
                     "hotkey":"Ctrl+X"
                 },
                 {

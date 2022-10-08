@@ -662,6 +662,9 @@
 ;; ibuffer
 (define-key global-map (kbd "C-x C-b") 'ibuffer)
 
+;; avoid :w
+(define-key global-map (kbd "C-s") 'save-buffer)
+
 ;; always kill current buffer and window if not the last
 (defun raxjs/kill-curr-buffer ()
   (interactive)
